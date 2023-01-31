@@ -1,0 +1,27 @@
+
+--dapper
+dotnet add package Dapper
+
+--acesso oracle
+dotnet add package Oracle.ManagedDataAccess.Core
+
+--cesso mysql
+dotnet add package Pomelo.EntityFrameworkCore.MySql
+--https://jasonwatmore.com/post/2022/03/25/net-6-connect-to-mysql-database-with-entity-framework-core
+
+
+--para manipulação do arquivo de configuração
+dotnet add package Microsoft.Extensions.Configuration.Json
+
+
+--passos:
+1º criar o arquivo appsettings com a string de conexao
+
+2ª criar a rotina que lê essa configuração e retorna uma IConfiguration (Configuracao / Configuracao.cs)
+
+3ª criar a 'fabrica de conexao', em que se passa uma configuração, e ela pode retornar uma conexão quando solicitado (metodo connect)
+
+4ª Criar os serviços, que recebem uma 'fabrica' em sua instanciação, para que possa abrir uma conexão e executar o comando necessario
+4.1 Parametros na query são passados como um objeto, e ele é mapeado com o nomes dos campos do objeto com o que tah na query
+ex. select * from usuario where cd_matricula = :valor --deve-se passar um objeto com um campo com o nome valor: new {valor = 156}
+4.2 MYSql os parametros devem estar junto de "@" enquanto no oracle devem estar junto a ":"

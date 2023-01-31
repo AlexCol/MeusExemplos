@@ -1,0 +1,1 @@
+public record XapTeste(string campo1);
