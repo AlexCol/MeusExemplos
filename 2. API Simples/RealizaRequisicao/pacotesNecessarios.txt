@@ -1,0 +1,7 @@
+
+
+dotnet add package 
+
+RestSharp 
+Microsoft.Extensions.Configuration.Json
+Microsoft.Extensions.Configuration.Binder
