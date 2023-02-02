@@ -29,18 +29,6 @@ public class Personagem : Notifiable<Notification>
             contract.AddNotification("Nome", "Nome só pode conter letras e _(underline)");
         }
 
-        bool classInvalida = true;
-        foreach (var classe in Enum.GetValues<ClassesEnum>())
-        {
-            if (Estatisticas.GetType().ToString() == classe.ToString())
-            {
-                classInvalida = false;
-            }
-        }
-        if (classInvalida)
-        {
-            contract.AddNotification("Classe", "Class inválida");
-        }
         AddNotifications(contract);
     }
 

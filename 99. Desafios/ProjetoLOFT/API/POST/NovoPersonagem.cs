@@ -6,18 +6,25 @@ public class NovoPersonagem
 
     public static IResult Action(PersonagemRequest personagemRequest)
     {
-        BaseClass novaClasse = personagemRequest.classe.retornaClasse();
-        int novoId = PersonagensRepository.novoId();
-        Personagem novoPersonagem = new Personagem(novoId, personagemRequest.nome, novaClasse);
-
-        if (!novoPersonagem.IsValid)
+        try
         {
-            var errors = novoPersonagem.Notifications.ConverteParaProblemDetails();
-            return Results.ValidationProblem(errors);
+            BaseClass novaClasse = personagemRequest.classe.retornaClasse();
+            int novoId = PersonagensRepository.novoId();
+            Personagem novoPersonagem = new Personagem(novoId, personagemRequest.nome, novaClasse);
+
+            if (!novoPersonagem.IsValid)
+            {
+                var errors = novoPersonagem.Notifications.ConverteParaProblemDetails();
+                return Results.ValidationProblem(errors);
+            }
+
+            PersonagensRepository.Add(novoPersonagem);
+
+            return Results.Created($"/personagem/{novoId}", novoId);
         }
-
-        PersonagensRepository.Add(novoPersonagem);
-
-        return Results.Created($"/personagem/{novoId}", novoId);
+        catch (Exception e)
+        {
+            return Results.Problem(e.Message);
+        }
     }
 }

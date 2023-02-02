@@ -7,24 +7,18 @@ public static class PersonagensRepository
         personagens.Add(p);
     }
 
-    public static List<PersonagemResponse>? listaPersonagens()
+    public static List<ListaDePersonagensResponse>? listaPersonagens()
     {
         if (personagens == null)
             return null;
 
-        List<PersonagemResponse> lista = new List<PersonagemResponse>();
-        foreach (Personagem p in personagens)
-        {
-            lista.Add(
-                new PersonagemResponse(
-                            p.Nome,
-                            p.Estatisticas.GetType().ToString(),
-                            p.Estatisticas,
-                            p.Estatisticas.getFormulaAtaque(),
-                            p.Estatisticas.getFormulaVelocidade()
-                        )
-            );
-        }
+        List<ListaDePersonagensResponse> lista = personagens.Select(p =>
+            new ListaDePersonagensResponse(
+                p.Nome,
+                p.Estatisticas.GetType().ToString(),
+                p.Estatisticas.isAlive() ? "Alive" : "Dead"
+            )).ToList();
+
         return lista;
     }
     public static PersonagemResponse? buscaPorId(int id)
@@ -34,6 +28,7 @@ public static class PersonagensRepository
             return null;
 
         PersonagemResponse personagemResponse = new PersonagemResponse(
+            personagem.Id,
             personagem.Nome,
             personagem.Estatisticas.GetType().ToString(),
             personagem.Estatisticas,
@@ -43,9 +38,11 @@ public static class PersonagensRepository
         return personagemResponse;
     }
 
-    public static void update(Personagem p)
+    public static void update(Personagem personagemAtualizar)
     {
-
+        int? indice = personagens.FindIndex(p => p.Id == personagemAtualizar.Id);
+        if (indice != null)
+            personagens[(int)indice] = personagemAtualizar;
     }
 
 

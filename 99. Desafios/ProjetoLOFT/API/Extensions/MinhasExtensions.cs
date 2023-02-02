@@ -11,6 +11,9 @@ public static class MinhasExtensions
 
         //POSTS
         app.MapMethods(NovoPersonagem.Template, NovoPersonagem.Methods, NovoPersonagem.Handle);
+
+        //PUTS
+        app.MapMethods(RealizaCombate.Template, RealizaCombate.Methods, RealizaCombate.Handle);
     }
 
     public static Dictionary<string, string[]> ConverteParaProblemDetails(this IReadOnlyCollection<Notification> notifications)

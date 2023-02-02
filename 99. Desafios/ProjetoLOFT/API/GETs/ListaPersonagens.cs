@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 
 public class ListaPersonagens
 {
-    public static string Template => "/listapersonagem"; //https://localhost:7101/personagem/{id}
+    public static string Template => "/listapersonagem"; //https://localhost:7101/listapersonagem
     public static string[] Methods => new string[] { HttpMethod.Get.ToString() };
     public static Delegate Handle => Action;
 
