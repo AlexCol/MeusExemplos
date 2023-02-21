@@ -1,3 +1,8 @@
+using Dominio;
+using Dominio.Classes;
+using Dominio.Classes.Extensoes;
+
+namespace Controllers.Responses.Extensions;
 public static class ResponseExtensions
 {
     public static Personagem converteParaPersonagem(this PersonagemResponse p)

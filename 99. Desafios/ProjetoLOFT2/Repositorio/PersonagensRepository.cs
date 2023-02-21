@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
+using Controllers.Responses;
+using Dominio;
 
+namespace Repository;
 public static class PersonagensRepository
 {
     private static List<Personagem> personagens = new List<Personagem>();
@@ -18,7 +21,7 @@ public static class PersonagensRepository
         List<ListaDePersonagensResponse> lista = personagens.Select(p =>
             new ListaDePersonagensResponse(
                 p.Nome,
-                p.Estatisticas.GetType().ToString(),
+                p.Estatisticas.GetType().Name,
                 p.Estatisticas.isAlive() ? "Alive" : "Dead"
             )).ToList();
 
@@ -33,7 +36,7 @@ public static class PersonagensRepository
         PersonagemResponse personagemResponse = new PersonagemResponse(
             personagem.Id,
             personagem.Nome,
-            personagem.Estatisticas.GetType().ToString(),
+            personagem.Estatisticas.GetType().Name,
             personagem.Estatisticas,
             personagem.Estatisticas.getFormulaAtaque(),
             personagem.Estatisticas.getFormulaVelocidade()

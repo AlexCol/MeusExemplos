@@ -1,5 +1,6 @@
 using Flunt.Notifications;
 
+namespace Dominio.Classes;
 public abstract class BaseClass
 {
     private int pontosDeVida;

@@ -1,3 +1,5 @@
+namespace Dominio.Classes;
+
 public class Mage : BaseClass
 {
     public Mage()

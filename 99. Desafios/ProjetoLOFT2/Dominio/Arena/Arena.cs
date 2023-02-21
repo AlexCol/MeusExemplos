@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 
+namespace Dominio.Arena;
 class Arena
 {
     public Personagem Player1 { get; private set; }

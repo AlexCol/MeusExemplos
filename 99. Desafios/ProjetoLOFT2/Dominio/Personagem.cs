@@ -1,7 +1,10 @@
 using System.Text.RegularExpressions;
+using Dominio.Classes;
 using Flunt.Notifications;
 using Flunt.Validations;
 using Microsoft.AspNetCore.Components.Forms;
+
+namespace Dominio;
 
 public class Personagem : Notifiable<Notification>
 {

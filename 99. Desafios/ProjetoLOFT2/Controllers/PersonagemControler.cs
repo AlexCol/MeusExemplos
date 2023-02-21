@@ -1,9 +1,14 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using Controllers.Requests;
+using Controllers.Responses;
+using Dominio;
+using Dominio.Classes;
+using Dominio.Classes.Extensoes;
+using Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Repository;
 
 namespace ProjetoLOFT2.Controllers;
 

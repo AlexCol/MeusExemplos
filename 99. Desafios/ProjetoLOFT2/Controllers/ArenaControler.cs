@@ -1,11 +1,15 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using Controllers.Responses;
+using Controllers.Responses.Extensions;
+using Dominio;
+using Dominio.Arena;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Repository;
 
-namespace ProjetoLOFT2.Controllers;
+namespace Controllers;
 
 [ApiController]
 [Route("api/arena")]

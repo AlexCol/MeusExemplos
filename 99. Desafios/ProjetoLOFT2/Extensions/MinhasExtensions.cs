@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Flunt.Notifications;
-using Microsoft.AspNetCore.Identity;
 
+namespace Extensions;
 public static class MinhasExtensions
 {
     public static Dictionary<string, string[]> ConverteParaProblemDetails(this IReadOnlyCollection<Notification> notifications)
