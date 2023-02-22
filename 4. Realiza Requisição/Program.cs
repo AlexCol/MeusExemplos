@@ -20,7 +20,7 @@ try
     doctors.OrderBy(d => d.Name);
     foreach (var item in doctors)
     {
-        //System.Console.WriteLine($"{item.Name}, {item.ProfessionalId}, {item.InternalCode}, {item.UserType}");
+        System.Console.WriteLine($"{item.Name}, {item.ProfessionalId}, {item.InternalCode}, {item.UserType}");
     }
 }
 catch (Exception e)
