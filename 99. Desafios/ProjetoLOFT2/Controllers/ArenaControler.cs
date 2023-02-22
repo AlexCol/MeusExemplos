@@ -24,7 +24,7 @@ public class ArenaControler : ControllerBase
 
     //!metodo 1, passando os parametros no caminho, cada um separado por barra
     [HttpPut("{idPersonagem1}/{idPersonagem2}")]
-    public IResult Put(int idPersonagem1, int idPersonagem2)
+    public IActionResult Put(int idPersonagem1, int idPersonagem2)
     {
         var p1 = idPersonagem1;
         var p2 = idPersonagem2;
@@ -33,7 +33,7 @@ public class ArenaControler : ControllerBase
 
     //!metodo 2, passando os parametros por query string da URL
     [HttpPut]
-    public IResult Put([FromQuery] string? idP1, [FromQuery] string? idP2) //mudado pra string pra não dar conflito com a que já existe
+    public IActionResult Put([FromQuery] string? idP1, [FromQuery] string? idP2) //mudado pra string pra não dar conflito com a que já existe
     {
         try
         {
@@ -46,25 +46,25 @@ public class ArenaControler : ControllerBase
         }
         catch (Exception e)
         {
-            return Results.BadRequest($"Parametros informados inválidos. {e.Message}");
+            return BadRequest($"Parametros informados inválidos. {e.Message}");
         }
     }
 
-    private IResult RealizaCombate(int p1, int p2)
+    private IActionResult RealizaCombate(int p1, int p2)
     {
         if (p1 == p2)
-            return Results.BadRequest("Um personagem não pode lutar contra ele mesmo.");
+            return BadRequest("Um personagem não pode lutar contra ele mesmo.");
 
         string? validaPersonagem;
         PersonagemResponse? playerResponse1 = PersonagensRepository.buscaPorId((int)p1);
         validaPersonagem = PersonagemValido(playerResponse1, 1);
         if (validaPersonagem != null)
-            return Results.BadRequest(validaPersonagem);
+            return BadRequest(validaPersonagem);
 
         PersonagemResponse? playerResponse2 = PersonagensRepository.buscaPorId((int)p2);
         validaPersonagem = PersonagemValido(playerResponse2, 2);
         if (validaPersonagem != null)
-            return Results.BadRequest(validaPersonagem);
+            return BadRequest(validaPersonagem);
 
 #pragma warning disable CS8604  //?desabilitando aqui o warning, pq o compilador não identifica que tratei na PersonagemValido pra não ser null
         Personagem playe1 = playerResponse1.converteParaPersonagem();
@@ -77,7 +77,7 @@ public class ArenaControler : ControllerBase
         PersonagensRepository.update(playe1);
         PersonagensRepository.update(playe2);
 
-        return Results.Ok(retorno);
+        return Ok(retorno);
     }
 
     private string? PersonagemValido(PersonagemResponse? personagem, int numPersonagem)

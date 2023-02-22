@@ -7,6 +7,7 @@ using Dominio.Classes.Extensoes;
 using Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
 using Repository;
 
@@ -24,7 +25,7 @@ public class PersonagemControler : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public IResult Get(int id)
+    public IActionResult Get(int id)
     {
         _logger.LogInformation("Buscando personagem.");
         PersonagemResponse? personagem = PersonagensRepository.buscaPorId(id);
@@ -32,20 +33,20 @@ public class PersonagemControler : ControllerBase
         if (personagem == null)
         {
             _logger.LogError("Erro na busca.");
-            return Results.BadRequest("Personagem nao existe.");
+            return BadRequest("Personagem nao existe.");
         }
 
-        return Results.Ok(personagem);
+        return Ok(personagem);
     }
 
     [HttpGet]
-    public IResult Get()
+    public IActionResult Get()
     {
-        return Results.Ok(PersonagensRepository.listaPersonagens());
+        return Ok(PersonagensRepository.listaPersonagens());
     }
 
     [HttpPost]
-    public IResult Post([FromBody] PersonagemRequest personagemRequest)
+    public IActionResult Post([FromBody] PersonagemRequest personagemRequest)
     {
         try
         {
@@ -55,17 +56,17 @@ public class PersonagemControler : ControllerBase
 
             if (!novoPersonagem.IsValid)
             {
-                var errors = novoPersonagem.Notifications.ConverteParaProblemDetails();
-                return Results.ValidationProblem(errors);
+                var errors = novoPersonagem.Notifications.ConverteParaProblemDetailsM();
+                return ValidationProblem(errors);
             }
 
             PersonagensRepository.Add(novoPersonagem);
 
-            return Results.Created($"Personagem criado. Id: {novoId}", novoId);
+            return Created($"Personagem criado. Id: {novoId}", novoId);
         }
         catch (Exception e)
         {
-            return Results.Problem(e.Message);
+            return Problem(e.Message);
         }
     }
 }
