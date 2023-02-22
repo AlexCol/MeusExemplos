@@ -1,0 +1,1 @@
+public record FraseRequest(string frase, string outraCoisa);
