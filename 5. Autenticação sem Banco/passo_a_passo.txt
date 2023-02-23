@@ -1,79 +1,48 @@
-Passo 1: Instalar os pacotes NuGet necessários
-Primeiro, abra o terminal e navegue até o diretório raiz do projeto. Em seguida, execute os seguintes comandos para instalar os pacotes NuGet necessários:
+1.
+Baixar o pacote Microsoft.AspNetCore.Authentication.JwtBearer.
 
-java
-Copy code
-dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer
-dotnet add package Microsoft.IdentityModel.Tokens
-O pacote Microsoft.AspNetCore.Authentication.JwtBearer fornece a funcionalidade de autenticação JWT e o pacote Microsoft.IdentityModel.Tokens fornece as classes para validação de tokens JWT.
-
-Passo 2: Configurar autenticação JWT no projeto
-Em seguida, abra o arquivo Program.cs e adicione o seguinte código ao método CreateHostBuilder:
-
-csharp
-Copy code
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = "sua_issuing_authority",
-            ValidAudience = "sua_audience",
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("sua_chave_secreta"))
-        };
-    });
-Isso configura a autenticação JWT para o projeto e define as opções de validação do token. Lembre-se de substituir os valores "sua_issuing_authority", "sua_audience" e "sua_chave_secreta" pelos valores apropriados para sua aplicação.
-
-Passo 3: Adicionar autorização aos endpoints
-Em seguida, abra o arquivo WeatherForecastController.cs e adicione o seguinte atributo à classe:
-
-csharp
-Copy code
-[Authorize]
-Isso protege todos os endpoints da classe WeatherForecastController com autenticação JWT. Você também pode adicionar o atributo [AllowAnonymous] a métodos específicos para permitir acesso sem autenticação.
-
-Passo 4: Gerar tokens JWT
-Para gerar tokens JWT para autenticação, você pode criar um endpoint em seu controlador que retorna um token JWT com base nas credenciais de login fornecidas. Aqui está um exemplo de como fazer isso:
-
-csharp
-Copy code
-[HttpPost("login")]
-public IActionResult Login([FromBody] LoginViewModel model)
+2.
+Colocar em 'Program.cs' os comandos (OBS: antes de var app = builder.Build();):
+builder.Services.AddAuthentication(x =>
 {
-    if (model.Username == "usuario" && model.Password == "senha")
+    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters()
     {
-        var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Encoding.ASCII.GetBytes("sua_chave_secreta");
-        var tokenDescriptor = new SecurityTokenDescriptor
-        {
-            Subject = new ClaimsIdentity(new Claim[]
-            {
-                new Claim(ClaimTypes.Name, model.Username)
-            }),
-            Expires = DateTime.UtcNow.AddHours(1),
-            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
-                                                        SecurityAlgorithms.HmacSha256Signature)
-        };
-        var token = tokenHandler.CreateToken(tokenDescriptor);
-        var tokenString = tokenHandler.WriteToken(token);
-        return Ok(new { Token = tokenString });
-    }
-    return Unauthorized();
-}
-Este método recebe as credenciais de login do usuário em um objeto LoginViewModel, verifica se as credenciais são válidas e, se forem, gera um token JWT usando a chave secreta definida na seção de configuração da autenticação. O token contém um único Claim que armazena o nome do usuário.
+        ValidIssuer = builder.Configuration["JwtBearerTokenSettings:Issuer"],
+        ValidAudience = builder.Configuration["JwtBearerTokenSettings:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtBearerTokenSettings:SecretKey"])),
+        ClockSkew = TimeSpan.Zero,
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
 
-O método retorna o token JWT em um objeto JSON com a chave "Token". Se as credenciais não forem válidas, o método retornará um resultado HTTP 401 Unauthorized.
+    };
+});
 
-Passo 5: Adicionar middleware de autenticação JWT
-Por fim, abra o arquivo Startup.cs e adicione o seguinte código ao método Configure:
+//!padrão
+//builder.Services.AddAuthorization();
+// Add services to the container.
+builder.Services.AddAuthorization(options =>
+{
+    options.FallbackPolicy = new AuthorizationPolicyBuilder()
+        .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+        .RequireAuthenticatedUser()
+        .Build();
+});
 
-csharp
-Copy code
+
+3.
+Colocar em 'Program.cs' os comandos (OBS: na ordem apresentada, e antes de app.MapControllers();):
 app.UseAuthentication();
-Isso adiciona o middleware de autenticação JWT à pipeline de middleware da aplicação, para que os tokens JWT possam ser validados em cada solicitação.
+app.UseAuthorization();
 
-Agora sua API está protegida com autenticação JWT! Os usuários devem primeiro fazer login para obter um token JWT válido e, em seguida, incluir o token no cabeçalho Authorization em cada solicitação para acessar os endpoints protegidos.
+4.
+Criar um 'UserRequest', onde vem o usuário e senha (ex.LoginViewModel.cs).
+
+5.
+Criar endpoint de solicitação do token (exemplo em "CriaTokenAutenticacao.cs").
+--Lembrar de manter o [AllowAnonymous] pra permitir execução dele sem precisar estar autenticado
