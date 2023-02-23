@@ -21,7 +21,7 @@ public class CriaTokenAutenticacao : ControllerBase
 
 
     [HttpPost("login")]
-    public IActionResult Login(
+    public async Task<IActionResult> Login(
         //[FromServices] IConfiguration configuration, //!movido para o construtor
         //[FromServices] ILogger<LoginViewModel> log, //!movido para o construtor
         [FromBody] LoginViewModel model
@@ -48,10 +48,21 @@ public class CriaTokenAutenticacao : ControllerBase
                 Expires = DateTime.UtcNow.AddSeconds(int.Parse(configuration["JwtBearerTokenSettings:ExpiryTimeInSeconds"]))
             };
 
+            //mantem o metodo sincorono (com declaração do metodo como "public IActionResult Login(")
+            // var tokenHandler = new JwtSecurityTokenHandler();
+            // var token = tokenHandler.CreateToken(tokenDescriptor);
+            // var tokenString = tokenHandler.WriteToken(token);
+            // return Ok(new { token = tokenString });
+
+            //torna ele assincrono (com declaração do metodo como "public async Task<IActionResult> Login("
             var tokenHandler = new JwtSecurityTokenHandler();
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            var tokenString = tokenHandler.WriteToken(token);
-            return Ok(new { token = tokenString });
+            var unsignedToken = await Task.FromResult(tokenHandler.CreateJwtSecurityToken(tokenDescriptor)); // Adicionando await aqui
+            var signingCredentials = tokenDescriptor.SigningCredentials;
+            var signingKey = signingCredentials.Key;
+            var signingAlgorithm = signingCredentials.Algorithm;
+            var signedToken = new JwtSecurityTokenHandler().WriteToken(unsignedToken);
+
+            return Ok(new { token = signedToken });
         }
         return Unauthorized();
     }
