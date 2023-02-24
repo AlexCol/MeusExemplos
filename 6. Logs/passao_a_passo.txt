@@ -1,0 +1,24 @@
+1.
+Instalar "dotnet add package Serilog.AspNetCore"
+
+2.
+Implementar a chamada em Program.cs.
+Qualquer ponto antes de "var app = builder.Build();"
+---exemplo em Program.cs iniciando com "builder.Host.UseSerilog((context, configuration) =>"
+
+o nível do log informa o nível mais alto que vai ser informado o log, e dali todos para baixo serão informados.
+-Verbose
+-Information
+-Warning
+-Error
+
+
+--
+para o log no mysql, precisa de:
+dotnet add package Serilog.Sinks.MySQL
+
+--
+para criar o endopoint de captura de erros:
+1.
+adicionar "app.UseExceptionHandler("/error");" a Program.cs
+e criar a classe de manipulaçao de erros... exemplo em "ErrorHandler"
