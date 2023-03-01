@@ -36,9 +36,14 @@ public class CriaTokenAutenticacao : ControllerBase
             var subject = new ClaimsIdentity(new Claim[] {
                     new Claim(ClaimTypes.Email, model.Username),
                     new Claim(ClaimTypes.NameIdentifier, model.Username),
+                    new Claim("MinhaVariavel2", "teste2")
                 });
 
-            System.Console.WriteLine(DateTime.UtcNow.AddSeconds(1));
+            var meuClaim = new Claim(
+                "MinhaVariavel", "variavel"
+            );
+            subject.AddClaim(meuClaim);
+
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = subject,
