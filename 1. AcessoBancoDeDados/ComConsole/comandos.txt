@@ -9,6 +9,21 @@ dotnet add package Microsoft.Extensions.Configuration.Json
 FirebirdSql.Data.FirebirdClient
 
 
+-> criada classe de configuração, para buscar os dados de appsettings.json (Configuracao.cs)
+-> criado um enum para apontar qual o banco está sendo usado (deixando cada valor do enum igual ao informado no appsettings)
+-> criada uma fabrica de conexões, com uma generica (e abstrata) que vai gerenciar o tipo de conexão informada, receber a classe de configuração e responsavel pelo dispose
+---> criada classe de fabrica do firebase, em que extende a fabrica generica e implementa o metodo de conexão (esse passo deve ser feito para outros bancos tbm)
+-> criada classe Usuario em Model, com os campos existentes na tabela Usuario no banco
+-> criado o repositório UsuarioRepository, que recebe uma IConnectionFactory e realiza os comandos de CRUD relacionados ao usuario (deve ser feito para cada nova tabela ou grupo de processos)
+-> realiza chamadas na classe program
+
+
+
+
+
+
+
+
 //cria bancos de dados no docker
 --firebird
 --não rolou, tem q instalar na maquina mesmo
