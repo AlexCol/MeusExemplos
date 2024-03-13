@@ -1,0 +1,18 @@
+//dependencias
+dotnet add package Dapper
+dotnet add package Serilog
+dotnet add package Serilog.Sinks.Console
+dotnet add package Serilog.Sinks.File
+dotnet add package Microsoft.Extensions.Configuration.Json
+
+//pacotes para bancos
+FirebirdSql.Data.FirebirdClient
+
+
+//cria bancos de dados no docker
+--firebird
+--não rolou, tem q instalar na maquina mesmo
+
+--postgres
+docker run -d --name db_postgres -e POSTGRES_USER=root -e POSTGRES_PASSWORD=ale123 -e POSTGRES_DB=teste_dapper_postgres -p 5432:5432 postgres
+//o comando já cria a database
