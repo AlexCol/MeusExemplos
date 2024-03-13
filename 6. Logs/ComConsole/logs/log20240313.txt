@@ -1,0 +1,2 @@
+2024-03-13 15:23:10.713 -03:00 [ERR] Usando log de erro
+2024-03-13 15:23:10.741 -03:00 [INF] Usnado log de informação
