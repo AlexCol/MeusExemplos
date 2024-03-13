@@ -1,0 +1,21 @@
+2024-03-13 15:47:15.443 -03:00 [INF] Usuário encontrado alex - Id:1
+2024-03-13 15:47:15.475 -03:00 [INF] Usuário criado Alexandre - Id:22
+2024-03-13 15:47:15.479 -03:00 [INF] Usuário atualizado Novo nome - Id:22
+2024-03-13 15:47:15.482 -03:00 [INF] Usuario deletado
+2024-03-13 15:47:55.942 -03:00 [ERR] Usuário não encontrado!Your user name and password are not defined. Ask your database administrator to set up a Firebird login.
+System.Exception: Usuário não encontrado!Your user name and password are not defined. Ask your database administrator to set up a Firebird login.
+   at ComConsole.src.Repository.UsuarioRepository.UsuarioRepository.FindById(Int32 id) in D:\meusRepos\MeusExemplos\1. AcessoBancoDeDados\ComConsole\src\Repository\UsuarioRepository\UsuarioRepository.cs:line 31
+   at ComConsole.src.Testes.DBTesting.Test(ETipoBanco tipoBanco) in D:\meusRepos\MeusExemplos\1. AcessoBancoDeDados\ComConsole\src\Testes\DBTesting.cs:line 40
+2024-03-13 15:49:13.993 -03:00 [ERR] Usuário não encontrado!
+System.Exception: Usuário não encontrado!
+   at ComConsole.src.Repository.UsuarioRepository.UsuarioRepository.FindById(Int32 id) in D:\meusRepos\MeusExemplos\1. AcessoBancoDeDados\ComConsole\src\Repository\UsuarioRepository\UsuarioRepository.cs:line 31
+   at ComConsole.src.Testes.DBTesting.Test(ETipoBanco tipoBanco) in D:\meusRepos\MeusExemplos\1. AcessoBancoDeDados\ComConsole\src\Testes\DBTesting.cs:line 40
+2024-03-13 15:49:44.445 -03:00 [ERR] Usuário não encontrado! Your user name and password are not defined. Ask your database administrator to set up a Firebird login.
+System.Exception: Usuário não encontrado! Your user name and password are not defined. Ask your database administrator to set up a Firebird login.
+   at ComConsole.src.Repository.UsuarioRepository.UsuarioRepository.FindById(Int32 id) in D:\meusRepos\MeusExemplos\1. AcessoBancoDeDados\ComConsole\src\Repository\UsuarioRepository\UsuarioRepository.cs:line 31
+   at ComConsole.src.Testes.DBTesting.Test(ETipoBanco tipoBanco) in D:\meusRepos\MeusExemplos\1. AcessoBancoDeDados\ComConsole\src\Testes\DBTesting.cs:line 40
+2024-03-13 15:50:42.850 -03:00 [INF] Usuário encontrado alex - Id:1
+2024-03-13 15:50:42.881 -03:00 [INF] Usuário criado Alexandre - Id:23
+2024-03-13 15:50:42.885 -03:00 [INF] Usuário atualizado Novo nome - Id:23
+2024-03-13 15:50:42.887 -03:00 [INF] Usuario deletado
+2024-03-13 15:50:50.175 -03:00 [ERR] Usuário não encontrado! Your user name and password are not defined. Ask your database administrator to set up a Firebird login.

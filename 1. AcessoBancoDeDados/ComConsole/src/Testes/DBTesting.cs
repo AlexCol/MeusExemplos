@@ -3,6 +3,7 @@ using ComConsole.src.Enums;
 using ComConsole.src.Factory;
 using ComConsole.src.Factory.Factories;
 using ComConsole.src.Model;
+using ComConsole.src.MySerilog;
 using ComConsole.src.Repository.UsuarioRepository;
 
 namespace ComConsole.src.Testes;
@@ -18,9 +19,7 @@ public static class DBTesting {
 		};
 
 		//+declara uma factory vazia
-		ConnectionFactory factory = null;
-
-
+		ConnectionFactory factory;
 		//+inancia a factory desejada
 		switch (tipoBanco) {
 			case ETipoBanco.Firebird:
@@ -39,11 +38,11 @@ public static class DBTesting {
 
 			//+busca um usuário por id
 			var searchedUser = UsuarioRepo.FindById(1);
-			Console.WriteLine($"Usuário encontrado {searchedUser.Nome} - Id:{searchedUser.Id}");
+			Logger.Log.Information($"Usuário encontrado {searchedUser.Nome} - Id:{searchedUser.Id}");
 
 			//+cria novo usuário
 			var createdUser = UsuarioRepo.Create(novoUsuario);
-			Console.WriteLine($"Usuário criado {createdUser.Nome} - Id:{createdUser.Id}");
+			Logger.Log.Information($"Usuário criado {createdUser.Nome} - Id:{createdUser.Id}");
 
 			//+atualiza o usuário criadocria novo usuário
 			var userToUpdate = new Usuario {
@@ -52,14 +51,14 @@ public static class DBTesting {
 				Nascimento = new DateTime(2000, 01, 01)
 			};
 			userToUpdate = UsuarioRepo.Update(userToUpdate);
-			Console.WriteLine($"Usuário atualizado {userToUpdate.Nome} - Id:{userToUpdate.Id}");
+			Logger.Log.Information($"Usuário atualizado {userToUpdate.Nome} - Id:{userToUpdate.Id}");
 
 			//+elimina usuário
 			UsuarioRepo.Delete(createdUser.Id);
-			Console.WriteLine("Usuario deletado");
+			Logger.Log.Information("Usuario deletado");
 
 		} catch (Exception e) {
-			Console.WriteLine(e.Message);
+			Logger.Log.Error(e.Message);
 		}
 
 	}

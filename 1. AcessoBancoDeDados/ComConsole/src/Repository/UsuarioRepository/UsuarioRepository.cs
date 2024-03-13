@@ -28,7 +28,7 @@ public class UsuarioRepository : IUsuarioRepository {
 				).First();
 			}
 		} catch (Exception e) {
-			throw new Exception("Usuário não encontrado!" + e.Message);
+			throw new Exception("Usuário não encontrado! " + e.Message);
 		}
 	}
 
@@ -100,8 +100,8 @@ public class UsuarioRepository : IUsuarioRepository {
 							}
 				).First();
 			}
-		} catch {
-			throw new Exception("Usuário não encontrado!");
+		} catch (Exception e) {
+			throw new Exception("Usuário não encontrado! " + e.Message);
 		}
 	}
 }
