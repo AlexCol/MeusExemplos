@@ -1,0 +1,11 @@
+2024-03-14 10:53:56.119 -03:00 [INF] Usuário encontrado alex - Id:1
+2024-03-14 10:53:56.179 -03:00 [INF] Usuário criado Alexandre - Id:2
+2024-03-14 10:53:56.189 -03:00 [INF] Usuário atualizado Novo nome - Id:2
+2024-03-14 10:53:56.194 -03:00 [INF] Usuario deletado
+2024-03-14 10:54:22.740 -03:00 [INF] Usuário encontrado alex - Id:1
+2024-03-14 10:54:22.779 -03:00 [INF] Usuário criado Alexandre - Id:3
+2024-03-14 10:54:22.784 -03:00 [INF] Usuário atualizado Novo nome - Id:3
+2024-03-14 11:00:38.675 -03:00 [ERR] Usuário não encontrado! Sequence contains no elements
+2024-03-14 11:01:05.705 -03:00 [INF] Usuário encontrado alex - Id:1
+2024-03-14 11:01:05.734 -03:00 [INF] Usuário criado Alexandre - Id:2
+2024-03-14 11:01:05.737 -03:00 [INF] Usuário atualizado Novo nome - Id:2

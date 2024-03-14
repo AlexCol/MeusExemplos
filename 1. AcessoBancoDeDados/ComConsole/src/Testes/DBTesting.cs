@@ -54,8 +54,8 @@ public static class DBTesting {
 			Logger.Log.Information($"Usuário atualizado {userToUpdate.Nome} - Id:{userToUpdate.Id}");
 
 			//+elimina usuário
-			UsuarioRepo.Delete(createdUser.Id);
-			Logger.Log.Information("Usuario deletado");
+			// UsuarioRepo.Delete(createdUser.Id);
+			// Logger.Log.Information("Usuario deletado");
 
 		} catch (Exception e) {
 			Logger.Log.Error(e.Message);
