@@ -1,0 +1,32 @@
+2024-03-14 14:24:06 [ERR] Teste
+2024-03-14 14:26:38 [ERR] Teste
+2024-03-14 14:26:41 [ERR] Teste
+2024-03-14 14:26:47 [ERR] Teste
+2024-03-14 14:26:48 [ERR] Teste
+2024-03-14 14:26:49 [ERR] Teste
+2024-03-14 14:26:55 [ERR] Teste
+2024-03-14 14:27:16 [ERR] Teste
+2024-03-14 14:27:18 [ERR] Teste
+2024-03-14 14:27:28 [ERR] Teste
+2024-03-14 14:28:25 [ERR] Teste
+2024-03-14 15:01:12 [INF] Email enviado
+2024-03-14 15:01:15 [INF] Email enviado
+2024-03-14 15:01:18 [INF] Email enviado
+2024-03-14 15:01:21 [INF] Email enviado
+2024-03-14 15:01:24 [INF] Email enviado
+2024-03-14 15:01:27 [INF] Email enviado
+2024-03-14 15:01:30 [INF] Email enviado
+2024-03-14 15:01:33 [INF] Email enviado
+2024-03-14 15:01:36 [INF] Email enviado
+2024-03-14 15:01:39 [INF] Email enviado
+2024-03-14 15:01:42 [INF] Email enviado
+2024-03-14 15:01:45 [INF] Email enviado
+2024-03-14 15:01:48 [INF] Email enviado
+2024-03-14 15:01:51 [INF] Email enviado
+2024-03-14 15:01:54 [INF] Email enviado
+2024-03-14 15:01:57 [INF] Email enviado
+2024-03-14 15:02:00 [INF] Email enviado
+2024-03-14 15:02:03 [INF] Email enviado
+2024-03-14 15:02:06 [INF] Email enviado
+2024-03-14 15:02:09 [INF] Email enviado
+2024-03-14 15:02:12 [INF] Email enviado
