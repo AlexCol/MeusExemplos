@@ -1,0 +1,146 @@
+2024-03-14 16:06:43.264 -03:00 [INF] Now listening on: http://localhost:5155
+2024-03-14 16:06:43.279 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-03-14 16:06:43.279 -03:00 [INF] Hosting environment: Development
+2024-03-14 16:06:43.279 -03:00 [INF] Content root path: D:\meusRepos\MeusExemplos\7. Quartz\WebAPI
+2024-03-14 16:06:49.167 -03:00 [INF] Application is shutting down...
+2024-03-14 16:07:23.571 -03:00 [INF] Now listening on: http://localhost:5155
+2024-03-14 16:07:23.585 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-03-14 16:07:23.586 -03:00 [INF] Hosting environment: Development
+2024-03-14 16:07:23.586 -03:00 [INF] Content root path: D:\meusRepos\MeusExemplos\7. Quartz\WebAPI
+2024-03-14 16:07:56.043 -03:00 [INF] Application is shutting down...
+2024-03-14 16:09:25.774 -03:00 [INF] Now listening on: http://localhost:5155
+2024-03-14 16:09:25.794 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-03-14 16:09:25.795 -03:00 [INF] Hosting environment: Development
+2024-03-14 16:09:25.796 -03:00 [INF] Content root path: D:\meusRepos\MeusExemplos\7. Quartz\WebAPI
+2024-03-14 16:09:29.804 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5155/test - null null
+2024-03-14 16:09:29.818 -03:00 [ERR] An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: Unable to resolve service for type 'Swashbuckle.AspNetCore.Swagger.ISwaggerProvider' while attempting to Invoke middleware 'Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware'.
+   at lambda_method1(Closure, Object, HttpContext, IServiceProvider)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2024-03-14 16:09:29.827 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5155/test - 500 null text/plain; charset=utf-8 22.8301ms
+2024-03-14 16:09:45.538 -03:00 [INF] Application is shutting down...
+2024-03-14 16:10:18.710 -03:00 [INF] Now listening on: http://localhost:5155
+2024-03-14 16:10:18.731 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-03-14 16:10:18.732 -03:00 [INF] Hosting environment: Development
+2024-03-14 16:10:18.732 -03:00 [INF] Content root path: D:\meusRepos\MeusExemplos\7. Quartz\WebAPI
+2024-03-14 16:10:22.351 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5155/test - null null
+2024-03-14 16:10:22.364 -03:00 [WRN] Failed to determine the https port for redirect.
+2024-03-14 16:10:22.365 -03:00 [INF] Executing endpoint 'WebAPI.src.Controller.TestController.GetOk (WebAPI)'
+2024-03-14 16:10:22.373 -03:00 [INF] Route matched with {action = "GetOk", controller = "Test"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetOk() on controller WebAPI.src.Controller.TestController (WebAPI).
+2024-03-14 16:10:22.378 -03:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2024-03-14 16:10:22.382 -03:00 [INF] Executed action WebAPI.src.Controller.TestController.GetOk (WebAPI) in 5.7635ms
+2024-03-14 16:10:22.384 -03:00 [INF] Executed endpoint 'WebAPI.src.Controller.TestController.GetOk (WebAPI)'
+2024-03-14 16:10:22.386 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5155/test - 200 null text/plain; charset=utf-8 36.1331ms
+2024-03-14 16:10:31.686 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5155/test - null null
+2024-03-14 16:10:31.688 -03:00 [INF] Executing endpoint 'WebAPI.src.Controller.TestController.GetOk (WebAPI)'
+2024-03-14 16:10:31.689 -03:00 [INF] Route matched with {action = "GetOk", controller = "Test"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetOk() on controller WebAPI.src.Controller.TestController (WebAPI).
+2024-03-14 16:10:31.690 -03:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2024-03-14 16:10:31.691 -03:00 [INF] Executed action WebAPI.src.Controller.TestController.GetOk (WebAPI) in 1.1804ms
+2024-03-14 16:10:31.692 -03:00 [INF] Executed endpoint 'WebAPI.src.Controller.TestController.GetOk (WebAPI)'
+2024-03-14 16:10:31.693 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5155/test - 200 null text/plain; charset=utf-8 7.1667ms
+2024-03-14 16:10:34.362 -03:00 [INF] Application is shutting down...
+2024-03-14 16:10:51.597 -03:00 [INF] Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2024-03-14 16:10:51.617 -03:00 [INF] Quartz Scheduler created
+2024-03-14 16:10:51.618 -03:00 [INF] JobFactory set to: Quartz.Simpl.MicrosoftDependencyInjectionJobFactory
+2024-03-14 16:10:51.618 -03:00 [INF] RAMJobStore initialized.
+2024-03-14 16:10:51.619 -03:00 [INF] Quartz Scheduler 3.8.1.0 - 'QuartzScheduler' with instanceId 'NON_CLUSTERED' initialized
+2024-03-14 16:10:51.620 -03:00 [INF] Using thread pool 'Quartz.Simpl.DefaultThreadPool', size: 10
+2024-03-14 16:10:51.621 -03:00 [INF] Using job store 'Quartz.Simpl.RAMJobStore', supports persistence: False, clustered: False
+2024-03-14 16:10:51.629 -03:00 [INF] Adding 2 jobs, 2 triggers.
+2024-03-14 16:10:51.631 -03:00 [INF] Adding job: DEFAULT.SendMail
+2024-03-14 16:10:51.638 -03:00 [INF] Adding job: DEFAULT.CheckStuff
+2024-03-14 16:10:51.660 -03:00 [INF] Now listening on: http://localhost:5155
+2024-03-14 16:10:51.661 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-03-14 16:10:51.662 -03:00 [INF] Hosting environment: Development
+2024-03-14 16:10:51.663 -03:00 [INF] Content root path: D:\meusRepos\MeusExemplos\7. Quartz\WebAPI
+2024-03-14 16:10:51.663 -03:00 [INF] Scheduler QuartzScheduler_$_NON_CLUSTERED started.
+2024-03-14 16:10:51.674 -03:00 [WRN] Checking stuff
+2024-03-14 16:10:54.004 -03:00 [WRN] Checking stuff
+2024-03-14 16:10:55.008 -03:00 [INF] Email sended
+2024-03-14 16:10:56.397 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5155/test - null null
+2024-03-14 16:10:56.411 -03:00 [WRN] Failed to determine the https port for redirect.
+2024-03-14 16:10:56.413 -03:00 [INF] Executing endpoint 'WebAPI.src.Controller.TestController.GetOk (WebAPI)'
+2024-03-14 16:10:56.418 -03:00 [INF] Route matched with {action = "GetOk", controller = "Test"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetOk() on controller WebAPI.src.Controller.TestController (WebAPI).
+2024-03-14 16:10:56.422 -03:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2024-03-14 16:10:56.426 -03:00 [INF] Executed action WebAPI.src.Controller.TestController.GetOk (WebAPI) in 4.4507ms
+2024-03-14 16:10:56.428 -03:00 [INF] Executed endpoint 'WebAPI.src.Controller.TestController.GetOk (WebAPI)'
+2024-03-14 16:10:56.429 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5155/test - 200 null text/plain; charset=utf-8 33.4015ms
+2024-03-14 16:10:57.000 -03:00 [WRN] Checking stuff
+2024-03-14 16:10:57.372 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5155/test - null null
+2024-03-14 16:10:57.374 -03:00 [INF] Executing endpoint 'WebAPI.src.Controller.TestController.GetOk (WebAPI)'
+2024-03-14 16:10:57.375 -03:00 [INF] Route matched with {action = "GetOk", controller = "Test"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetOk() on controller WebAPI.src.Controller.TestController (WebAPI).
+2024-03-14 16:10:57.377 -03:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2024-03-14 16:10:57.378 -03:00 [INF] Executed action WebAPI.src.Controller.TestController.GetOk (WebAPI) in 1.5059ms
+2024-03-14 16:10:57.379 -03:00 [INF] Executed endpoint 'WebAPI.src.Controller.TestController.GetOk (WebAPI)'
+2024-03-14 16:10:57.380 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5155/test - 200 null text/plain; charset=utf-8 8.2077ms
+2024-03-14 16:10:58.049 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5155/test - null null
+2024-03-14 16:10:58.051 -03:00 [INF] Executing endpoint 'WebAPI.src.Controller.TestController.GetOk (WebAPI)'
+2024-03-14 16:10:58.052 -03:00 [INF] Route matched with {action = "GetOk", controller = "Test"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetOk() on controller WebAPI.src.Controller.TestController (WebAPI).
+2024-03-14 16:10:58.053 -03:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2024-03-14 16:10:58.054 -03:00 [INF] Executed action WebAPI.src.Controller.TestController.GetOk (WebAPI) in 0.9139ms
+2024-03-14 16:10:58.055 -03:00 [INF] Executed endpoint 'WebAPI.src.Controller.TestController.GetOk (WebAPI)'
+2024-03-14 16:10:58.056 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5155/test - 200 null text/plain; charset=utf-8 6.8891ms
+2024-03-14 16:10:58.624 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5155/test - null null
+2024-03-14 16:10:58.625 -03:00 [INF] Executing endpoint 'WebAPI.src.Controller.TestController.GetOk (WebAPI)'
+2024-03-14 16:10:58.626 -03:00 [INF] Route matched with {action = "GetOk", controller = "Test"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetOk() on controller WebAPI.src.Controller.TestController (WebAPI).
+2024-03-14 16:10:58.627 -03:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2024-03-14 16:10:58.628 -03:00 [INF] Executed action WebAPI.src.Controller.TestController.GetOk (WebAPI) in 0.7813ms
+2024-03-14 16:10:58.629 -03:00 [INF] Executed endpoint 'WebAPI.src.Controller.TestController.GetOk (WebAPI)'
+2024-03-14 16:10:58.629 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5155/test - 200 null text/plain; charset=utf-8 5.7855ms
+2024-03-14 16:11:00.006 -03:00 [WRN] Checking stuff
+2024-03-14 16:11:00.006 -03:00 [INF] Email sended
+2024-03-14 16:11:03.013 -03:00 [WRN] Checking stuff
+2024-03-14 16:11:05.008 -03:00 [INF] Email sended
+2024-03-14 16:11:06.010 -03:00 [WRN] Checking stuff
+2024-03-14 16:11:09.003 -03:00 [WRN] Checking stuff
+2024-03-14 16:11:10.003 -03:00 [INF] Email sended
+2024-03-14 16:11:12.000 -03:00 [WRN] Checking stuff
+2024-03-14 16:11:15.004 -03:00 [WRN] Checking stuff
+2024-03-14 16:11:15.005 -03:00 [INF] Email sended
+2024-03-14 16:11:18.000 -03:00 [WRN] Checking stuff
+2024-03-14 16:11:20.000 -03:00 [INF] Email sended
+2024-03-14 16:11:21.003 -03:00 [WRN] Checking stuff
+2024-03-14 16:11:23.734 -03:00 [INF] Application is shutting down...
+2024-03-14 16:11:23.739 -03:00 [INF] Scheduler QuartzScheduler_$_NON_CLUSTERED shutting down.
+2024-03-14 16:11:23.741 -03:00 [INF] Scheduler QuartzScheduler_$_NON_CLUSTERED paused.
+2024-03-14 16:11:23.743 -03:00 [INF] Scheduler QuartzScheduler_$_NON_CLUSTERED Shutdown complete.
+2024-03-14 16:19:50.053 -03:00 [INF] Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2024-03-14 16:19:50.072 -03:00 [INF] Quartz Scheduler created
+2024-03-14 16:19:50.072 -03:00 [INF] JobFactory set to: Quartz.Simpl.MicrosoftDependencyInjectionJobFactory
+2024-03-14 16:19:50.073 -03:00 [INF] RAMJobStore initialized.
+2024-03-14 16:19:50.074 -03:00 [INF] Quartz Scheduler 3.8.1.0 - 'QuartzScheduler' with instanceId 'NON_CLUSTERED' initialized
+2024-03-14 16:19:50.074 -03:00 [INF] Using thread pool 'Quartz.Simpl.DefaultThreadPool', size: 10
+2024-03-14 16:19:50.075 -03:00 [INF] Using job store 'Quartz.Simpl.RAMJobStore', supports persistence: False, clustered: False
+2024-03-14 16:19:50.082 -03:00 [INF] Adding 2 jobs, 2 triggers.
+2024-03-14 16:19:50.084 -03:00 [INF] Adding job: DEFAULT.SendMail
+2024-03-14 16:19:50.092 -03:00 [INF] Adding job: DEFAULT.CheckStuff
+2024-03-14 16:19:50.110 -03:00 [INF] Now listening on: http://localhost:5155
+2024-03-14 16:19:50.112 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-03-14 16:19:50.112 -03:00 [INF] Hosting environment: Development
+2024-03-14 16:19:50.113 -03:00 [INF] Content root path: D:\meusRepos\MeusExemplos\7. Quartz\WebAPI
+2024-03-14 16:19:50.113 -03:00 [INF] Scheduler QuartzScheduler_$_NON_CLUSTERED started.
+2024-03-14 16:19:50.124 -03:00 [INF] Email sended
+2024-03-14 16:19:51.002 -03:00 [WRN] Checking stuff
+2024-03-14 16:19:54.014 -03:00 [WRN] Checking stuff
+2024-03-14 16:19:55.013 -03:00 [INF] Email sended
+2024-03-14 16:19:57.011 -03:00 [WRN] Checking stuff
+2024-03-14 16:20:00.006 -03:00 [INF] Email sended
+2024-03-14 16:20:05.004 -03:00 [INF] Email sended
+2024-03-14 16:20:10.005 -03:00 [INF] Email sended
+2024-03-14 16:20:15.011 -03:00 [INF] Email sended
+2024-03-14 16:20:20.000 -03:00 [INF] Email sended
+2024-03-14 16:20:25.008 -03:00 [INF] Email sended
+2024-03-14 16:20:30.009 -03:00 [WRN] Checking stuff
+2024-03-14 16:20:30.009 -03:00 [INF] Email sended
+2024-03-14 16:20:33.000 -03:00 [WRN] Checking stuff
+2024-03-14 16:20:35.010 -03:00 [INF] Email sended
+2024-03-14 16:20:36.009 -03:00 [WRN] Checking stuff
+2024-03-14 16:20:39.008 -03:00 [WRN] Checking stuff
+2024-03-14 16:20:40.009 -03:00 [INF] Email sended
+2024-03-14 16:20:42.014 -03:00 [WRN] Checking stuff
+2024-03-14 16:20:44.503 -03:00 [INF] Application is shutting down...
+2024-03-14 16:20:44.508 -03:00 [INF] Scheduler QuartzScheduler_$_NON_CLUSTERED shutting down.
+2024-03-14 16:20:44.509 -03:00 [INF] Scheduler QuartzScheduler_$_NON_CLUSTERED paused.
+2024-03-14 16:20:44.512 -03:00 [INF] Scheduler QuartzScheduler_$_NON_CLUSTERED Shutdown complete.
