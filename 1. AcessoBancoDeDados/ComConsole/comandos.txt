@@ -29,5 +29,5 @@ FirebirdSql.Data.FirebirdClient
 --não rolou, tem q instalar na maquina mesmo
 
 --postgres
-docker run -d --name db_postgres -e POSTGRES_USER=root -e POSTGRES_PASSWORD=ale123 -e POSTGRES_DB=teste_dapper_postgres -p 5432:5432 postgres
+docker run -d --name db_postgres -e POSTGRES_USER=root -e POSTGRES_PASSWORD=ale123 -e POSTGRES_DB=teste_dapper_postgres -p 5432:5432 --restart always postgres
 //o comando já cria a database

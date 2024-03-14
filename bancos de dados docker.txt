@@ -1,0 +1,6 @@
+--postgres
+docker run -d --name postgreOrkletti -e POSTGRES_USER=root -e POSTGRES_PASSWORD=orkletti@852ad -e POSTGRES_DB=orklett -p 5432:5432 --restart always postgres
+//o comando já cria a database
+
+--mysql
+docker run -d --name db_mysql -e MYSQL_ROOT_PASSWORD=ale123 -e MYSQL_DATABASE=teste_dapper_mysql -p 3306:3306 mysql
