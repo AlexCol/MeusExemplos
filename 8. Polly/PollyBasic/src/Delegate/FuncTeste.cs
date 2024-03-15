@@ -7,19 +7,22 @@ namespace PollyBasic.src.Delegate;
 
 public static class FuncTeste {
   public static void Func() {
-    try {
-      for (int tries = 0; tries < 2; tries++) {
-        int.TryParse(DateTime.Now.ToString("ffff"), out int div);
-        div = 0;
-        Console.WriteLine($"A divisão é: {1 / (div % 2)}");
-      }
-      Console.WriteLine("Chegou ao fim com sucesso");
-    } catch {
-      throw;
+    for (int tries = 0; tries < 2; tries++) {
+      int.TryParse(DateTime.Now.ToString("ffff"), out int div);
+      div = 2;
+      Console.WriteLine($"A divisão é: {1 / (div % 2)}");
     }
+    Console.WriteLine("Chegou ao fim com sucesso");
   }
 
   public static void FallbackFunc() {
     Console.WriteLine("Fallback activated");
+  }
+
+  public static void TesteValor(int i) {
+    if (i == 0) {
+      throw new DivideByZeroException("Zero dá erro.");
+    }
+    Console.WriteLine("Deu certo");
   }
 }

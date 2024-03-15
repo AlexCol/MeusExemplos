@@ -24,10 +24,10 @@ public static class PollyRetry {
                 .Handle<DivideByZeroException>()
                 .WaitAndRetry([
                   TimeSpan.FromSeconds(1),
-                  TimeSpan.FromSeconds(2),
-                  TimeSpan.FromSeconds(3)
+                  TimeSpan.FromSeconds(5),
+                  TimeSpan.FromSeconds(10)
                 ], (exception, timeSpan, retryCount, context) => {
-                  Console.WriteLine($"Erro na tentativa {retryCount}: {exception.Message}");
+                  Console.WriteLine($"Erro na tentativa {retryCount}: {exception.Message} - {DateTime.Now.ToString("HH:mm:ss")}");
                 });
 
     try {
