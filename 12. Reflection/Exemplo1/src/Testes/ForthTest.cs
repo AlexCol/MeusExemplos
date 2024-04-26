@@ -72,13 +72,13 @@ public static class ForthTest {
         //! Filtra as classes que possuem um atributo personalizado específico
         var classesComAtributoCustomizado = classesDoSistema.Where(c => c.GetCustomAttribute<MyCustomClassAttribut>() != null);
         //! das que possuem o atributo, busca a que tem a descricao informada no comando
-        var classeSelecionada = classesComAtributoCustomizado.FirstOrDefault(c => c.GetCustomAttribute<MyCustomClassAttribut>().Descricao == comandoEmArray[0]);
+        var classeSelecionada = classesComAtributoCustomizado.FirstOrDefault(c => c.GetCustomAttribute<MyCustomClassAttribut>().Descricao.ToLower() == comandoEmArray[0].ToLower());
 
         if (classeSelecionada != null) {
             //! Filtra os metodos que possuem um atributo personalizado específico
             var metodosComAttCustomizado = classeSelecionada.GetMethods().Where(m => m.GetCustomAttribute<MyCustomMethodAttribut>() != null);
             //! das que possuem o atributo, busca a que tem a descricao informada no comando
-            var metodoEscolhido = metodosComAttCustomizado.FirstOrDefault(m => m.GetCustomAttribute<MyCustomMethodAttribut>().Descricao == comandoEmArray[1]);
+            var metodoEscolhido = metodosComAttCustomizado.FirstOrDefault(m => m.GetCustomAttribute<MyCustomMethodAttribut>().Descricao.ToLower() == comandoEmArray[1].ToLower());
 
             if (metodoEscolhido != null) {
                 var tiposDosParametros = metodoEscolhido.GetParameters().Select(p => p.ParameterType).ToArray();
