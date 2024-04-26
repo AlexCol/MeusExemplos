@@ -1,4 +1,5 @@
 using System.Reflection;
+using Exemplo1.MyAttributes.Custom;
 
 namespace Exemplo1.src.Testes;
 public static class SecondTest {
@@ -40,6 +41,9 @@ public static class SecondTest {
                     Console.WriteLine($"    Method {m}: {method.Name}");
                     foreach (var parameter in method.GetParameters()) {
                         Console.WriteLine($"        Parameter: {parameter.Name} - {parameter.ParameterType}");
+                    }
+                    foreach (var attribute in method.GetCustomAttributes<MyCustomMethodAttribut>()) {
+                        Console.WriteLine($"        CustomAttribute: {attribute.GetType().Name} - {attribute.Descricao}");
                     }
                 }
 
