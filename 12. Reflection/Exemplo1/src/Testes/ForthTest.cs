@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Exemplo1.MyAttributes.Custom;
+using Exemplo1.src.Util;
 
 namespace Exemplo1.src.Testes;
 
@@ -50,7 +51,7 @@ public static class ForthTest {
         if (opt == OpcoesMenu.PublicarLivro) {
             Console.WriteLine("Qual o nome do livro(não usar ';')?");
             var nomeLivro = Console.ReadLine().Replace(";", "");
-            comando = "book;publish;{\"Nome\":\"" + nomeLivro + "\"}";
+            comando = "book;publish;{\"nome\":\"" + nomeLivro + "\"}";
         }
 
         if (opt == OpcoesMenu.FalarMarcaPreferida) {
@@ -99,7 +100,7 @@ public static class ForthTest {
                         if (tiposDosParametros[i] == typeof(string)) {
                             listaParametros.Add(parametrosNoComando[i]);
                         } else {
-                            var parametro = JsonSerializer.Deserialize(parametrosNoComando[i], tiposDosParametros[i]);
+                            var parametro = JsonSerializer.Deserialize(parametrosNoComando[i], tiposDosParametros[i], MyJsonOptions.GetOptions());
                             listaParametros.Add(parametro);
                         }
                     }
