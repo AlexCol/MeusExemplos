@@ -1,0 +1,18 @@
+Para criar o projeto da DLL
+-> dotnet new classlib
+
+
+pra adicionar manualmente a dll criada
+ou se coloca apontando a origem dela (de modo que se for recompilada, já é automaticamente atualizada)
+->
+<ItemGroup>
+<Reference Include="_63_CriandoDLL">
+    <HintPath>../../06-DLLs/_63_CriandoDLL/bin/Debug/net8.0/_63_CriandoDLL.dll</HintPath>
+</Reference>
+</ItemGroup>
+
+ou (se colcoar a dll numa pasta do proprio projeto), mas se atualizar a dll, precisa ser recopiada
+  <ItemGroup>
+    <!-- Outras referências do seu projeto -->
+    <Reference Include="libs/NomeDaDll.dll" />
+  </ItemGroup>
