@@ -1,0 +1,1 @@
+dotnet sln AulasCSharp2.sln add  02-Basicos/02-Basicos.csproj
