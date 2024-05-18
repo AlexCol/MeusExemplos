@@ -1,0 +1,46 @@
+2024-05-17 20:00:59.504 -03:00 [INF] Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2024-05-17 20:00:59.523 -03:00 [INF] Quartz Scheduler created
+2024-05-17 20:00:59.524 -03:00 [INF] JobFactory set to: Quartz.Simpl.MicrosoftDependencyInjectionJobFactory
+2024-05-17 20:00:59.524 -03:00 [INF] RAMJobStore initialized.
+2024-05-17 20:00:59.525 -03:00 [INF] Quartz Scheduler 3.8.1.0 - 'QuartzScheduler' with instanceId 'NON_CLUSTERED' initialized
+2024-05-17 20:00:59.525 -03:00 [INF] Using thread pool 'Quartz.Simpl.DefaultThreadPool', size: 10
+2024-05-17 20:00:59.526 -03:00 [INF] Using job store 'Quartz.Simpl.RAMJobStore', supports persistence: False, clustered: False
+2024-05-17 20:00:59.532 -03:00 [INF] Adding 2 jobs, 2 triggers.
+2024-05-17 20:00:59.534 -03:00 [INF] Adding job: DEFAULT.SendMail
+2024-05-17 20:00:59.541 -03:00 [INF] Adding job: DEFAULT.CheckStuff
+2024-05-17 20:00:59.570 -03:00 [INF] Now listening on: http://localhost:5155
+2024-05-17 20:00:59.571 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-05-17 20:00:59.572 -03:00 [INF] Hosting environment: Development
+2024-05-17 20:00:59.572 -03:00 [INF] Content root path: D:\meusRepos\MeusExemplos\7. Quartz\WebAPI
+2024-05-17 20:00:59.573 -03:00 [INF] Scheduler QuartzScheduler_$_NON_CLUSTERED started.
+2024-05-17 20:01:00.024 -03:00 [INF] Email sended
+2024-05-17 20:01:05.008 -03:00 [INF] Email sended
+2024-05-17 20:01:10.003 -03:00 [INF] Email sended
+2024-05-17 20:01:15.000 -03:00 [INF] Email sended
+2024-05-17 20:01:20.000 -03:00 [INF] Email sended
+2024-05-17 20:01:25.009 -03:00 [INF] Email sended
+2024-05-17 20:01:30.007 -03:00 [WRN] Checking stuff
+2024-05-17 20:01:30.007 -03:00 [INF] Email sended
+2024-05-17 20:01:33.003 -03:00 [WRN] Checking stuff
+2024-05-17 20:01:35.010 -03:00 [INF] Email sended
+2024-05-17 20:01:36.010 -03:00 [WRN] Checking stuff
+2024-05-17 20:01:39.002 -03:00 [WRN] Checking stuff
+2024-05-17 20:01:40.009 -03:00 [INF] Email sended
+2024-05-17 20:01:42.003 -03:00 [WRN] Checking stuff
+2024-05-17 20:01:45.005 -03:00 [WRN] Checking stuff
+2024-05-17 20:01:45.006 -03:00 [INF] Email sended
+2024-05-17 20:01:48.004 -03:00 [WRN] Checking stuff
+2024-05-17 20:01:50.002 -03:00 [INF] Email sended
+2024-05-17 20:01:51.014 -03:00 [WRN] Checking stuff
+2024-05-17 20:01:54.012 -03:00 [WRN] Checking stuff
+2024-05-17 20:01:55.004 -03:00 [INF] Email sended
+2024-05-17 20:01:57.013 -03:00 [WRN] Checking stuff
+2024-05-17 20:02:00.012 -03:00 [INF] Email sended
+2024-05-17 20:02:05.002 -03:00 [INF] Email sended
+2024-05-17 20:02:10.006 -03:00 [INF] Email sended
+2024-05-17 20:02:15.009 -03:00 [INF] Email sended
+2024-05-17 20:02:20.005 -03:00 [INF] Email sended
+2024-05-17 20:02:22.970 -03:00 [INF] Application is shutting down...
+2024-05-17 20:02:22.977 -03:00 [INF] Scheduler QuartzScheduler_$_NON_CLUSTERED shutting down.
+2024-05-17 20:02:22.978 -03:00 [INF] Scheduler QuartzScheduler_$_NON_CLUSTERED paused.
+2024-05-17 20:02:22.981 -03:00 [INF] Scheduler QuartzScheduler_$_NON_CLUSTERED Shutdown complete.
