@@ -1,3 +1,4 @@
 ﻿using EnviaEmail.src.Testes;
 
-TestaEmailService.Run();
+//TestaEmailService.Run();
+TestaEmailService2.Run();
