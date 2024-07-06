@@ -4,3 +4,5 @@ docker run -d --name postgreOrkletti -e POSTGRES_USER=root -e POSTGRES_PASSWORD=
 
 --mysql
 docker run -d --name db_mysql -e MYSQL_ROOT_PASSWORD=ale123 -e MYSQL_DATABASE=teste_dapper_mysql -p 3306:3306 mysql
+
+docker run -d --name db_mysql -e MYSQL_ROOT_PASSWORD=ale123 -e MYSQL_DATABASE=node_mysql -e MYSQL_PASSWORD=ale123 -p 3306:3306 mysql:8.0 --default-authentication-plugin=mysql_native_password
