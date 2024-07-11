@@ -1,4 +1,5 @@
 using Quartz;
+using Quartz.Impl.Matchers;
 using WebApiCustomJobs.src.Model;
 
 namespace WebApiCustomJobs.src.Services;
@@ -6,6 +7,7 @@ namespace WebApiCustomJobs.src.Services;
 public interface IMyScheduler {
   Task<string> StartJob(JobRequest jobRequest);
   Task<string> StopJob(string jobName);
+  Task<List<string>> GetRunningJobs();
 }
 
 public class MyScheduler : IMyScheduler {
@@ -39,5 +41,18 @@ public class MyScheduler : IMyScheduler {
     var scheduler = await _schedulerFactory.GetScheduler();
     var deleted = await scheduler.DeleteJob(new JobKey(jobName));
     return deleted ? $"Job stopped for email: {jobName}" : $"Job not founded!";
+  }
+
+  public async Task<List<string>> GetRunningJobs() {
+    var scheduler = await _schedulerFactory.GetScheduler();
+    var list = new List<string>();
+
+    var jobKeys = await scheduler.GetJobKeys(GroupMatcher<JobKey>.AnyGroup());
+    foreach (var key in jobKeys) {
+      var job = await scheduler.GetJobDetail(key);
+      list.Add(job.Key.Name);
+    }
+
+    return list;
   }
 }

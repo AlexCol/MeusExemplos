@@ -39,6 +39,11 @@ public class EmailController : ControllerBase {
 
   [HttpPost("running")]
   public IActionResult ListRunningJobs() {
-    return Ok(_runningJobs);
+    return Ok(_runningJobs); //obter os jobs da lista criada (que precisa forçar o stop e star a dar manutenção)
+  }
+
+  [HttpPost("running2")]
+  public async Task<IActionResult> ListRunningJobs2() {
+    return Ok(await _scheduler.GetRunningJobs()); //obter os jobs do proprio scheduler
   }
 }

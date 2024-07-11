@@ -1,0 +1,259 @@
+2024-07-11 12:49:33.193 -03:00 [INF] Default Quartz.NET properties loaded from embedded resource file
+2024-07-11 12:49:33.255 -03:00 [INF] Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2024-07-11 12:49:33.257 -03:00 [INF] Quartz Scheduler created
+2024-07-11 12:49:33.258 -03:00 [INF] RAMJobStore initialized.
+2024-07-11 12:49:33.260 -03:00 [INF] Quartz Scheduler 3.9.0.0 - 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED' initialized
+2024-07-11 12:49:33.261 -03:00 [INF] Using thread pool 'Quartz.Simpl.DefaultThreadPool', size: 10
+2024-07-11 12:49:33.262 -03:00 [INF] Using job store 'Quartz.Simpl.RAMJobStore', supports persistence: False, clustered: False
+2024-07-11 12:49:33.286 -03:00 [INF] Now listening on: http://localhost:5263
+2024-07-11 12:49:33.289 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-07-11 12:49:33.290 -03:00 [INF] Hosting environment: Development
+2024-07-11 12:49:33.291 -03:00 [INF] Content root path: C:\Alexandre\C#\MeusExemplos\7. Quartz\WebApiCustomJobs
+2024-07-11 12:49:33.292 -03:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2024-07-11 12:51:18.572 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5263/email/start - application/json 63
+2024-07-11 12:51:18.587 -03:00 [WRN] Failed to determine the https port for redirect.
+2024-07-11 12:51:18.590 -03:00 [INF] Executing endpoint 'WebApiCustomJobs.src.Controllers.EmailController.StartJob (WebApiCustomJobs)'
+2024-07-11 12:51:18.602 -03:00 [INF] Route matched with {action = "StartJob", controller = "Email"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] StartJob(WebApiCustomJobs.src.Model.JobRequest) on controller WebApiCustomJobs.src.Controllers.EmailController (WebApiCustomJobs).
+2024-07-11 12:51:18.630 -03:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2024-07-11 12:51:18.633 -03:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2024-07-11 12:51:18.637 -03:00 [INF] Executed action WebApiCustomJobs.src.Controllers.EmailController.StartJob (WebApiCustomJobs) in 30.7066ms
+2024-07-11 12:51:18.641 -03:00 [INF] Executed endpoint 'WebApiCustomJobs.src.Controllers.EmailController.StartJob (WebApiCustomJobs)'
+2024-07-11 12:51:18.643 -03:00 [ERR] Email enviado para eu_axil@yahoo.com.br. Sendo enviado a cada 5 segundos.
+2024-07-11 12:51:18.644 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5263/email/start - 200 null text/plain; charset=utf-8 72.5589ms
+2024-07-11 12:51:23.637 -03:00 [ERR] Email enviado para eu_axil@yahoo.com.br. Sendo enviado a cada 5 segundos.
+2024-07-11 12:51:28.638 -03:00 [ERR] Email enviado para eu_axil@yahoo.com.br. Sendo enviado a cada 5 segundos.
+2024-07-11 12:51:31.783 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5263/email/start - application/json 64
+2024-07-11 12:51:31.786 -03:00 [INF] Executing endpoint 'WebApiCustomJobs.src.Controllers.EmailController.StartJob (WebApiCustomJobs)'
+2024-07-11 12:51:31.787 -03:00 [INF] Route matched with {action = "StartJob", controller = "Email"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] StartJob(WebApiCustomJobs.src.Model.JobRequest) on controller WebApiCustomJobs.src.Controllers.EmailController (WebApiCustomJobs).
+2024-07-11 12:51:31.791 -03:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2024-07-11 12:51:31.792 -03:00 [ERR] Email enviado para eu_axil2@yahoo.com.br. Sendo enviado a cada 3 segundos.
+2024-07-11 12:51:31.794 -03:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2024-07-11 12:51:31.796 -03:00 [INF] Executed action WebApiCustomJobs.src.Controllers.EmailController.StartJob (WebApiCustomJobs) in 6.2149ms
+2024-07-11 12:51:31.798 -03:00 [INF] Executed endpoint 'WebApiCustomJobs.src.Controllers.EmailController.StartJob (WebApiCustomJobs)'
+2024-07-11 12:51:31.799 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5263/email/start - 200 null text/plain; charset=utf-8 16.6722ms
+2024-07-11 12:51:33.641 -03:00 [ERR] Email enviado para eu_axil@yahoo.com.br. Sendo enviado a cada 5 segundos.
+2024-07-11 12:51:34.791 -03:00 [ERR] Email enviado para eu_axil2@yahoo.com.br. Sendo enviado a cada 3 segundos.
+2024-07-11 12:51:37.794 -03:00 [ERR] Email enviado para eu_axil2@yahoo.com.br. Sendo enviado a cada 3 segundos.
+2024-07-11 12:51:38.634 -03:00 [ERR] Email enviado para eu_axil@yahoo.com.br. Sendo enviado a cada 5 segundos.
+2024-07-11 12:51:40.796 -03:00 [ERR] Email enviado para eu_axil2@yahoo.com.br. Sendo enviado a cada 3 segundos.
+2024-07-11 12:51:43.630 -03:00 [ERR] Email enviado para eu_axil@yahoo.com.br. Sendo enviado a cada 5 segundos.
+2024-07-11 12:51:43.803 -03:00 [ERR] Email enviado para eu_axil2@yahoo.com.br. Sendo enviado a cada 3 segundos.
+2024-07-11 12:51:46.804 -03:00 [ERR] Email enviado para eu_axil2@yahoo.com.br. Sendo enviado a cada 3 segundos.
+2024-07-11 12:51:48.631 -03:00 [ERR] Email enviado para eu_axil@yahoo.com.br. Sendo enviado a cada 5 segundos.
+2024-07-11 12:51:49.805 -03:00 [ERR] Email enviado para eu_axil2@yahoo.com.br. Sendo enviado a cada 3 segundos.
+2024-07-11 12:51:52.803 -03:00 [ERR] Email enviado para eu_axil2@yahoo.com.br. Sendo enviado a cada 3 segundos.
+2024-07-11 12:51:53.627 -03:00 [ERR] Email enviado para eu_axil@yahoo.com.br. Sendo enviado a cada 5 segundos.
+2024-07-11 12:51:55.191 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5263/email/running - application/json 64
+2024-07-11 12:51:55.194 -03:00 [INF] Executing endpoint 'WebApiCustomJobs.src.Controllers.EmailController.ListRunningJobs (WebApiCustomJobs)'
+2024-07-11 12:51:55.195 -03:00 [INF] Route matched with {action = "ListRunningJobs", controller = "Email"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult ListRunningJobs() on controller WebApiCustomJobs.src.Controllers.EmailController (WebApiCustomJobs).
+2024-07-11 12:51:55.197 -03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2024-07-11 12:51:55.203 -03:00 [INF] Executed action WebApiCustomJobs.src.Controllers.EmailController.ListRunningJobs (WebApiCustomJobs) in 6.5443ms
+2024-07-11 12:51:55.205 -03:00 [INF] Executed endpoint 'WebApiCustomJobs.src.Controllers.EmailController.ListRunningJobs (WebApiCustomJobs)'
+2024-07-11 12:51:55.208 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5263/email/running - 200 null application/json; charset=utf-8 17.0984ms
+2024-07-11 12:51:55.793 -03:00 [ERR] Email enviado para eu_axil2@yahoo.com.br. Sendo enviado a cada 3 segundos.
+2024-07-11 12:51:58.631 -03:00 [ERR] Email enviado para eu_axil@yahoo.com.br. Sendo enviado a cada 5 segundos.
+2024-07-11 12:51:58.804 -03:00 [ERR] Email enviado para eu_axil2@yahoo.com.br. Sendo enviado a cada 3 segundos.
+2024-07-11 12:51:59.628 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5263/email/running2 - application/json 64
+2024-07-11 12:51:59.629 -03:00 [INF] Executing endpoint 'WebApiCustomJobs.src.Controllers.EmailController.ListRunningJobs2 (WebApiCustomJobs)'
+2024-07-11 12:51:59.631 -03:00 [INF] Route matched with {action = "ListRunningJobs2", controller = "Email"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult ListRunningJobs2() on controller WebApiCustomJobs.src.Controllers.EmailController (WebApiCustomJobs).
+2024-07-11 12:51:59.635 -03:00 [INF] Executing OkObjectResult, writing value of type 'System.Threading.Tasks.Task`1[[System.Collections.Generic.List`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2024-07-11 12:51:59.651 -03:00 [INF] Executed action WebApiCustomJobs.src.Controllers.EmailController.ListRunningJobs2 (WebApiCustomJobs) in 18.3815ms
+2024-07-11 12:51:59.652 -03:00 [INF] Executed endpoint 'WebApiCustomJobs.src.Controllers.EmailController.ListRunningJobs2 (WebApiCustomJobs)'
+2024-07-11 12:51:59.653 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5263/email/running2 - 200 null application/json; charset=utf-8 24.9064ms
+2024-07-11 12:52:01.797 -03:00 [ERR] Email enviado para eu_axil2@yahoo.com.br. Sendo enviado a cada 3 segundos.
+2024-07-11 12:52:03.627 -03:00 [ERR] Email enviado para eu_axil@yahoo.com.br. Sendo enviado a cada 5 segundos.
+2024-07-11 12:52:04.800 -03:00 [ERR] Email enviado para eu_axil2@yahoo.com.br. Sendo enviado a cada 3 segundos.
+2024-07-11 12:52:07.803 -03:00 [ERR] Email enviado para eu_axil2@yahoo.com.br. Sendo enviado a cada 3 segundos.
+2024-07-11 12:52:08.642 -03:00 [ERR] Email enviado para eu_axil@yahoo.com.br. Sendo enviado a cada 5 segundos.
+2024-07-11 12:52:10.804 -03:00 [ERR] Email enviado para eu_axil2@yahoo.com.br. Sendo enviado a cada 3 segundos.
+2024-07-11 12:52:13.638 -03:00 [ERR] Email enviado para eu_axil@yahoo.com.br. Sendo enviado a cada 5 segundos.
+2024-07-11 12:52:13.792 -03:00 [ERR] Email enviado para eu_axil2@yahoo.com.br. Sendo enviado a cada 3 segundos.
+2024-07-11 12:52:16.794 -03:00 [ERR] Email enviado para eu_axil2@yahoo.com.br. Sendo enviado a cada 3 segundos.
+2024-07-11 12:52:18.630 -03:00 [ERR] Email enviado para eu_axil@yahoo.com.br. Sendo enviado a cada 5 segundos.
+2024-07-11 12:52:19.798 -03:00 [ERR] Email enviado para eu_axil2@yahoo.com.br. Sendo enviado a cada 3 segundos.
+2024-07-11 12:52:22.795 -03:00 [ERR] Email enviado para eu_axil2@yahoo.com.br. Sendo enviado a cada 3 segundos.
+2024-07-11 12:52:23.633 -03:00 [ERR] Email enviado para eu_axil@yahoo.com.br. Sendo enviado a cada 5 segundos.
+2024-07-11 12:52:25.793 -03:00 [ERR] Email enviado para eu_axil2@yahoo.com.br. Sendo enviado a cada 3 segundos.
+2024-07-11 12:52:27.625 -03:00 [INF] Application is shutting down...
+2024-07-11 12:52:27.635 -03:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED shutting down.
+2024-07-11 12:52:27.637 -03:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED paused.
+2024-07-11 12:52:27.640 -03:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED Shutdown complete.
+2024-07-11 12:52:35.943 -03:00 [INF] Default Quartz.NET properties loaded from embedded resource file
+2024-07-11 12:52:35.993 -03:00 [INF] Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2024-07-11 12:52:35.994 -03:00 [INF] Quartz Scheduler created
+2024-07-11 12:52:35.996 -03:00 [INF] RAMJobStore initialized.
+2024-07-11 12:52:35.997 -03:00 [INF] Quartz Scheduler 3.9.0.0 - 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED' initialized
+2024-07-11 12:52:35.998 -03:00 [INF] Using thread pool 'Quartz.Simpl.DefaultThreadPool', size: 10
+2024-07-11 12:52:35.998 -03:00 [INF] Using job store 'Quartz.Simpl.RAMJobStore', supports persistence: False, clustered: False
+2024-07-11 12:52:36.019 -03:00 [INF] Now listening on: http://localhost:5263
+2024-07-11 12:52:36.021 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-07-11 12:52:36.023 -03:00 [INF] Hosting environment: Development
+2024-07-11 12:52:36.024 -03:00 [INF] Content root path: C:\Alexandre\C#\MeusExemplos\7. Quartz\WebApiCustomJobs
+2024-07-11 12:52:36.025 -03:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2024-07-11 12:52:37.680 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5263/email/running2 - application/json 64
+2024-07-11 12:52:37.696 -03:00 [WRN] Failed to determine the https port for redirect.
+2024-07-11 12:52:37.698 -03:00 [INF] Executing endpoint 'WebApiCustomJobs.src.Controllers.EmailController.ListRunningJobs2 (WebApiCustomJobs)'
+2024-07-11 12:52:37.706 -03:00 [INF] Route matched with {action = "ListRunningJobs2", controller = "Email"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult ListRunningJobs2() on controller WebApiCustomJobs.src.Controllers.EmailController (WebApiCustomJobs).
+2024-07-11 12:52:37.714 -03:00 [INF] Executing OkObjectResult, writing value of type 'System.Threading.Tasks.Task`1[[System.Collections.Generic.List`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2024-07-11 12:52:37.744 -03:00 [INF] Executed action WebApiCustomJobs.src.Controllers.EmailController.ListRunningJobs2 (WebApiCustomJobs) in 33.0478ms
+2024-07-11 12:52:37.746 -03:00 [INF] Executed endpoint 'WebApiCustomJobs.src.Controllers.EmailController.ListRunningJobs2 (WebApiCustomJobs)'
+2024-07-11 12:52:37.748 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5263/email/running2 - 200 null application/json; charset=utf-8 68.8995ms
+2024-07-11 12:53:13.267 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5263/email/running2 - application/json 64
+2024-07-11 12:53:13.270 -03:00 [INF] Executing endpoint 'WebApiCustomJobs.src.Controllers.EmailController.ListRunningJobs2 (WebApiCustomJobs)'
+2024-07-11 12:53:13.271 -03:00 [INF] Route matched with {action = "ListRunningJobs2", controller = "Email"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult ListRunningJobs2() on controller WebApiCustomJobs.src.Controllers.EmailController (WebApiCustomJobs).
+2024-07-11 12:53:13.274 -03:00 [INF] Executing OkObjectResult, writing value of type 'System.Threading.Tasks.Task`1[[System.Collections.Generic.List`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2024-07-11 12:53:13.275 -03:00 [INF] Executed action WebApiCustomJobs.src.Controllers.EmailController.ListRunningJobs2 (WebApiCustomJobs) in 2.1494ms
+2024-07-11 12:53:13.276 -03:00 [INF] Executed endpoint 'WebApiCustomJobs.src.Controllers.EmailController.ListRunningJobs2 (WebApiCustomJobs)'
+2024-07-11 12:53:13.277 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5263/email/running2 - 200 null application/json; charset=utf-8 9.5216ms
+2024-07-11 12:53:17.117 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5263/email/running - application/json 64
+2024-07-11 12:53:17.119 -03:00 [INF] Executing endpoint 'WebApiCustomJobs.src.Controllers.EmailController.ListRunningJobs (WebApiCustomJobs)'
+2024-07-11 12:53:17.122 -03:00 [INF] Route matched with {action = "ListRunningJobs", controller = "Email"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult ListRunningJobs() on controller WebApiCustomJobs.src.Controllers.EmailController (WebApiCustomJobs).
+2024-07-11 12:53:17.125 -03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2024-07-11 12:53:17.127 -03:00 [INF] Executed action WebApiCustomJobs.src.Controllers.EmailController.ListRunningJobs (WebApiCustomJobs) in 2.347ms
+2024-07-11 12:53:17.127 -03:00 [INF] Executed endpoint 'WebApiCustomJobs.src.Controllers.EmailController.ListRunningJobs (WebApiCustomJobs)'
+2024-07-11 12:53:17.128 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5263/email/running - 200 null application/json; charset=utf-8 11.2689ms
+2024-07-11 12:53:20.112 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5263/email/running2 - application/json 64
+2024-07-11 12:53:20.115 -03:00 [INF] Executing endpoint 'WebApiCustomJobs.src.Controllers.EmailController.ListRunningJobs2 (WebApiCustomJobs)'
+2024-07-11 12:53:20.116 -03:00 [INF] Route matched with {action = "ListRunningJobs2", controller = "Email"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult ListRunningJobs2() on controller WebApiCustomJobs.src.Controllers.EmailController (WebApiCustomJobs).
+2024-07-11 12:53:20.117 -03:00 [INF] Executing OkObjectResult, writing value of type 'System.Threading.Tasks.Task`1[[System.Collections.Generic.List`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2024-07-11 12:53:20.119 -03:00 [INF] Executed action WebApiCustomJobs.src.Controllers.EmailController.ListRunningJobs2 (WebApiCustomJobs) in 1.5516ms
+2024-07-11 12:53:20.121 -03:00 [INF] Executed endpoint 'WebApiCustomJobs.src.Controllers.EmailController.ListRunningJobs2 (WebApiCustomJobs)'
+2024-07-11 12:53:20.123 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5263/email/running2 - 200 null application/json; charset=utf-8 10.2382ms
+2024-07-11 12:54:09.161 -03:00 [INF] Application is shutting down...
+2024-07-11 12:54:09.173 -03:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED shutting down.
+2024-07-11 12:54:09.175 -03:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED paused.
+2024-07-11 12:54:09.178 -03:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED Shutdown complete.
+2024-07-11 12:54:11.531 -03:00 [INF] Default Quartz.NET properties loaded from embedded resource file
+2024-07-11 12:54:11.574 -03:00 [INF] Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2024-07-11 12:54:11.576 -03:00 [INF] Quartz Scheduler created
+2024-07-11 12:54:11.577 -03:00 [INF] RAMJobStore initialized.
+2024-07-11 12:54:11.578 -03:00 [INF] Quartz Scheduler 3.9.0.0 - 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED' initialized
+2024-07-11 12:54:11.580 -03:00 [INF] Using thread pool 'Quartz.Simpl.DefaultThreadPool', size: 10
+2024-07-11 12:54:11.580 -03:00 [INF] Using job store 'Quartz.Simpl.RAMJobStore', supports persistence: False, clustered: False
+2024-07-11 12:54:11.602 -03:00 [INF] Now listening on: http://localhost:5263
+2024-07-11 12:54:11.605 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-07-11 12:54:11.606 -03:00 [INF] Hosting environment: Development
+2024-07-11 12:54:11.607 -03:00 [INF] Content root path: C:\Alexandre\C#\MeusExemplos\7. Quartz\WebApiCustomJobs
+2024-07-11 12:54:11.607 -03:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2024-07-11 12:54:14.149 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5263/email/running2 - application/json 64
+2024-07-11 12:54:14.165 -03:00 [WRN] Failed to determine the https port for redirect.
+2024-07-11 12:54:14.168 -03:00 [INF] Executing endpoint 'WebApiCustomJobs.src.Controllers.EmailController.ListRunningJobs2 (WebApiCustomJobs)'
+2024-07-11 12:54:14.178 -03:00 [INF] Route matched with {action = "ListRunningJobs2", controller = "Email"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ListRunningJobs2() on controller WebApiCustomJobs.src.Controllers.EmailController (WebApiCustomJobs).
+2024-07-11 12:54:14.185 -03:00 [INF] Executing OkObjectResult, writing value of type 'System.Threading.Tasks.Task`1[[System.Collections.Generic.List`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2024-07-11 12:54:14.216 -03:00 [INF] Executed action WebApiCustomJobs.src.Controllers.EmailController.ListRunningJobs2 (WebApiCustomJobs) in 34.1833ms
+2024-07-11 12:54:14.218 -03:00 [INF] Executed endpoint 'WebApiCustomJobs.src.Controllers.EmailController.ListRunningJobs2 (WebApiCustomJobs)'
+2024-07-11 12:54:14.220 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5263/email/running2 - 200 null application/json; charset=utf-8 72.2141ms
+2024-07-11 12:54:38.794 -03:00 [INF] Application is shutting down...
+2024-07-11 12:54:38.802 -03:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED shutting down.
+2024-07-11 12:54:38.803 -03:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED paused.
+2024-07-11 12:54:38.806 -03:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED Shutdown complete.
+2024-07-11 12:54:41.149 -03:00 [INF] Default Quartz.NET properties loaded from embedded resource file
+2024-07-11 12:54:41.192 -03:00 [INF] Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2024-07-11 12:54:41.193 -03:00 [INF] Quartz Scheduler created
+2024-07-11 12:54:41.194 -03:00 [INF] RAMJobStore initialized.
+2024-07-11 12:54:41.195 -03:00 [INF] Quartz Scheduler 3.9.0.0 - 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED' initialized
+2024-07-11 12:54:41.195 -03:00 [INF] Using thread pool 'Quartz.Simpl.DefaultThreadPool', size: 10
+2024-07-11 12:54:41.196 -03:00 [INF] Using job store 'Quartz.Simpl.RAMJobStore', supports persistence: False, clustered: False
+2024-07-11 12:54:41.215 -03:00 [INF] Now listening on: http://localhost:5263
+2024-07-11 12:54:41.218 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-07-11 12:54:41.218 -03:00 [INF] Hosting environment: Development
+2024-07-11 12:54:41.219 -03:00 [INF] Content root path: C:\Alexandre\C#\MeusExemplos\7. Quartz\WebApiCustomJobs
+2024-07-11 12:54:41.220 -03:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2024-07-11 12:54:45.038 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5263/email/running2 - application/json 64
+2024-07-11 12:54:45.055 -03:00 [WRN] Failed to determine the https port for redirect.
+2024-07-11 12:54:45.058 -03:00 [INF] Executing endpoint 'WebApiCustomJobs.src.Controllers.EmailController.ListRunningJobs2 (WebApiCustomJobs)'
+2024-07-11 12:54:45.067 -03:00 [INF] Route matched with {action = "ListRunningJobs2", controller = "Email"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ListRunningJobs2() on controller WebApiCustomJobs.src.Controllers.EmailController (WebApiCustomJobs).
+2024-07-11 12:54:45.075 -03:00 [INF] Executing OkObjectResult, writing value of type 'System.Threading.Tasks.Task`1[[System.Collections.Generic.List`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2024-07-11 12:54:45.104 -03:00 [INF] Executed action WebApiCustomJobs.src.Controllers.EmailController.ListRunningJobs2 (WebApiCustomJobs) in 33.1714ms
+2024-07-11 12:54:45.108 -03:00 [INF] Executed endpoint 'WebApiCustomJobs.src.Controllers.EmailController.ListRunningJobs2 (WebApiCustomJobs)'
+2024-07-11 12:54:45.111 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5263/email/running2 - 200 null application/json; charset=utf-8 74.1621ms
+2024-07-11 12:54:47.424 -03:00 [INF] Application is shutting down...
+2024-07-11 12:54:47.434 -03:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED shutting down.
+2024-07-11 12:54:47.435 -03:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED paused.
+2024-07-11 12:54:47.439 -03:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED Shutdown complete.
+2024-07-11 12:55:05.749 -03:00 [INF] Default Quartz.NET properties loaded from embedded resource file
+2024-07-11 12:55:05.792 -03:00 [INF] Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2024-07-11 12:55:05.794 -03:00 [INF] Quartz Scheduler created
+2024-07-11 12:55:05.795 -03:00 [INF] RAMJobStore initialized.
+2024-07-11 12:55:05.795 -03:00 [INF] Quartz Scheduler 3.9.0.0 - 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED' initialized
+2024-07-11 12:55:05.796 -03:00 [INF] Using thread pool 'Quartz.Simpl.DefaultThreadPool', size: 10
+2024-07-11 12:55:05.797 -03:00 [INF] Using job store 'Quartz.Simpl.RAMJobStore', supports persistence: False, clustered: False
+2024-07-11 12:55:05.817 -03:00 [INF] Now listening on: http://localhost:5263
+2024-07-11 12:55:05.820 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-07-11 12:55:05.821 -03:00 [INF] Hosting environment: Development
+2024-07-11 12:55:05.822 -03:00 [INF] Content root path: C:\Alexandre\C#\MeusExemplos\7. Quartz\WebApiCustomJobs
+2024-07-11 12:55:05.822 -03:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2024-07-11 12:55:09.466 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5263/email/running2 - application/json 64
+2024-07-11 12:55:09.483 -03:00 [WRN] Failed to determine the https port for redirect.
+2024-07-11 12:55:09.485 -03:00 [INF] Executing endpoint 'WebApiCustomJobs.src.Controllers.EmailController.ListRunningJobs2 (WebApiCustomJobs)'
+2024-07-11 12:55:09.495 -03:00 [INF] Route matched with {action = "ListRunningJobs2", controller = "Email"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult ListRunningJobs2() on controller WebApiCustomJobs.src.Controllers.EmailController (WebApiCustomJobs).
+2024-07-11 12:55:09.501 -03:00 [INF] Executing OkObjectResult, writing value of type 'System.Threading.Tasks.Task`1[[System.Collections.Generic.List`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2024-07-11 12:55:09.531 -03:00 [INF] Executed action WebApiCustomJobs.src.Controllers.EmailController.ListRunningJobs2 (WebApiCustomJobs) in 32.0168ms
+2024-07-11 12:55:09.533 -03:00 [INF] Executed endpoint 'WebApiCustomJobs.src.Controllers.EmailController.ListRunningJobs2 (WebApiCustomJobs)'
+2024-07-11 12:55:09.535 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5263/email/running2 - 200 null application/json; charset=utf-8 69.6496ms
+2024-07-11 12:55:10.661 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5263/email/running2 - application/json 64
+2024-07-11 12:55:10.664 -03:00 [INF] Executing endpoint 'WebApiCustomJobs.src.Controllers.EmailController.ListRunningJobs2 (WebApiCustomJobs)'
+2024-07-11 12:55:10.665 -03:00 [INF] Route matched with {action = "ListRunningJobs2", controller = "Email"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult ListRunningJobs2() on controller WebApiCustomJobs.src.Controllers.EmailController (WebApiCustomJobs).
+2024-07-11 12:55:10.666 -03:00 [INF] Executing OkObjectResult, writing value of type 'System.Threading.Tasks.Task`1[[System.Collections.Generic.List`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2024-07-11 12:55:10.667 -03:00 [INF] Executed action WebApiCustomJobs.src.Controllers.EmailController.ListRunningJobs2 (WebApiCustomJobs) in 1.4298ms
+2024-07-11 12:55:10.668 -03:00 [INF] Executed endpoint 'WebApiCustomJobs.src.Controllers.EmailController.ListRunningJobs2 (WebApiCustomJobs)'
+2024-07-11 12:55:10.669 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5263/email/running2 - 200 null application/json; charset=utf-8 8.0764ms
+2024-07-11 12:55:12.121 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5263/email/running2 - application/json 64
+2024-07-11 12:55:12.123 -03:00 [INF] Executing endpoint 'WebApiCustomJobs.src.Controllers.EmailController.ListRunningJobs2 (WebApiCustomJobs)'
+2024-07-11 12:55:12.124 -03:00 [INF] Route matched with {action = "ListRunningJobs2", controller = "Email"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult ListRunningJobs2() on controller WebApiCustomJobs.src.Controllers.EmailController (WebApiCustomJobs).
+2024-07-11 12:55:12.126 -03:00 [INF] Executing OkObjectResult, writing value of type 'System.Threading.Tasks.Task`1[[System.Collections.Generic.List`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2024-07-11 12:55:12.127 -03:00 [INF] Executed action WebApiCustomJobs.src.Controllers.EmailController.ListRunningJobs2 (WebApiCustomJobs) in 1.5269ms
+2024-07-11 12:55:12.128 -03:00 [INF] Executed endpoint 'WebApiCustomJobs.src.Controllers.EmailController.ListRunningJobs2 (WebApiCustomJobs)'
+2024-07-11 12:55:12.129 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5263/email/running2 - 200 null application/json; charset=utf-8 7.7418ms
+2024-07-11 12:55:41.599 -03:00 [INF] Application is shutting down...
+2024-07-11 12:55:41.606 -03:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED shutting down.
+2024-07-11 12:55:41.608 -03:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED paused.
+2024-07-11 12:55:41.612 -03:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED Shutdown complete.
+2024-07-11 12:55:43.609 -03:00 [INF] Default Quartz.NET properties loaded from embedded resource file
+2024-07-11 12:55:43.653 -03:00 [INF] Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2024-07-11 12:55:43.653 -03:00 [INF] Quartz Scheduler created
+2024-07-11 12:55:43.654 -03:00 [INF] RAMJobStore initialized.
+2024-07-11 12:55:43.655 -03:00 [INF] Quartz Scheduler 3.9.0.0 - 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED' initialized
+2024-07-11 12:55:43.656 -03:00 [INF] Using thread pool 'Quartz.Simpl.DefaultThreadPool', size: 10
+2024-07-11 12:55:43.657 -03:00 [INF] Using job store 'Quartz.Simpl.RAMJobStore', supports persistence: False, clustered: False
+2024-07-11 12:55:43.679 -03:00 [INF] Now listening on: http://localhost:5263
+2024-07-11 12:55:43.682 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-07-11 12:55:43.683 -03:00 [INF] Hosting environment: Development
+2024-07-11 12:55:43.683 -03:00 [INF] Content root path: C:\Alexandre\C#\MeusExemplos\7. Quartz\WebApiCustomJobs
+2024-07-11 12:55:43.684 -03:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2024-07-11 12:55:47.858 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5263/email/running2 - application/json 64
+2024-07-11 12:55:47.876 -03:00 [WRN] Failed to determine the https port for redirect.
+2024-07-11 12:55:47.878 -03:00 [INF] Executing endpoint 'WebApiCustomJobs.src.Controllers.EmailController.ListRunningJobs2 (WebApiCustomJobs)'
+2024-07-11 12:55:47.887 -03:00 [INF] Route matched with {action = "ListRunningJobs2", controller = "Email"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ListRunningJobs2() on controller WebApiCustomJobs.src.Controllers.EmailController (WebApiCustomJobs).
+2024-07-11 12:55:47.895 -03:00 [INF] Executing OkObjectResult, writing value of type 'System.Threading.Tasks.Task`1[[System.Collections.Generic.List`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2024-07-11 12:55:47.924 -03:00 [INF] Executed action WebApiCustomJobs.src.Controllers.EmailController.ListRunningJobs2 (WebApiCustomJobs) in 30.8298ms
+2024-07-11 12:55:47.927 -03:00 [INF] Executed endpoint 'WebApiCustomJobs.src.Controllers.EmailController.ListRunningJobs2 (WebApiCustomJobs)'
+2024-07-11 12:55:47.928 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5263/email/running2 - 200 null application/json; charset=utf-8 70.7587ms
+2024-07-11 12:55:57.679 -03:00 [INF] Application is shutting down...
+2024-07-11 12:55:57.687 -03:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED shutting down.
+2024-07-11 12:55:57.688 -03:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED paused.
+2024-07-11 12:55:57.691 -03:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED Shutdown complete.
+2024-07-11 12:55:59.991 -03:00 [INF] Default Quartz.NET properties loaded from embedded resource file
+2024-07-11 12:56:00.036 -03:00 [INF] Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2024-07-11 12:56:00.037 -03:00 [INF] Quartz Scheduler created
+2024-07-11 12:56:00.038 -03:00 [INF] RAMJobStore initialized.
+2024-07-11 12:56:00.039 -03:00 [INF] Quartz Scheduler 3.9.0.0 - 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED' initialized
+2024-07-11 12:56:00.041 -03:00 [INF] Using thread pool 'Quartz.Simpl.DefaultThreadPool', size: 10
+2024-07-11 12:56:00.042 -03:00 [INF] Using job store 'Quartz.Simpl.RAMJobStore', supports persistence: False, clustered: False
+2024-07-11 12:56:00.061 -03:00 [INF] Now listening on: http://localhost:5263
+2024-07-11 12:56:00.064 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-07-11 12:56:00.065 -03:00 [INF] Hosting environment: Development
+2024-07-11 12:56:00.065 -03:00 [INF] Content root path: C:\Alexandre\C#\MeusExemplos\7. Quartz\WebApiCustomJobs
+2024-07-11 12:56:00.066 -03:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+2024-07-11 12:56:06.588 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5263/email/running2 - application/json 64
+2024-07-11 12:56:06.604 -03:00 [WRN] Failed to determine the https port for redirect.
+2024-07-11 12:56:06.608 -03:00 [INF] Executing endpoint 'WebApiCustomJobs.src.Controllers.EmailController.ListRunningJobs2 (WebApiCustomJobs)'
+2024-07-11 12:56:06.618 -03:00 [INF] Route matched with {action = "ListRunningJobs2", controller = "Email"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ListRunningJobs2() on controller WebApiCustomJobs.src.Controllers.EmailController (WebApiCustomJobs).
+2024-07-11 12:56:06.625 -03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2024-07-11 12:56:06.640 -03:00 [INF] Executed action WebApiCustomJobs.src.Controllers.EmailController.ListRunningJobs2 (WebApiCustomJobs) in 17.823ms
+2024-07-11 12:56:06.643 -03:00 [INF] Executed endpoint 'WebApiCustomJobs.src.Controllers.EmailController.ListRunningJobs2 (WebApiCustomJobs)'
+2024-07-11 12:56:06.644 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5263/email/running2 - 200 null application/json; charset=utf-8 57.2158ms
+2024-07-11 12:56:13.232 -03:00 [INF] Application is shutting down...
+2024-07-11 12:56:13.243 -03:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED shutting down.
+2024-07-11 12:56:13.244 -03:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED paused.
+2024-07-11 12:56:13.248 -03:00 [INF] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED Shutdown complete.
