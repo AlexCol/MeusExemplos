@@ -1,0 +1,3 @@
+site para testar consumo de api
+
+https://jsonplaceholder.typicode.com/
