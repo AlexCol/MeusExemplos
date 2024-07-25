@@ -21,6 +21,9 @@ public static class DependenciesBuilder {
 
     //!adicionando classes para injeções de dependencia
     builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+    builder.Services.AddScoped<IPersonRepository, PersonRepository>();
+
     builder.Services.AddScoped<IGenderService, GenderService>();
+    builder.Services.AddScoped<IPersonService, PersonService>();
   }
 }

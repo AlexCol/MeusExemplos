@@ -28,6 +28,17 @@ public class GenderController : ControllerBase {
     }
   }
 
+  [HttpGet("description/{description}")]
+  public async Task<IActionResult> FindByDescription(string description) {
+    try {
+      var list = await _service.FindByDescriptionCaseInsentive(description);
+      if (list.Count == 0) return NoContent();
+      return Ok(list);
+    } catch (Exception e) {
+      return BadRequest(new ErrorModel(e.Message));
+    }
+  }
+
   [HttpGet("list")]
   public async Task<IActionResult> ListAll() {
     try {

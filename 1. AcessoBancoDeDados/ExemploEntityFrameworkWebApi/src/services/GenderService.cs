@@ -6,7 +6,7 @@ namespace ExemploEntityFrameworkWebApi.src.services;
 public interface IGenderService {
   Task<Gender> FindById(int id);
   Task<List<Gender>> FindAll();
-  Task<List<Gender>> ListByDescriptionCaseInsentive(string description);
+  Task<List<Gender>> FindByDescriptionCaseInsentive(string description);
   Task<Gender> Create(Gender gender);
   Task<Gender> Update(Gender gender);
   Task DeleteById(int id);
@@ -27,7 +27,7 @@ public class GenderService : IGenderService {
     return await _repository.FindAll();
   }
 
-  public async Task<List<Gender>> ListByDescriptionCaseInsentive(string description) {
+  public async Task<List<Gender>> FindByDescriptionCaseInsentive(string description) {
     return (await _repository.FindAll()).Where(g => g.Description.ToLower().Contains(description.ToLower())).ToList();
   }
 

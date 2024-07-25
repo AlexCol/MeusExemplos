@@ -1,3 +1,4 @@
+using System.Reflection;
 using ExemploEntityFrameworkWebApi.src.models;
 using ExemploEntityFrameworkWebApi.src.models.contexts;
 using Microsoft.EntityFrameworkCore;
@@ -22,12 +23,16 @@ public class GenericRepository<T> : IGenericRepository<T> where T : _BaseEntityW
   }
 
   virtual public async Task<T> FindById(int id) {
-    T item = await dataset.SingleOrDefaultAsync(p => p.Id.Equals(id));
+    IQueryable<T> query = dataset;
+    query = IncludeRelatedEntities(query);
+    T item = await query.SingleOrDefaultAsync(p => p.Id.Equals(id));
     return item;
   }
 
   virtual public async Task<List<T>> FindAll() {
-    return await dataset.ToListAsync();
+    IQueryable<T> query = dataset;
+    query = IncludeRelatedEntities(query);
+    return await query.ToListAsync();
   }
 
   virtual public async Task<T> Create(T item) {
@@ -55,5 +60,23 @@ public class GenericRepository<T> : IGenericRepository<T> where T : _BaseEntityW
 
     dataset.Remove(user);
     await _context.SaveChangesAsync();
+  }
+
+  //????????????????? rotina para buscar automaticamente todas as classes vinculadas (ex, traz gender se buscar por uma person)
+  protected IQueryable<T> PrepareQuery() {
+    IQueryable<T> query = dataset;
+    return IncludeRelatedEntities(query); //ver QueribleExtension.cs para detalhes
+  }
+
+  private IQueryable<T> IncludeRelatedEntities(IQueryable<T> query) {
+    var navigationProperties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                                       .Where(p => typeof(IEnumerable<>).IsAssignableFrom(p.PropertyType) ||
+                                                   typeof(_BaseEntityWithId).IsAssignableFrom(p.PropertyType));
+
+    foreach (var property in navigationProperties) {
+      query = query.Include(property.Name);
+    }
+
+    return query;
   }
 }
