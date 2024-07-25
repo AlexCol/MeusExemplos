@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace ExemploEntityFrameworkWebApi.src.models;
 
 [Table("gender")]
-public class Gender : _BaseEntity {
+public class Gender : _BaseEntityWithId {
   [Column("ds_description")]
   public string Description { get; set; }
 }

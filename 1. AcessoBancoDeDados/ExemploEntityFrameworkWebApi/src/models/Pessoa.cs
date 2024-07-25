@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace ExemploEntityFrameworkWebApi.src.models;
 
 [Table("person")]
-public class Person : _BaseEntity {
+public class Person : _BaseEntityWithId {
   [Required]
   //[MaxLength(100)] //desncessário pois tem no context o tamanho padrão
   [Column("ds_first_name")]

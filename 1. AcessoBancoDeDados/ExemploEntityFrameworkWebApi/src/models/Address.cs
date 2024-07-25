@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace ExemploEntityFrameworkWebApi.src.models;
 
 [Table("address")]
-public class Address : _BaseEntity {
+public class Address : _BaseEntityWithId {
   [MaxLength(200)]
   [Required]
   [Column("ds_street")]
