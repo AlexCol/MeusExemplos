@@ -22,6 +22,7 @@
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Gender> Genders { get; set; }
 obs: criado um modelo base _BaseEntity para cadastrar informações comum entre multiplas tabelas, para não ser necessário sempre colocar
+obs2: criado outro modelo base para colocar id
 
 5.1. Opcional: colocado em SaveChanges no context uma configuração para atualizar autmaticamente o campo de ediçao quando a entidade for alterada ou inserida
 
@@ -32,3 +33,8 @@ obs: criado um modelo base _BaseEntity para cadastrar informações comum entre 
         dotnet ef migrations add 'firstMigration'
         dotnet ef database update
 
+7. Criado repositório para salvar as informações (repo generico para CRUD basico para itens com ID).
+
+8. Criado serviço para ser meio de campo das informações;
+
+9. Criado controladores para permitir chamarem as operações;
