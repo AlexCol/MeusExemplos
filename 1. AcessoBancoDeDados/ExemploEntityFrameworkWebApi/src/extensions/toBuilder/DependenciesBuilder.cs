@@ -13,6 +13,7 @@ public static class DependenciesBuilder {
 
     //!adicionando configurações
     builder.addSwagger();
+    builder.addMySqlConfig();
 
     //!adicionando classes para injeções de dependencia
 

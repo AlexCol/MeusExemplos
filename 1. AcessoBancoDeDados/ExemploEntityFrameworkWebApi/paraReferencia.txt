@@ -1,0 +1,34 @@
+1. Importar pacotes:
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.7" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="8.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.7" />
+
+2. Adicionar a appsettings.json a string de conexão ao banco.
+    "ConnectionStrings": {
+        "MySql": "server=localhost; database=cadastro; user=usuario; password=senha"
+  },  
+
+3. Criar classe DBContext (aqui feito MySqlContext.cs).
+
+4. Adicionar dependencia ao builder (feito em MySqlDependency.cs) e adicionado em DependenciesBuilder.cs.
+
+5. Criar classes de Modelo. Então a adicionar no contexto.
+    criado: Pessoa.cs e Address.cs e Gender.cs - para usar relações
+    então em contexo adicionado: 
+        public DbSet<Person> Persons { get; set; }
+        public DbSet<Address> Addresses { get; set; }
+        public DbSet<Gender> Genders { get; set; }
+obs: criado um modelo base _BaseEntity para cadastrar informações comum entre multiplas tabelas, para não ser necessário sempre colocar
+
+5.1. Opcional: colocado em SaveChanges no context uma configuração para atualizar autmaticamente o campo de ediçao quando a entidade for alterada ou inserida
+
+6. Instalar 
+    dotnet tool install -g dotnet-ef --version 7.0.2
+    dotnet tool update -g dotnet-ef
+    executar: 
+        dotnet ef migrations add 'firstMigration'
+        dotnet ef database update
+
