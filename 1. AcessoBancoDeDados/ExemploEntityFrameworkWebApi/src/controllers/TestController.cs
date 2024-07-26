@@ -11,6 +11,15 @@ namespace ExemploEntityFrameworkWebApi.src.controllers;
 public class TestController : ControllerBase {
   [HttpGet]
   public ActionResult Teste() {
-    return Ok("Funcionando!");
+    var descrcao = "MinhaDescricaoPequena";
+    descrcao = descrcao.Substring(0, Math.Min(descrcao.Length - 1, 100));
+
+    var longa = "MinhaDescricaoPequenaMinhaDescricaoPequenaMinhaDescricaoPequenaMinhaDescricaoPequenaMinhaDescricaoPequenaMinhaDescricaoPequena";
+    longa = longa.Length <= 100 ? longa : longa.Substring(0, 100);
+    //longa = longa.Substring(0, Math.Min(longa.Length - 1, 100));
+    return Ok(new {
+      descrcao,
+      longa
+    });
   }
 }

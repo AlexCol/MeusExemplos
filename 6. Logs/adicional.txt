@@ -1,0 +1,10 @@
+na pasta de teste do entity
+MeusExemplos\1. AcessoBancoDeDados\ExemploEntityFrameworkWebApi
+
+há novas funcionalidades testadas para o log
+-em: LogDependency.cs
+--mapear o SourceContext pra ver quem disparou o log
+--colocar niveis diferentes de log com base na source
+
+-em: LogMiddleware e adicionando em MiddlewareDependencies
+--Colocar um midlleware de logs no meio das requisições, para mapear quem é chamado

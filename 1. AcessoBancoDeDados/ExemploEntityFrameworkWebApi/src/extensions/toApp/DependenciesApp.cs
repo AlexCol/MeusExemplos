@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 namespace ExemploEntityFrameworkWebApi.src.extensions.toApp;
 
 public static class DependenciesApp {
-  public static void addDependencies(this WebApplication app) {
+  public static void AddDependencies(this WebApplication app) {
+    //!adicionando middlewares
+    app.AddMiddlewares();
+
     //!adicionando configurações padrão    
     //app.UseHttpsRedirection();
     app.MapControllers();

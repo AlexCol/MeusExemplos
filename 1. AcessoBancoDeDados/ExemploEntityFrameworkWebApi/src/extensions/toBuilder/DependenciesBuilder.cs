@@ -9,14 +9,14 @@ using ExemploEntityFrameworkWebApi.src.services;
 namespace ExemploEntityFrameworkWebApi.src.extensions.toBuilder;
 
 public static class DependenciesBuilder {
-  public static void addDependencies(this WebApplicationBuilder builder) {
+  public static void AddDependencies(this WebApplicationBuilder builder) {
     //!adicionando configurações padrão
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddControllers();
 
     //!adicionando configurações
-    builder.addSwagger();
-    builder.addMySqlConfig();
+    builder.AddSwagger();
+    builder.AddMySqlConfig();
     builder.AddLogConfig();
 
     //!adicionando classes para injeções de dependencia

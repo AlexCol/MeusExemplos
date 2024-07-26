@@ -70,11 +70,7 @@ public class GenderController : ControllerBase {
 
   [HttpDelete("delete/{id}")]
   public async Task<IActionResult> Delete(int id) {
-    try {
-      await _service.DeleteById(id);
-      return NoContent();
-    } catch (Exception e) {
-      return BadRequest(new ErrorModel(e));
-    }
+    await _service.DeleteById(id);
+    return NoContent();
   }
 }

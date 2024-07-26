@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace ExemploEntityFrameworkWebApi.src.extensions.toBuilder;
 
 public static class SwaggerDependencies {
-  public static void addSwagger(this WebApplicationBuilder builder) {
+  public static void AddSwagger(this WebApplicationBuilder builder) {
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
   }
