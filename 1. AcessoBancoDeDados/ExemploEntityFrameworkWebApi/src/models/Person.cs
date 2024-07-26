@@ -21,7 +21,7 @@ public class Person : _BaseEntityWithId {
   [Column("ds_document")]
   public string Document { get; set; }
 
-  [ForeignKey("id_gender")]
+  [ForeignKey("id_gender")] //para realizar deleção em cascata, somente no OnModelCreating no context
   public Gender Gender { get; set; }
 
   [Column("dt_birth", TypeName = "date")]

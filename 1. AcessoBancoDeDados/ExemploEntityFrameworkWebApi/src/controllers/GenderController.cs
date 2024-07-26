@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using ExemploEntityFrameworkWebApi.src.models;
 using ExemploEntityFrameworkWebApi.src.models.error;
 using ExemploEntityFrameworkWebApi.src.services;
@@ -24,7 +20,7 @@ public class GenderController : ControllerBase {
     try {
       return Ok(await _service.FindById(id)); //se nulo, retorno NoContent
     } catch (Exception e) {
-      return BadRequest(new ErrorModel(e.Message));
+      return BadRequest(new ErrorModel(e));
     }
   }
 
@@ -35,7 +31,7 @@ public class GenderController : ControllerBase {
       if (list.Count == 0) return NoContent();
       return Ok(list);
     } catch (Exception e) {
-      return BadRequest(new ErrorModel(e.Message));
+      return BadRequest(new ErrorModel(e));
     }
   }
 
@@ -46,7 +42,7 @@ public class GenderController : ControllerBase {
       if (list.Count == 0) return NoContent();
       return Ok(list);
     } catch (Exception e) {
-      return BadRequest(new ErrorModel(e.Message));
+      return BadRequest(new ErrorModel(e));
     }
   }
 
@@ -56,7 +52,7 @@ public class GenderController : ControllerBase {
       var gender = await _service.Create(newGender);
       return Created($"/{gender.Id}", null);
     } catch (Exception e) {
-      return BadRequest(new ErrorModel(e.Message));
+      return BadRequest(new ErrorModel(e));
     }
   }
 
@@ -68,7 +64,7 @@ public class GenderController : ControllerBase {
       Log.Error("here");
       return NoContent();
     } catch (Exception e) {
-      return BadRequest(new ErrorModel(e.Message));
+      return BadRequest(new ErrorModel(e));
     }
   }
 
@@ -78,7 +74,7 @@ public class GenderController : ControllerBase {
       await _service.DeleteById(id);
       return NoContent();
     } catch (Exception e) {
-      return BadRequest(new ErrorModel(e.Message));
+      return BadRequest(new ErrorModel(e));
     }
   }
 }

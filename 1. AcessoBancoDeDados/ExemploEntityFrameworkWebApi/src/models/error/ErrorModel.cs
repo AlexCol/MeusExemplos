@@ -17,6 +17,15 @@ public class ErrorModel {
     ErrorMessage.AddRange(errorMessages);
   }
 
+  public ErrorModel(Exception exception) {
+    ErrorMessage.Add(exception.Message);
+    var inner = exception.InnerException;
+    while (inner != null) {
+      ErrorMessage.Add(inner.Message);
+      inner = inner.InnerException;
+    }
+  }
+
   public List<string> ErrorMessage { get; set; } = new List<string>();
 
   public override string ToString() {

@@ -32,6 +32,24 @@ public class PersonController : ControllerBase {
     }
   }
 
+  [HttpGet("birth/{birth}")]
+  public async Task<IActionResult> FindByBirth(DateTime birth) {
+    try {
+      return Ok(await _service.FindByBirth(birth));
+    } catch (Exception e) {
+      return BadRequest(new ErrorModel(e.Message));
+    }
+  }
+
+  [HttpGet("gender/{genderId}")]
+  public async Task<IActionResult> FindByGender(int genderId) {
+    try {
+      return Ok(await _service.FindByGender(genderId));
+    } catch (Exception e) {
+      return BadRequest(new ErrorModel(e.Message));
+    }
+  }
+
   [HttpGet("list")]
   public async Task<IActionResult> FindAll() {
     try {
@@ -48,6 +66,17 @@ public class PersonController : ControllerBase {
     try {
       var person = await _service.Create(newPerson);
       return Created($"person/{person.Id}", null);
+    } catch (Exception e) {
+      return BadRequest(new ErrorModel(e.Message));
+    }
+  }
+
+  [HttpPut("update/{id}")]
+  public async Task<IActionResult> Update(int id, [FromBody] Person person) {
+    try {
+      person.Id = id;
+      await _service.Update(person);
+      return NoContent();
     } catch (Exception e) {
       return BadRequest(new ErrorModel(e.Message));
     }
