@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using ExemploEntityFrameworkWebApi.src.repository;
 using ExemploEntityFrameworkWebApi.src.repository.Generic;
 using ExemploEntityFrameworkWebApi.src.services;
@@ -25,5 +21,6 @@ public static class DependenciesBuilder {
 
     builder.Services.AddScoped<IGenderService, GenderService>();
     builder.Services.AddScoped<IPersonService, PersonService>();
+    builder.Services.AddScoped<IAddressService, AddressService>();
   }
 }

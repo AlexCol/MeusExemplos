@@ -14,30 +14,37 @@ public interface IGenericRepository<T> where T : _BaseEntityWithId {
   Task Delete(int id);
 }
 
-public class GenericRepository<T> : IGenericRepository<T> where T : _BaseEntityWithId {
+//! deixado como partcial, para deixar a parte mais complexa, com reflections, em outro arquivo
+//! deixando aqui a parte simples, para ficar mais facil de tentar entender o que ocorre
+//! na reflection
+public partial class GenericRepository<T> : IGenericRepository<T> where T : _BaseEntityWithId {
+
   private readonly MyDBContext _context;
+  private readonly IServiceProvider _service;
   private DbSet<T> dataset;
 
-  public GenericRepository(MyDBContext context) {
+  public GenericRepository(MyDBContext context, IServiceProvider service) {
     _context = context;
+    _service = service;
     dataset = context.Set<T>();
   }
 
-  virtual public async Task<T> FindById(int id) {
+  public virtual async Task<T> FindById(int id) {
     IQueryable<T> query = dataset;
     query = IncludeRelatedEntities(query);
     T registro = await query.SingleOrDefaultAsync(p => p.Id.Equals(id));
     return registro;
   }
 
-  virtual public async Task<List<T>> FindAll() {
+  public virtual async Task<List<T>> FindAll() {
     IQueryable<T> query = dataset;
     query = IncludeRelatedEntities(query);
     return await query.ToListAsync();
   }
 
-  virtual public async Task<T> Create(T registro) {
+  public virtual async Task<T> Create(T registro) {
     try {
+      await UpdateRelatedEntities(registro);
       await dataset.AddAsync(registro);
       await _context.SaveChangesAsync();
       return registro;
@@ -46,71 +53,23 @@ public class GenericRepository<T> : IGenericRepository<T> where T : _BaseEntityW
     }
   }
 
-  virtual public async Task<T> Update(T registro) {
+  public virtual async Task<T> Update(T registro) {
     T registroAtual = await FindById(registro.Id);
-    if (registroAtual == null) throw new InvalidDataException("Erro ao atualizar o registro. Não encontrado.");
+    var type = registro.GetType();
+    if (registroAtual == null) throw new InvalidDataException($"Repositório - Erro ao atualizar {type.Name}. Não encontrado com id {registro.Id}.");
 
     _context.Entry(registroAtual).CurrentValues.SetValues(registro);
-    UpdateRelatedEntities(registroAtual, registro);
+    await UpdateRelatedEntities(registroAtual, registro);
 
     await _context.SaveChangesAsync();
     return registro;
   }
 
-  virtual public async Task Delete(int id) {
+  public virtual async Task Delete(int id) {
     var registro = await FindById(id);
     if (registro == null) throw new Exception("Item não encontrado ou já excluído.");
 
     dataset.Remove(registro);
     await _context.SaveChangesAsync();
-  }
-
-  //????????????????
-  protected IQueryable<T> PrepareQuery() { //! processo para buscar automaticamente todas as classes vinculadas (ex, traz gender se buscar por uma person)
-    IQueryable<T> query = dataset;
-    return IncludeRelatedEntities(query); //ver QueribleExtension.cs para detalhes
-  }
-
-  private IQueryable<T> IncludeRelatedEntities(IQueryable<T> query) {
-    var navigationProperties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                                       .Where(p => typeof(IEnumerable<>).IsAssignableFrom(p.PropertyType) ||
-                                                   typeof(_BaseEntityWithId).IsAssignableFrom(p.PropertyType));
-
-    foreach (var property in navigationProperties) {
-      query = query.Include(property.Name);
-    }
-
-    return query;
-  }
-
-  //! _context.Entry(registroAtual).CurrentValues.SetValues(registro); atualiza apenas dados simples, e não suas relações
-  //! com isso aqui, após atualizar os dados simples, navega entre as propriedades, atualizando as informações
-  //! desde que a relação seja do tipo _BaseEntityWithId
-  private void UpdateRelatedEntities(T existingItem, T newItem) {
-    var navigationProperties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance)
-        .Where(p => typeof(IEnumerable<>).IsAssignableFrom(p.PropertyType) ||
-                    typeof(_BaseEntityWithId).IsAssignableFrom(p.PropertyType));
-
-    foreach (var property in navigationProperties) {
-      var newValue = property.GetValue(newItem);
-      var currentValue = property.GetValue(existingItem);
-
-      if (newValue != null && newValue is IEnumerable<object> newCollection) {
-        var currentCollection = currentValue as IEnumerable<object>;
-        if (currentCollection != null) {
-          foreach (var newItemInCollection in newCollection) {
-            if (!_context.Entry(newItemInCollection).IsKeySet) {
-              _context.Attach(newItemInCollection);
-            }
-          }
-        }
-      } else if (newValue != null) {
-        var newEntity = newValue as _BaseEntityWithId;
-        if (newEntity != null && !_context.Entry(newEntity).IsKeySet) {
-          _context.Attach(newEntity);
-        }
-        property.SetValue(existingItem, newValue);
-      }
-    }
   }
 }

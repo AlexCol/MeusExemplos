@@ -26,46 +26,29 @@ public class GenderController : ControllerBase {
 
   [HttpGet("description/{description}")]
   public async Task<IActionResult> FindByDescription(string description) {
-    try {
-      var list = await _service.FindByDescriptionCaseInsentive(description);
-      if (list.Count == 0) return NoContent();
-      return Ok(list);
-    } catch (Exception e) {
-      return BadRequest(new ErrorModel(e));
-    }
+    var list = await _service.FindByDescriptionCaseInsentive(description);
+    if (list.Count == 0) return NoContent();
+    return Ok(list);
   }
 
   [HttpGet("list")]
   public async Task<IActionResult> ListAll() {
-    try {
-      var list = await _service.FindAll();
-      if (list.Count == 0) return NoContent();
-      return Ok(list);
-    } catch (Exception e) {
-      return BadRequest(new ErrorModel(e));
-    }
+    var list = await _service.FindAll();
+    if (list.Count == 0) return NoContent();
+    return Ok(list);
   }
 
   [HttpPost("create")]
   public async Task<IActionResult> Create([FromBody] Gender newGender) {
-    try {
-      var gender = await _service.Create(newGender);
-      return Created($"/{gender.Id}", null);
-    } catch (Exception e) {
-      return BadRequest(new ErrorModel(e));
-    }
+    var gender = await _service.Create(newGender);
+    return Created($"/{gender.Id}", null);
   }
 
   [HttpPut("update/{id}")]
   public async Task<IActionResult> Update(int id, [FromBody] Gender gender) {
-    try {
-      gender.Id = id;
-      await _service.Update(gender);
-      Log.Error("here");
-      return NoContent();
-    } catch (Exception e) {
-      return BadRequest(new ErrorModel(e));
-    }
+    gender.Id = id;
+    await _service.Update(gender);
+    return NoContent();
   }
 
   [HttpDelete("delete/{id}")]

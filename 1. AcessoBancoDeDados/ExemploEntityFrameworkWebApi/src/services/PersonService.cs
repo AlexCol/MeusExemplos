@@ -1,6 +1,5 @@
 using ExemploEntityFrameworkWebApi.src.models;
-using ExemploEntityFrameworkWebApi.src.repository.Generic;
-using Serilog;
+using ExemploEntityFrameworkWebApi.src.repository;
 
 namespace ExemploEntityFrameworkWebApi.src.services;
 

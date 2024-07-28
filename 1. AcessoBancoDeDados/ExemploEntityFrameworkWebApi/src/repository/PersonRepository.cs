@@ -1,9 +1,10 @@
 using ExemploEntityFrameworkWebApi.src.models;
 using ExemploEntityFrameworkWebApi.src.models.contexts;
+using ExemploEntityFrameworkWebApi.src.repository.Generic;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
-namespace ExemploEntityFrameworkWebApi.src.repository.Generic;
+namespace ExemploEntityFrameworkWebApi.src.repository;
 
 public interface IPersonRepository : IGenericRepository<Person> {
   Task<List<Person>> FindByName(string name);
@@ -14,7 +15,7 @@ public interface IPersonRepository : IGenericRepository<Person> {
 public class PersonRepository : GenericRepository<Person>, IPersonRepository {
   public IServiceProvider _service;
 
-  public PersonRepository(MyDBContext context, IServiceProvider service) : base(context) {
+  public PersonRepository(MyDBContext context, IServiceProvider service) : base(context, service) {
     _service = service;
   }
   public async Task<List<Person>> FindByName(string name) {
@@ -33,20 +34,6 @@ public class PersonRepository : GenericRepository<Person>, IPersonRepository {
     var query = PrepareQuery();
     var persons = await query.Where(p => p.Gender.Id == genderId).ToListAsync();
     return persons;
-  }
-
-  public override async Task<Person> Create(Person newPerson) {
-    var gender = await _service.GetRequiredService<IGenericRepository<Gender>>().FindById(newPerson.Gender.Id);
-    if (gender == null) throw new Exception("Repositorio - Gênero inválido.");
-    newPerson.Gender = gender;
-    return await base.Create(newPerson);
-  }
-
-  public override async Task<Person> Update(Person person) {
-    var gender = await _service.GetRequiredService<IGenericRepository<Gender>>().FindById(person.Gender.Id);
-    if (gender == null) throw new Exception("Repositorio - Gênero inválido.");
-    person.Gender = gender;
-    return await base.Update(person);
   }
 }
 
