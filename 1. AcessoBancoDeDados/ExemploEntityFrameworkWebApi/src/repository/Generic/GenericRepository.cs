@@ -48,7 +48,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : _BaseEntityW
 
   virtual public async Task<T> Update(T registro) {
     T registroAtual = await FindById(registro.Id);
-    if (registroAtual == null) throw new InvalidDataException("Erro ao atualizar o registro.");
+    if (registroAtual == null) throw new InvalidDataException("Erro ao atualizar o registro. Não encontrado.");
 
     _context.Entry(registroAtual).CurrentValues.SetValues(registro);
     UpdateRelatedEntities(registroAtual, registro);

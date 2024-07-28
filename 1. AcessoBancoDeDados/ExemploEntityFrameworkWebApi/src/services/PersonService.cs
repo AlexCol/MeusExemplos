@@ -12,7 +12,7 @@ public interface IPersonService {
   Task<List<Person>> FindByGender(int genderId);
   Task<Person> Create(Person person);
   Task<Person> Update(Person person);
-  // Task DeleteById(int id);
+  Task DeleteById(int id);
 }
 
 public class PersonService : IPersonService {
@@ -52,4 +52,7 @@ public class PersonService : IPersonService {
     return await _repository.Update(person);
   }
 
+  public async Task DeleteById(int id) {
+    await _repository.Delete(id);
+  }
 }
