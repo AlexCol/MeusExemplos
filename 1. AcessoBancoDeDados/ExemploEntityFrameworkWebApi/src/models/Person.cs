@@ -2,19 +2,22 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace ExemploEntityFrameworkWebApi.src.models;
 
 [Table("person")]
 public class Person : _BaseEntityWithId {
-  [Required]
+  //https://learn.microsoft.com/en-us/ef/core/modeling/entity-properties?tabs=data-annotations%2Cwithout-nrt
+  [NotNull] //utilizar esse e não required, pois com isso consigo suprimir a obrigatoriedade de vir no json (ver DependenciesBuilder)
   //[MaxLength(100)] //desncessário pois tem no context o tamanho padrão
   [Column("ds_first_name")]
   public string First_Name { get; set; }
 
-  [Required]
+  [NotNull] //utilizar esse e não required, pois com isso consigo suprimir a obrigatoriedade de vir no json (ver DependenciesBuilder)
   [Column("ds_last_name")]
   public string Last_Name { get; set; }
 
@@ -26,6 +29,4 @@ public class Person : _BaseEntityWithId {
 
   [Column("dt_birth", TypeName = "date")]
   public DateTime DateOfBirth { get; set; }
-
-  public ICollection<Address> Addresses { get; set; }
 }

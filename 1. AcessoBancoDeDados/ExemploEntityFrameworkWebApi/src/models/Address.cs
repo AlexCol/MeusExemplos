@@ -5,6 +5,7 @@ namespace ExemploEntityFrameworkWebApi.src.models;
 
 [Table("address")]
 public class Address : _BaseEntityWithId {
+  //https://learn.microsoft.com/en-us/ef/core/modeling/entity-properties?tabs=data-annotations%2Cwithout-nrt
   [MaxLength(200)]
   [Required]
   [Column("ds_street")]

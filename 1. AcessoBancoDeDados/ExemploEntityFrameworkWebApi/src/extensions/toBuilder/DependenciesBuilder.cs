@@ -8,7 +8,10 @@ public static class DependenciesBuilder {
   public static void AddDependencies(this WebApplicationBuilder builder) {
     //!adicionando configurações padrão
     builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddControllers();
+    builder.Services.AddControllers(options => {
+      // Remove a validação automática do ModelState
+      options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true;
+    });
 
     //!adicionando configurações
     builder.AddSwagger();
@@ -18,6 +21,7 @@ public static class DependenciesBuilder {
     //!adicionando classes para injeções de dependencia
     builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
     builder.Services.AddScoped<IPersonRepository, PersonRepository>();
+    builder.Services.AddScoped<IAddressRepository, AddressRepository>();
 
     builder.Services.AddScoped<IGenderService, GenderService>();
     builder.Services.AddScoped<IPersonService, PersonService>();
