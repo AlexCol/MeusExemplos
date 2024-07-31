@@ -20,7 +20,7 @@ public class PersonRepository : GenericRepository<Person>, IPersonRepository {
   }
   public async Task<List<Person>> FindByName(string name) {
     var query = PrepareQuery();
-    var persons = await query.Where(p => p.First_Name.ToLower().Contains(name.ToLower())).ToListAsync();
+    var persons = await query.Where(p => p.FirstName.ToLower().Contains(name.ToLower())).ToListAsync();
     return persons;
   }
 

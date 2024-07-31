@@ -38,7 +38,10 @@ public class PersonService : IPersonService {
   }
 
   public async Task<List<Person>> FindByGender(int genderId) {
-    return await _repository.FindByGender(genderId);
+    var criteria = new Dictionary<string, object> {
+        { "Gender", new Gender { Id = genderId } }
+      };
+    return await _repository.FindByPropertiesAsync(criteria);
   }
 
   public async Task<Person> Create(Person person) {

@@ -35,6 +35,7 @@ obs2: criado outro modelo base para colocar id
 
 7. Criado repositório para salvar as informações (repo generico para CRUD basico para itens com ID).
 7.1. Criado processo com reflection para salvar referencias de outros objetos (como Gender ao salvar Person).
+7.2. Processo de reflection separado em arquivos separados, com parcial class, para deixar cada processo em um arquivo.
 
 8. Criado serviço para ser meio de campo das informações;
 

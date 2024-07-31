@@ -9,6 +9,8 @@ namespace ExemploEntityFrameworkWebApi.src.repository.Generic;
 public interface IGenericRepository<T> where T : _BaseEntityWithId {
   Task<T> FindById(int id);
   Task<List<T>> FindAll();
+  Task<List<T>> FindByPropertiesAsync(Dictionary<string, object> properties);
+  Task<List<T>> FindByPropertiesAsync(List<Tuple<string, object, object>> properties);
   Task<T> Create(T registro);
   Task<T> Update(T registro);
   Task Delete(int id);
@@ -21,31 +23,27 @@ public partial class GenericRepository<T> : IGenericRepository<T> where T : _Bas
 
   private readonly MyDBContext _context;
   private readonly IServiceProvider _service;
-  private DbSet<T> dataset;
+  private DbSet<T> _dataset;
 
   public GenericRepository(MyDBContext context, IServiceProvider service) {
     _context = context;
     _service = service;
-    dataset = context.Set<T>();
+    _dataset = context.Set<T>();
   }
 
   public virtual async Task<T> FindById(int id) {
-    IQueryable<T> query = dataset;
-    query = IncludeRelatedEntities(query);
-    T registro = await query.SingleOrDefaultAsync(p => p.Id.Equals(id));
-    return registro;
+    var query = PrepareQuery().SingleOrDefaultAsync(p => p.Id == id);
+    return await query;
   }
 
   public virtual async Task<List<T>> FindAll() {
-    IQueryable<T> query = dataset;
-    query = IncludeRelatedEntities(query);
-    return await query.ToListAsync();
+    return await PrepareQuery().ToListAsync();
   }
 
   public virtual async Task<T> Create(T registro) {
     try {
       await UpdateRelatedEntities(registro);
-      await dataset.AddAsync(registro);
+      await _dataset.AddAsync(registro);
       await _context.SaveChangesAsync();
       return registro;
     } catch (Exception e) {
@@ -55,8 +53,7 @@ public partial class GenericRepository<T> : IGenericRepository<T> where T : _Bas
 
   public virtual async Task<T> Update(T registro) {
     T registroAtual = await FindById(registro.Id);
-    var type = registro.GetType();
-    if (registroAtual == null) throw new InvalidDataException($"Repositório - Erro ao atualizar {type.Name}. Não encontrado com id {registro.Id}.");
+    if (registroAtual == null) throw new InvalidDataException($"Repositório - Erro ao atualizar {typeof(T).Name}. Não encontrado com id {registro.Id}.");
 
     _context.Entry(registroAtual).CurrentValues.SetValues(registro);
     await UpdateRelatedEntities(registroAtual, registro);
@@ -69,7 +66,7 @@ public partial class GenericRepository<T> : IGenericRepository<T> where T : _Bas
     var registro = await FindById(id);
     if (registro == null) throw new Exception("Item não encontrado ou já excluído.");
 
-    dataset.Remove(registro);
+    _dataset.Remove(registro);
     await _context.SaveChangesAsync();
   }
 }

@@ -15,11 +15,11 @@ public class Person : _BaseEntityWithId {
   [NotNull] //utilizar esse e não required, pois com isso consigo suprimir a obrigatoriedade de vir no json (ver DependenciesBuilder)
   //[MaxLength(100)] //desncessário pois tem no context o tamanho padrão
   [Column("ds_first_name")]
-  public string First_Name { get; set; }
+  public string FirstName { get; set; }
 
   [NotNull] //utilizar esse e não required, pois com isso consigo suprimir a obrigatoriedade de vir no json (ver DependenciesBuilder)
   [Column("ds_last_name")]
-  public string Last_Name { get; set; }
+  public string LastName { get; set; }
 
   [Column("ds_document")]
   public string Document { get; set; }
