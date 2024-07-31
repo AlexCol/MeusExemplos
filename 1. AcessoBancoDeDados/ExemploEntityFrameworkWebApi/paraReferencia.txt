@@ -43,3 +43,13 @@ obs2: criado outro modelo base para colocar id
 
 Extras:
 10. Criado middlewares para controle de excessão e logs (pasta middlewares);
+11. Modelo de busca com parametro generico. O json deve ser composto por:
+"NomeDaPropriedadeDaClasse": "Valor"
+ou se desejar busca 'between'
+"NomeDaPropriedadeDaClasse": ["Valor1", "Valor2"]
+
+Observações:
+-Gender feito com Service próprio, implementando suas buscas por ali, para ter de exemplo.
+-Person criado Repositório e Service próprios, mas só pra ter uma camada se desejar implementar algo muito especifico, são só usados os comandos de Service e Repo generic.
+-Addres usado somente Repo e Service genericos, mesmo no controller.
+

@@ -9,11 +9,11 @@ namespace ExemploEntityFrameworkWebApi.src.repository.Generic;
 public interface IGenericRepository<T> where T : _BaseEntityWithId {
   Task<T> FindById(int id);
   Task<List<T>> FindAll();
-  Task<List<T>> FindByPropertiesAsync(Dictionary<string, object> properties);
-  Task<List<T>> FindByPropertiesAsync(List<Tuple<string, object, object>> properties);
+  Task<List<T>> SeachByCriteria(Dictionary<string, object> properties);
+  Task<List<T>> SeachByCriteria(List<Tuple<string, object, object>> properties);
   Task<T> Create(T registro);
   Task<T> Update(T registro);
-  Task Delete(int id);
+  Task DeleteById(int id);
 }
 
 //! deixado como partcial, para deixar a parte mais complexa, com reflections, em outro arquivo
@@ -40,6 +40,14 @@ public partial class GenericRepository<T> : IGenericRepository<T> where T : _Bas
     return await PrepareQuery().ToListAsync();
   }
 
+  public async Task<List<T>> SeachByCriteria(Dictionary<string, object> properties) {
+    return await FindByPropertiesAsync(properties);
+  }
+
+  public async Task<List<T>> SeachByCriteria(List<Tuple<string, object, object>> properties) {
+    return await FindByPropertiesAsync(properties); //deixado aqui pra manter tudo que é da interce num arquivo só
+  }
+
   public virtual async Task<T> Create(T registro) {
     try {
       await UpdateRelatedEntities(registro);
@@ -62,7 +70,7 @@ public partial class GenericRepository<T> : IGenericRepository<T> where T : _Bas
     return registro;
   }
 
-  public virtual async Task Delete(int id) {
+  public virtual async Task DeleteById(int id) {
     var registro = await FindById(id);
     if (registro == null) throw new Exception("Item não encontrado ou já excluído.");
 

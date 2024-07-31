@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace ExemploEntityFrameworkWebApi.src.models;
 
@@ -7,27 +8,27 @@ namespace ExemploEntityFrameworkWebApi.src.models;
 public class Address : _BaseEntityWithId {
   //https://learn.microsoft.com/en-us/ef/core/modeling/entity-properties?tabs=data-annotations%2Cwithout-nrt
   [MaxLength(200)]
-  [Required]
+  [NotNull]
   [Column("ds_street")]
   public string Street { get; set; }
 
-  [Required]
+  [NotNull]
   [Column("ds_city")]
   public string City { get; set; }
 
-  [Required]
+  [NotNull]
   [Column("ds_state")]
   public string State { get; set; }
 
-  [Required]
+  [NotNull]
   [Column("ds_number")]
   public string Number { get; set; }
 
-  [Required]
+  [NotNull]
   [Column("ds_zip_code")]
   public string ZipCode { get; set; }
 
-  [Required]
+  [NotNull]
   [ForeignKey("id_person")]
   public Person Person { get; set; }
 }

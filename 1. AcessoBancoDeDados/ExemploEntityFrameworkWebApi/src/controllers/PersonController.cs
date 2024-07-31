@@ -1,6 +1,8 @@
+using System.Text.Json;
 using ExemploEntityFrameworkWebApi.src.models;
 using ExemploEntityFrameworkWebApi.src.models.error;
 using ExemploEntityFrameworkWebApi.src.services;
+using ExemploEntityFrameworkWebApi.src.util;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExemploEntityFrameworkWebApi.src.controllers;
@@ -24,17 +26,32 @@ public class PersonController : ControllerBase {
 
   [HttpGet("name/{name}")]
   public async Task<IActionResult> FindByName(string name) {
-    return Ok(await _service.FindByName(name));
+    var criteria = new Dictionary<string, object> {
+      {"FirstName", name}
+    };
+    return Ok(await _service.SeachByCriteria(criteria));
   }
 
   [HttpGet("birth/{birth}")]
   public async Task<IActionResult> FindByBirth(DateTime birth) {
-    return Ok(await _service.FindByBirth(birth));
+    var criteria = new Dictionary<string, object> {
+      {"DateOfBirth", birth}
+    };
+    return Ok(await _service.SeachByCriteria(criteria));
   }
 
   [HttpGet("gender/{genderId}")]
   public async Task<IActionResult> FindByGender(int genderId) {
-    return Ok(await _service.FindByGender(genderId));
+    var criteria = new Dictionary<string, object> {
+      {"Gender", new Gender {Id = genderId}}
+    };
+    return Ok(await _service.SeachByCriteria(criteria));
+  }
+
+  [HttpGet("search")]
+  public async Task<IActionResult> Search([FromBody] JsonElement searchParams) {
+    var criteria = CriteriaConverter.ConvertJsonElementToCriteria(searchParams);
+    return Ok(await _service.SeachByCriteria(criteria));
   }
 
   [HttpGet("list")]

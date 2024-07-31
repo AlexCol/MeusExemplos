@@ -41,6 +41,6 @@ public class GenderService : IGenderService {
   }
 
   public async Task DeleteById(int id) {
-    await _repository.Delete(id);
+    await _repository.DeleteById(id);
   }
 }

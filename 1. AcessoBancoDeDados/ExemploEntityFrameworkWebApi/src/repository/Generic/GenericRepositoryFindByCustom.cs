@@ -7,12 +7,12 @@ using Microsoft.EntityFrameworkCore;
 namespace ExemploEntityFrameworkWebApi.src.repository.Generic;
 
 public partial class GenericRepository<T> : IGenericRepository<T> where T : _BaseEntityWithId {
-  public async Task<List<T>> FindByPropertiesAsync(Dictionary<string, object> properties) {
+  private async Task<List<T>> FindByPropertiesAsync(Dictionary<string, object> properties) {
     var propertyTuples = properties.Select(p => Tuple.Create(p.Key, p.Value, (object)null)).ToList();
     return await FindByPropertiesAsync(propertyTuples);
   }
 
-  public async Task<List<T>> FindByPropertiesAsync(List<Tuple<string, object, object>> properties) {
+  private async Task<List<T>> FindByPropertiesAsync(List<Tuple<string, object, object>> properties) {
     IQueryable<T> query = PrepareQuery();
 
     foreach (var property in properties) {
@@ -51,7 +51,7 @@ public partial class GenericRepository<T> : IGenericRepository<T> where T : _Bas
     } else if (startValue is _BaseEntityWithId startEntity && endValue is _BaseEntityWithId endEntity) {
       return CreateBetweenEntityIdExpression(member, startEntity, endEntity);
     } else {
-      throw new Exception("GenericRepositoryFindByCustom - Informado dois valores que não são compativeis para buscar valores 'entre'.");
+      throw new Exception("GenericRepositoryFindByCustom - Informado dois valores que não são compativeis para buscar valores 'entre'. Deve ser data ou numero.");
     }
   }
 
