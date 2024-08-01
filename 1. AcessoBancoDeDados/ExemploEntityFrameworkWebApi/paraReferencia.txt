@@ -25,6 +25,7 @@ obs: criado um modelo base _BaseEntity para cadastrar informações comum entre 
 obs2: criado outro modelo base para colocar id
 
 5.1. Opcional: colocado em SaveChanges no context uma configuração para atualizar autmaticamente o campo de ediçao quando a entidade for alterada ou inserida
+5.2. Criada para testes de relação muitos para muitos as classes Student e Couses. Para nomear a tabela intermediaria, usado OnModelCreating no context.
 
 6. Instalar 
     dotnet tool install -g dotnet-ef --version 7.0.2
@@ -42,8 +43,8 @@ obs2: criado outro modelo base para colocar id
 9. Criado controladores para permitir chamarem as operações;
 
 Extras:
-10. Criado middlewares para controle de excessão e logs (pasta middlewares);
-11. Modelo de busca com parametro generico. O json deve ser composto por:
+20. Criado middlewares para controle de excessão e logs (pasta middlewares);
+21. Modelo de busca com parametro generico. O json deve ser composto por:
 "NomeDaPropriedadeDaClasse": "Valor"
 ou se desejar busca 'between'
 "NomeDaPropriedadeDaClasse": ["Valor1", "Valor2"]

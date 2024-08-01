@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Serilog;
 
 namespace ExemploEntityFrameworkWebApi.src.models.contexts;
 
@@ -7,6 +6,8 @@ public class MyDBContext : DbContext {
   public DbSet<Person> Persons { get; set; }
   public DbSet<Address> Addresses { get; set; }
   public DbSet<Gender> Genders { get; set; }
+  public DbSet<Student> Students { get; set; }
+  public DbSet<Course> Courses { get; set; }
 
   public MyDBContext(DbContextOptions<MyDBContext> options) : base(options) { }
 
@@ -14,6 +15,20 @@ public class MyDBContext : DbContext {
   protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder) {
     configurationBuilder.Properties<string>()
         .HaveMaxLength(100); //com isso digo que todos os campos do tipo string terão setados tamanho max de 100 se não for informado o contrário
+  }
+
+  protected override void OnModelCreating(ModelBuilder modelBuilder) {
+    modelBuilder.Entity<Course>() //para situações de muitos para muitos, a tabela intermediaria, se deseja renomear, tem q ser pelo OnModelCreating
+        .HasMany(c => c.Students)
+        .WithMany(s => s.Courses)
+        .UsingEntity(j => j.ToTable("student_course"));
+
+    /* //deixado como exemplo, mas indifirente se usar como está acima ou esse comentado
+    modelBuilder.Entity<Student>()
+      .HasMany(s => s.Courses)
+      .WithMany(c => c.Students)
+      .UsingEntity(j => j.ToTable("student_course"));
+    */
   }
 
   //! duas configuracoes abaixo para que as datas de alteração e criação sejam preenchidas ao salvar assincrono e sincrono
