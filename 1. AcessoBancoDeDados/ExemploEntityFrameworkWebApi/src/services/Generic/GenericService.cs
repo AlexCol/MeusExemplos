@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ExemploEntityFrameworkWebApi.src.models;
+using ExemploEntityFrameworkWebApi.src.models.search;
 using ExemploEntityFrameworkWebApi.src.repository.Generic;
 
 namespace ExemploEntityFrameworkWebApi.src.services.Generic;
@@ -10,8 +11,7 @@ namespace ExemploEntityFrameworkWebApi.src.services.Generic;
 public interface IGenericService<T> where T : _BaseEntityWithId {
   Task<T> FindById(int id);
   Task<List<T>> FindAll();
-  Task<List<T>> SeachByCriteria(Dictionary<string, object> properties);
-  Task<List<T>> SeachByCriteria(List<Tuple<string, object, object, bool>> properties);
+  Task<List<T>> SeachByCriteria(List<SearchCriteria> properties);
   Task<T> Create(T entity);
   Task<T> Update(T entity);
   Task DeleteById(int id);
@@ -32,11 +32,7 @@ public class GenericService<T> : IGenericService<T> where T : _BaseEntityWithId 
     return await _repository.FindAll();
   }
 
-  public async Task<List<T>> SeachByCriteria(Dictionary<string, object> properties) {
-    return await _repository.SeachByCriteria(properties);
-  }
-
-  public async Task<List<T>> SeachByCriteria(List<Tuple<string, object, object, bool>> properties) {
+  public async Task<List<T>> SeachByCriteria(List<SearchCriteria> properties) {
     return await _repository.SeachByCriteria(properties);
   }
 

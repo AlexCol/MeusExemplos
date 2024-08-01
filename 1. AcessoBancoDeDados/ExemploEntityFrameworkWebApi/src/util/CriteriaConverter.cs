@@ -1,15 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
+
 using System.Reflection;
 using System.Text.Json;
 using ExemploEntityFrameworkWebApi.src.models;
+using ExemploEntityFrameworkWebApi.src.models.search;
 
 namespace ExemploEntityFrameworkWebApi.src.util;
 
 public static class CriteriaConverter {
-  public static List<Tuple<string, object, object, bool>> ConvertJsonElementToCriteria(JsonElement json) {
-    var tuples = new List<Tuple<string, object, object, bool>>();
+  public static List<SearchCriteria> ConvertJsonElementToCriteria(JsonElement json) {
+    var criteriaList = new List<SearchCriteria>();
 
     foreach (var property in json.EnumerateObject()) {
       var key = property.Name;
@@ -17,16 +16,26 @@ public static class CriteriaConverter {
       var isNegated = key.StartsWith("!");
       if (isNegated) key = key.Substring(1); // Remove the '!' prefix
 
-      if (value.ValueKind == JsonValueKind.Array) {
-        ProcessArrayValue(key, value, tuples, isNegated);
+      if (value.ValueKind == JsonValueKind.Object && value.TryGetProperty("in", out JsonElement inElement)) {
+        ProcessInValue(key, inElement, criteriaList, isNegated);
+      } else if (value.ValueKind == JsonValueKind.Array) {
+        ProcessArrayValue(key, value, criteriaList, isNegated);
       } else {
-        tuples.Add(Tuple.Create(key, GetTypedItem(key, value), (object)null, isNegated));
+        criteriaList.Add(new SearchCriteria(key, GetTypedItem(key, value), null, isNegated, false));
       }
     }
-    return tuples;
+    return criteriaList;
   }
 
-  private static void ProcessArrayValue(string key, JsonElement value, List<Tuple<string, object, object, bool>> tuples, bool isNegated) {
+  private static void ProcessInValue(string key, JsonElement value, List<SearchCriteria> criteria, bool isNegated) {
+    var inValues = new List<object>();
+    foreach (var item in value.EnumerateArray()) {
+      inValues.Add(GetTypedItem(key, item));
+    }
+    criteria.Add(new SearchCriteria(key, inValues, null, isNegated, true));
+  }
+
+  private static void ProcessArrayValue(string key, JsonElement value, List<SearchCriteria> criteria, bool isNegated) {
     var arrayValues = new List<object>();
     foreach (var item in value.EnumerateArray()) {
       arrayValues.Add(GetTypedItem(key, item));
@@ -34,9 +43,9 @@ public static class CriteriaConverter {
 
     if (arrayValues.Count >= 2) {
       ValidateArrayValuesType(key, arrayValues);
-      tuples.Add(Tuple.Create(key, arrayValues[0], arrayValues[1], isNegated));
+      criteria.Add(new SearchCriteria(key, arrayValues[0], arrayValues[1], isNegated, false));
     } else if (arrayValues.Count == 1) {
-      tuples.Add(Tuple.Create(key, arrayValues[0], (object)null, isNegated));
+      criteria.Add(new SearchCriteria(key, arrayValues[0], null, isNegated, false));
     }
   }
 

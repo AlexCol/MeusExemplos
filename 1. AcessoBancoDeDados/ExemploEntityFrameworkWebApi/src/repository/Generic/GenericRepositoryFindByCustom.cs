@@ -1,22 +1,25 @@
-using System.Reflection;
+// GenericRepository.cs
 using System.Linq.Expressions;
 using ExemploEntityFrameworkWebApi.src.models;
-using ExemploEntityFrameworkWebApi.src.models.contexts;
 using Microsoft.EntityFrameworkCore;
+using ExemploEntityFrameworkWebApi.src.models.search;
 
 namespace ExemploEntityFrameworkWebApi.src.repository.Generic;
 
 public partial class GenericRepository<T> : IGenericRepository<T> where T : _BaseEntityWithId {
-  private async Task<List<T>> FindByPropertiesAsync(Dictionary<string, object> properties) {
-    var propertyTuples = properties.Select(p => Tuple.Create(p.Key, p.Value, (object)null, false)).ToList();
-    return await FindByPropertiesAsync(propertyTuples);
-  }
-
-  private async Task<List<T>> FindByPropertiesAsync(List<Tuple<string, object, object, bool>> properties) {
+  /*
+    ! O método FindByPropertiesAsync é usado realizar buscas usando uma lista de SearchCriteria.
+    ! Com ele é possível realizar buscas com base no nome da Propriedade da classe T.
+    ! Atualmente é comportado:
+    ! Busca direta: "FirstName": "ale";
+    ! Busca com valor Between (numeros, data e entidades): "Gender": [1, 2] ou "DateOfBirth": ["26-06-1978", "20-12-1979"]
+    ! Negação: Qualquer campo que tenha em seu nome iniciando com '!' será com Not. ex. "!LastName": "coletti" para não vir registros com LastName que tenham 'coletti';
+  */
+  private async Task<List<T>> FindByPropertiesAsync(List<SearchCriteria> criteriaList) {
     IQueryable<T> query = PrepareQuery();
 
-    foreach (var property in properties) {
-      var predicate = CreatePredicate(property);
+    foreach (var criteria in criteriaList) {
+      var predicate = CreatePredicate(criteria);
       if (predicate != null) {
         query = query.Where(predicate);
       }
@@ -25,26 +28,34 @@ public partial class GenericRepository<T> : IGenericRepository<T> where T : _Bas
     return await query.ToListAsync();
   }
 
-  private Expression<Func<T, bool>> CreatePredicate(Tuple<string, object, object, bool> property) {
+  private Expression<Func<T, bool>> CreatePredicate(SearchCriteria criteria) {
     var parameter = Expression.Parameter(typeof(T), "x");
-    var member = Expression.Property(parameter, property.Item1);
+    var member = Expression.Property(parameter, criteria.Key);
 
-    Expression body;
-    if (property.Item2 != null && property.Item3 != null) {
-      body = CreateBetweenExpression(member, property.Item2, property.Item3);
-    } else if (property.Item2 is string stringValue) {
+    Expression body = null;
+    if (criteria.IsIn) { // "in" operation
+      body = CreateInExpression(member, (List<object>)criteria.Value1);
+    } else if (criteria.Value1 != null && criteria.Value2 != null) {
+      body = CreateBetweenExpression(member, criteria.Value1, criteria.Value2);
+    } else if (criteria.Value1 is string stringValue) {
       body = CreateStringContainsExpression(member, stringValue);
-    } else if (property.Item2 is _BaseEntityWithId entityValue) {
+    } else if (criteria.Value1 is _BaseEntityWithId entityValue) {
       body = CreateEntityIdEqualsExpression(member, entityValue);
     } else {
-      body = CreateEqualsExpression(member, property.Item2);
+      body = CreateEqualsExpression(member, criteria.Value1);
     }
 
-    if (property.Item4) {
+    if (criteria.IsNegated) {
       body = Expression.Not(body);
     }
 
     return body != null ? Expression.Lambda<Func<T, bool>>(body, parameter) : null;
+  }
+
+  private Expression CreateInExpression(MemberExpression member, List<object> values) {
+    var expressions = values.Select(value => Expression.Equal(member, Expression.Constant(value)));
+    var combined = expressions.Aggregate(Expression.OrElse);
+    return combined;
   }
 
   private Expression CreateBetweenExpression(MemberExpression member, object startValue, object endValue) {
@@ -86,7 +97,7 @@ public partial class GenericRepository<T> : IGenericRepository<T> where T : _Bas
 
   private Expression CreateStringContainsExpression(MemberExpression member, string stringValue) {
     var toLowerMethod = typeof(string).GetMethod("ToLower", Type.EmptyTypes);
-    var containsMethod = typeof(string).GetMethod("Contains", [typeof(string)]);
+    var containsMethod = typeof(string).GetMethod("Contains", new[] { typeof(string) });
 
     var memberToLower = Expression.Call(member, toLowerMethod);
     var constantToLower = Expression.Constant(stringValue.ToLower());
