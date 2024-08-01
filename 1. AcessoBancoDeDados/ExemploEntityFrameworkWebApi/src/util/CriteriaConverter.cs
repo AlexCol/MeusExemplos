@@ -30,7 +30,11 @@ public static class CriteriaConverter {
   private static void ProcessInValue(string key, JsonElement value, List<SearchCriteria> criteria, bool isNegated) {
     var inValues = new List<object>();
     foreach (var item in value.EnumerateArray()) {
-      inValues.Add(GetTypedItem(key, item));
+      var newItem = GetTypedItem(key, item);
+      var firstItem = inValues.Count > 0 ? inValues[0] : newItem;
+      if (firstItem.GetType() != newItem.GetType())
+        throw new Exception($"CriteriaConverter - Para busca IN, devem ser usados dados do mesmo tipo. {firstItem.GetType().Name} e {newItem.GetType().Name} não compativeis. Chave {key}.");
+      inValues.Add(newItem);
     }
     criteria.Add(new SearchCriteria(key, inValues, null, isNegated, true));
   }
@@ -72,13 +76,14 @@ public static class CriteriaConverter {
   private static bool TryCreateBaseEntityWithId(string key, JsonElement item, out _BaseEntityWithId entity) {
     entity = null;
     var type = GetBaseEntityWithIdType(key);
+    if (type == null) return false;
 
-    if (type != null && item.TryGetInt32(out int idValue)) {
-      entity = (_BaseEntityWithId)Activator.CreateInstance(type);
-      entity.Id = idValue;
-      return true;
-    }
-    return false;
+    if (item.ValueKind == JsonValueKind.String || item.ValueKind == JsonValueKind.True || item.ValueKind == JsonValueKind.False || !item.TryGetInt32(out int idValue))
+      throw new Exception($"CriteriaConverter - Para filtrar Entidades, é preciso usar valores Inteiros. Chave {key}.");
+
+    entity = (_BaseEntityWithId)Activator.CreateInstance(type);
+    entity.Id = idValue;
+    return true;
   }
 
   private static object GetStringOrDateTime(JsonElement item) {
