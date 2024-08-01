@@ -23,4 +23,6 @@ public class Person : _BaseEntityWithId {
 
   [Column("dt_birth", TypeName = "date")]
   public DateTime DateOfBirth { get; set; }
+
+  public ICollection<Address> Address { get; set; }
 }

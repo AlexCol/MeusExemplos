@@ -11,16 +11,16 @@ namespace ExemploEntityFrameworkWebApi.src.controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class AddressController : ControllerBase {
-  private readonly IGenericService<Address> _service;
+public class CourseController : ControllerBase {
+  private readonly IGenericService<Course> _service;
 
-  public AddressController(IGenericService<Address> service) {
+  public CourseController(IGenericService<Course> service) {
     _service = service;
   }
 
   [HttpPost("create")]
-  public async Task<IActionResult> Create([FromBody] Address newAddress) {
-    await _service.Create(newAddress);
+  public async Task<IActionResult> Create([FromBody] Course newCourse) {
+    await _service.Create(newCourse);
     return Created();
   }
 }

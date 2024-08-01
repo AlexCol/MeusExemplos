@@ -13,6 +13,8 @@ public class Course : _BaseEntityWithId {
   [Column("sn_ativo")]
   public bool Ativo { get; set; } = true;
 
-  [ForeignKey("id_student")] //para nomeação da tabela intermediaria, somente pelo OnModelCreating
+  //para nomeação da tabela intermediaria, somente pelo OnModelCreating
+  //para a nomeação da colune, aqui representa como a outra vai ver essa, por isso pode ser confuso, mas preciso identificar que id_student é como student vai ser reconhecido na relação 
+  [ForeignKey("id_course")]
   public ICollection<Student> Students { get; set; }
 }

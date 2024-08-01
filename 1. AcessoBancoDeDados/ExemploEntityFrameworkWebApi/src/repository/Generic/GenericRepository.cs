@@ -11,6 +11,7 @@ public interface IGenericRepository<T> where T : _BaseEntityWithId {
   Task<T> FindById(int id);
   Task<List<T>> FindAll();
   Task<List<T>> SeachByCriteria(List<SearchCriteria> properties);
+  Task<List<T>> FindByIdListWithoutReferences(List<int> ids);
   Task<T> Create(T registro);
   Task<T> Update(T registro);
   Task DeleteById(int id);
@@ -42,6 +43,10 @@ public partial class GenericRepository<T> : IGenericRepository<T> where T : _Bas
 
   public async Task<List<T>> SeachByCriteria(List<SearchCriteria> properties) {
     return await FindByPropertiesAsync(properties); //deixado aqui pra manter tudo que é da interce num arquivo só
+  }
+
+  public async Task<List<T>> FindByIdListWithoutReferences(List<int> ids) {
+    return await _dataset.Where(e => ids.Contains(e.Id)).ToListAsync();
   }
 
   public virtual async Task<T> Create(T registro) {

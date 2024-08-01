@@ -18,17 +18,15 @@ public class MyDBContext : DbContext {
   }
 
   protected override void OnModelCreating(ModelBuilder modelBuilder) {
-    modelBuilder.Entity<Course>() //para situações de muitos para muitos, a tabela intermediaria, se deseja renomear, tem q ser pelo OnModelCreating
-        .HasMany(c => c.Students)
-        .WithMany(s => s.Courses)
-        .UsingEntity(j => j.ToTable("student_course"));
+    // modelBuilder.Entity<Course>() //para situações de muitos para muitos, a tabela intermediaria, se deseja renomear, tem q ser pelo OnModelCreating
+    //     .HasMany(c => c.Students)
+    //     .WithMany(s => s.Courses)
+    //     .UsingEntity(j => j.ToTable("student_course"));
 
-    /* //deixado como exemplo, mas indifirente se usar como está acima ou esse comentado
     modelBuilder.Entity<Student>()
       .HasMany(s => s.Courses)
       .WithMany(c => c.Students)
       .UsingEntity(j => j.ToTable("student_course"));
-    */
   }
 
   //! duas configuracoes abaixo para que as datas de alteração e criação sejam preenchidas ao salvar assincrono e sincrono

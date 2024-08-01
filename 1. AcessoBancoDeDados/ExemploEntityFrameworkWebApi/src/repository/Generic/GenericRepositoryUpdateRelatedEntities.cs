@@ -22,16 +22,25 @@ public partial class GenericRepository<T> : IGenericRepository<T> where T : _Bas
     var navigationProperties = GetNavigationProperties(); // Obtém todas as propriedades de navegação do tipo T que são do tipo _BaseEntityWithId
 
     foreach (var property in navigationProperties) { // Itera sobre cada propriedade de navegação
-      await UpdateNavigationProperty(existingItem, newItem, property); // Atualiza a propriedade de navegação específica
+      var newValue = property.GetValue(newItem);
+      if (newValue is _BaseEntityWithId) {
+        await UpdateSingleEntityAsync(existingItem, newItem, property); // Atualiza a propriedade de navegação específica
+      } else if (newValue is IEnumerable<_BaseEntityWithId> collection) {
+        await UpdateEntityCollectionAsync(existingItem, collection, property);
+      }
+
     }
   }
 
   private IEnumerable<PropertyInfo> GetNavigationProperties() { // Obtém as propriedades de navegação do tipo T que são do tipo _BaseEntityWithId
     return typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance) // Obtém todas as propriedades públicas e de instância
-        .Where(p => typeof(_BaseEntityWithId).IsAssignableFrom(p.PropertyType)); // Filtra propriedades do tipo _BaseEntityWithId
+        .Where(p =>
+              typeof(_BaseEntityWithId).IsAssignableFrom(p.PropertyType) ||
+              (p.PropertyType.IsGenericType && p.PropertyType.GetGenericTypeDefinition() == typeof(ICollection<>))
+        );
   }
 
-  private async Task UpdateNavigationProperty(T existingItem, T newItem, PropertyInfo property) { // Atualiza uma propriedade de navegação específica do item existente com base no novo item
+  private async Task UpdateSingleEntityAsync(T existingItem, T newItem, PropertyInfo property) { // Atualiza uma propriedade de navegação específica do item existente com base no novo item
     var newValue = property.GetValue(newItem); // Obtém o valor da propriedade no novo item
 
     if (newValue != null) { // Se a nova propriedade não for nula
@@ -40,12 +49,42 @@ public partial class GenericRepository<T> : IGenericRepository<T> where T : _Bas
         var currentEntity = await GetCurrentValueOfProperty(newEntity); // Obtém a entidade atual correspondente ao novo valor
 
         if (currentEntity == null) { // Se a entidade atual não for encontrada, lança uma exceção
-          throw new Exception($"Falha ao registrar nova: {newItem.GetType().Name}. Não encontrado código {newEntity.Id} para {newEntity.GetType().Name} para vincular.");
+          newEntity.Id = 0; //com isso se não achou com ID informada, vai criar uma nova com base nos demais dados
+          currentEntity = newEntity;
         }
 
         property.SetValue(existingItem, currentEntity); // Define o valor da propriedade no item existente com a entidade atualizada
       }
     }
+  }
+
+  private async Task UpdateEntityCollectionAsync(T entity, IEnumerable<_BaseEntityWithId> collection, PropertyInfo property) {
+    var entityType = property.PropertyType.GetGenericArguments()[0];
+    var ids = collection.Select(e => e.Id).ToList();
+
+    Type serviceType = typeof(IGenericRepository<>).MakeGenericType(entityType);
+    object service = _service.GetRequiredService(serviceType);
+    var genericRepository = (IGenericRepository<Course>)service;
+    var entitiesList = await genericRepository.FindByIdListWithoutReferences(ids);
+
+    var entityIds = new HashSet<int>(entitiesList.Select(e => e.Id));
+    var newItens = collection.Where(item => !entityIds.Contains(item.Id)).ToList();
+
+    foreach (var newItem in newItens) {
+      var newEntity = Activator.CreateInstance(entityType);
+      // Copiar as propriedades do item para a nova instância
+      foreach (var propertyInfo in newItem.GetType().GetProperties()) {
+        var targetProperty = entityType.GetProperty(propertyInfo.Name);
+        if (targetProperty != null && targetProperty.CanWrite) {
+          var value = propertyInfo.GetValue(newItem);
+          targetProperty.SetValue(newEntity, value);
+        }
+        ((_BaseEntityWithId)newEntity).Id = 0;
+        entitiesList.Add((dynamic)newEntity);
+      }
+    }
+
+    property.SetValue(entity, entitiesList);
   }
 
   // Obtém o valor da propriedade atual usando o repositório para buscar a entidade pelo ID
