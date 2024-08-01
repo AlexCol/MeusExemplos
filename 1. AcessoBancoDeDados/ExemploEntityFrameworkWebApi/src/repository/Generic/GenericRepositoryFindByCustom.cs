@@ -13,6 +13,8 @@ public partial class GenericRepository<T> : IGenericRepository<T> where T : _Bas
     ! Atualmente é comportado:
     ! Busca direta: "FirstName": "ale";
     ! Busca com valor Between (numeros, data e entidades): "Gender": [1, 2] ou "DateOfBirth": ["26-06-1978", "20-12-1979"]
+    ! Busca maior ou igual a: "Id": [4, "+"] (no primeiro valor usar o valor desejado - id de entidade, numero ou data - com o segundo valor do array com um '+')
+    ! Busca menor ou igual a: "Id": ["-", 3] (colocar um '-' no primeiro valor e usar o valor desejado - id de entidade, numero ou data - no segundo do array)
     ! Negação: Qualquer campo que tenha em seu nome iniciando com '!' será com Not. ex. "!LastName": "coletti" para não vir registros com LastName que tenham 'coletti';
   */
   private async Task<List<T>> FindByPropertiesAsync(List<SearchCriteria> criteriaList) {
@@ -32,11 +34,17 @@ public partial class GenericRepository<T> : IGenericRepository<T> where T : _Bas
     var parameter = Expression.Parameter(typeof(T), "x");
     var member = Expression.Property(parameter, criteria.Key);
 
-    Expression body = null;
-    if (criteria.IsIn) { // "in" operation
+    Expression body;
+    if (criteria.IsIn) {
       body = CreateInExpression(member, (List<object>)criteria.Value1);
     } else if (criteria.Value1 != null && criteria.Value2 != null) {
-      body = CreateBetweenExpression(member, criteria.Value1, criteria.Value2);
+      if (criteria.Value1.GetType() == typeof(string) && criteria.Value1.ToString() == "-") {
+        body = CreateLessThanOrEqualExpression(member, criteria.Value2);
+      } else if (criteria.Value2.GetType() == typeof(string) && criteria.Value2.ToString() == "+") {
+        body = CreateGreaterThanOrEqualExpression(member, criteria.Value1);
+      } else {
+        body = CreateBetweenExpression(member, criteria.Value1, criteria.Value2);
+      }
     } else if (criteria.Value1 is string stringValue) {
       body = CreateStringContainsExpression(member, stringValue);
     } else if (criteria.Value1 is _BaseEntityWithId entityValue) {
@@ -50,6 +58,22 @@ public partial class GenericRepository<T> : IGenericRepository<T> where T : _Bas
     }
 
     return body != null ? Expression.Lambda<Func<T, bool>>(body, parameter) : null;
+  }
+
+  private Expression CreateLessThanOrEqualExpression(MemberExpression member, object value) {
+    return CreateComparisonExpression(member, value, Expression.LessThanOrEqual);
+  }
+
+  private Expression CreateGreaterThanOrEqualExpression(MemberExpression member, object value) {
+    return CreateComparisonExpression(member, value, Expression.GreaterThanOrEqual);
+  }
+
+  private Expression CreateComparisonExpression(MemberExpression member, object value, Func<Expression, Expression, BinaryExpression> comparison) {
+    if (value is not (DateTime or _BaseEntityWithId) && !IsNumericType(value)) {
+      throw new ArgumentException("GenericRepositoryFindByCustom - Para buscas 'menor ou maior a' é preciso que o dado seja  data ou numero ou uma Entidade.");
+    }
+    var constant = Expression.Constant(value);
+    return comparison(member, constant);
   }
 
   private Expression CreateInExpression(MemberExpression member, List<object> values) {

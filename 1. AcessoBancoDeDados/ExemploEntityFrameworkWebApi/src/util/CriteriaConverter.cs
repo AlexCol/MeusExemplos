@@ -54,8 +54,9 @@ public static class CriteriaConverter {
   }
 
   private static void ValidateArrayValuesType(string key, List<object> arrayValues) {
+    if (arrayValues[0].ToString() == "-" || arrayValues[1].ToString() == "+") return;
     if (arrayValues[0].GetType() != arrayValues[1].GetType()) {
-      throw new Exception($"CriteriaConverter - Para pesquisar entre, os tipos precisam ser iguais: {key}");
+      throw new Exception($"CriteriaConverter - Para pesquisar entre, os tipos precisam ser iguais: Chave {key}");
     }
   }
 
