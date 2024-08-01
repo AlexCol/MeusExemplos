@@ -11,7 +11,7 @@ public interface IGenericService<T> where T : _BaseEntityWithId {
   Task<T> FindById(int id);
   Task<List<T>> FindAll();
   Task<List<T>> SeachByCriteria(Dictionary<string, object> properties);
-  Task<List<T>> SeachByCriteria(List<Tuple<string, object, object>> properties);
+  Task<List<T>> SeachByCriteria(List<Tuple<string, object, object, bool>> properties);
   Task<T> Create(T entity);
   Task<T> Update(T entity);
   Task DeleteById(int id);
@@ -36,7 +36,7 @@ public class GenericService<T> : IGenericService<T> where T : _BaseEntityWithId 
     return await _repository.SeachByCriteria(properties);
   }
 
-  public async Task<List<T>> SeachByCriteria(List<Tuple<string, object, object>> properties) {
+  public async Task<List<T>> SeachByCriteria(List<Tuple<string, object, object, bool>> properties) {
     return await _repository.SeachByCriteria(properties);
   }
 

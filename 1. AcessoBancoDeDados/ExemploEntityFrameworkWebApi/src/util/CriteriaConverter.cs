@@ -8,23 +8,25 @@ using ExemploEntityFrameworkWebApi.src.models;
 namespace ExemploEntityFrameworkWebApi.src.util;
 
 public static class CriteriaConverter {
-  public static List<Tuple<string, object, object>> ConvertJsonElementToCriteria(JsonElement json) {
-    var tuples = new List<Tuple<string, object, object>>();
+  public static List<Tuple<string, object, object, bool>> ConvertJsonElementToCriteria(JsonElement json) {
+    var tuples = new List<Tuple<string, object, object, bool>>();
 
     foreach (var property in json.EnumerateObject()) {
       var key = property.Name;
       var value = property.Value;
+      var isNegated = key.StartsWith("!");
+      if (isNegated) key = key.Substring(1); // Remove the '!' prefix
 
       if (value.ValueKind == JsonValueKind.Array) {
-        ProcessArrayValue(key, value, tuples);
+        ProcessArrayValue(key, value, tuples, isNegated);
       } else {
-        tuples.Add(Tuple.Create(key, GetTypedItem(key, value), (object)null));
+        tuples.Add(Tuple.Create(key, GetTypedItem(key, value), (object)null, isNegated));
       }
     }
     return tuples;
   }
 
-  private static void ProcessArrayValue(string key, JsonElement value, List<Tuple<string, object, object>> tuples) {
+  private static void ProcessArrayValue(string key, JsonElement value, List<Tuple<string, object, object, bool>> tuples, bool isNegated) {
     var arrayValues = new List<object>();
     foreach (var item in value.EnumerateArray()) {
       arrayValues.Add(GetTypedItem(key, item));
@@ -32,9 +34,9 @@ public static class CriteriaConverter {
 
     if (arrayValues.Count >= 2) {
       ValidateArrayValuesType(key, arrayValues);
-      tuples.Add(Tuple.Create(key, arrayValues[0], arrayValues[1]));
+      tuples.Add(Tuple.Create(key, arrayValues[0], arrayValues[1], isNegated));
     } else if (arrayValues.Count == 1) {
-      tuples.Add(Tuple.Create(key, arrayValues[0], (object)null));
+      tuples.Add(Tuple.Create(key, arrayValues[0], (object)null, isNegated));
     }
   }
 

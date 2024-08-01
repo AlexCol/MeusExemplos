@@ -10,7 +10,7 @@ public interface IGenericRepository<T> where T : _BaseEntityWithId {
   Task<T> FindById(int id);
   Task<List<T>> FindAll();
   Task<List<T>> SeachByCriteria(Dictionary<string, object> properties);
-  Task<List<T>> SeachByCriteria(List<Tuple<string, object, object>> properties);
+  Task<List<T>> SeachByCriteria(List<Tuple<string, object, object, bool>> properties);
   Task<T> Create(T registro);
   Task<T> Update(T registro);
   Task DeleteById(int id);
@@ -44,7 +44,7 @@ public partial class GenericRepository<T> : IGenericRepository<T> where T : _Bas
     return await FindByPropertiesAsync(properties);
   }
 
-  public async Task<List<T>> SeachByCriteria(List<Tuple<string, object, object>> properties) {
+  public async Task<List<T>> SeachByCriteria(List<Tuple<string, object, object, bool>> properties) {
     return await FindByPropertiesAsync(properties); //deixado aqui pra manter tudo que é da interce num arquivo só
   }
 
