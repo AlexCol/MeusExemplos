@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 
 namespace ExemploEntityFrameworkWebApi.src.models;
 
@@ -24,5 +25,6 @@ public class Person : _BaseEntityWithId {
   [Column("dt_birth", TypeName = "date")]
   public DateTime DateOfBirth { get; set; }
 
-  public ICollection<Address> Address { get; set; }
+  [JsonIgnore] //!não buscar o endereço quando se buscar pessoas (evita referencia circular se buscar o endereço)
+  public ICollection<Address> Addresses { get; set; }
 }

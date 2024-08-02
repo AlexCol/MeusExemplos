@@ -10,9 +10,14 @@ public static class DependenciesBuilder {
     //!adicionando configurações padrão
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddControllers(options => {
-      // Remove a validação automática do ModelState
+      // Remove a validação automática do ModelState (pra poder usar NotNull e não impedir o envio do json)
       options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true;
-    });
+    })
+      //! isso aqui é pra evitar referencia circular (optador por não trazer referencias de colections)
+      // .AddJsonOptions(options => { //necessário para evitar referencia circular nas buscas
+      //   options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+      // })
+      ;
 
     //!adicionando configurações
     builder.AddSwagger();
