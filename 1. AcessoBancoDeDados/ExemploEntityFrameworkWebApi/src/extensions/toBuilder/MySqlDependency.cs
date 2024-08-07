@@ -8,4 +8,9 @@ public static class MySqlDependency {
     var conectionString = builder.Configuration["ConnectionStrings:MySql"];
     builder.Services.AddMySql<MyDBContext>(conectionString, ServerVersion.AutoDetect(conectionString));
   }
+
+  public static void AddFirebirdConfig(this WebApplicationBuilder builder) {
+    var conectionString = builder.Configuration["ConnectionStrings:Firebird"];
+    builder.Services.AddFirebird<MyDBContext>(conectionString);
+  }
 }

@@ -22,6 +22,7 @@ public static class DependenciesBuilder {
     //!adicionando configurações
     builder.AddSwagger();
     builder.AddMySqlConfig();
+    //builder.AddFirebirdConfig();
     builder.AddLogConfig();
 
     //!adicionando classes para injeções de dependencia
