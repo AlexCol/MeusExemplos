@@ -7,22 +7,15 @@ namespace ExemploEntityFrameworkWebApi.src.extensions.toBuilder;
 
 public static class DependenciesBuilder {
   public static void AddDependencies(this WebApplicationBuilder builder) {
-    //!adicionando configurações padrão
+    //!adicionando configurações padrão .Net
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddControllers(options => {
-      // Remove a validação automática do ModelState (pra poder usar NotNull e não impedir o envio do json)
-      options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true;
-    })
-      //! isso aqui é pra evitar referencia circular (optador por não trazer referencias de colections)
-      // .AddJsonOptions(options => { //necessário para evitar referencia circular nas buscas
-      //   options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
-      // })
-      ;
+      options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true; //* Remove a validação automática do ModelState (pra poder usar NotNull e não impedir o envio do json)
+    });
 
-    //!adicionando configurações
+    //!adicionando configurações via extensão
     builder.AddSwagger();
-    builder.AddMySqlConfig();
-    //builder.AddFirebirdConfig();
+    builder.AddDBContextConfig();
     builder.AddLogConfig();
 
     //!adicionando classes para injeções de dependencia

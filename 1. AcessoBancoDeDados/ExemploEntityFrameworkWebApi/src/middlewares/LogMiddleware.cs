@@ -3,7 +3,7 @@ using Serilog;
 
 namespace ExemploEntityFrameworkWebApi.src.middlewares;
 
-public class LogMiddleware {
+public class LogMiddleware { /*para lembrete, middlewares são carregados no app, logo estão no addDependencies do app*/
   private readonly RequestDelegate _next;
 
   public LogMiddleware(RequestDelegate next) {
