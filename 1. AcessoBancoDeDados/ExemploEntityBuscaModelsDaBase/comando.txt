@@ -1,11 +1,6 @@
 /*comando para buscar os dados do banco e criar o*/
 
-dotnet ef dbcontext scaffold ^
-"User=SYSDBA;Password=masterkey;Database=C:\\BaseDeDados\\CAROL\\DBFAZENDA_CAROL_30.FDB;DataSource=localhost;Port=3050;Charset=NONE;Role=;Connection lifetime=15;Pooling=true;MinPoolSize=0;MaxPoolSize=50;" ^
-FirebirdSql.EntityFrameworkCore.Firebird ^
--o src/models ^
---context MyDBContext ^
---context-dir src/models/context ^
--t TB_CLIENTES ^
--t TB_CONFIG ^
---data-annotations
+dotnet ef dbcontext scaffold "User=SYSDBA;Password=masterkey;Database=C:\\BaseDeDados\\CAROL\\DBFAZENDA_CAROL_30.FDB;DataSource=localhost;Port=3050;Charset=NONE;Role=;Connection lifetime=15;Pooling=true;MinPoolSize=0;MaxPoolSize=50;" FirebirdSql.EntityFrameworkCore.Firebird -o src/models --context MyDBContext --context-dir src/models/context -t TB_SOFTHOUSE -t TB_CLIENTES -t TB_CONFIG --data-annotations
+dotnet ef dbcontext scaffold "User=SYSDBA;Password=masterkey;Database=C:\\BaseDeDados\\CAROL\\DBFAZENDA_CAROL_30.FDB;DataSource=localhost;Port=3050;Charset=NONE;Role=;Connection lifetime=15;Pooling=true;MinPoolSize=0;MaxPoolSize=50;" FirebirdSql.EntityFrameworkCore.Firebird -o src/models --context MyDBContext --context-dir src/models/context -t TB_CLIENTES -t TB_CONFIG --use-database-names --data-annotations
+
+dotnet ef dbcontext scaffold "User=SYSDBA;Password=masterkey;Database=C:\\BaseDeDados\\CAROL\\DBFAZENDA_CAROL_30.FDB;DataSource=localhost;Port=3050;Charset=NONE;Role=;Connection lifetime=15;Pooling=true;MinPoolSize=0;MaxPoolSize=50;" FirebirdSql.EntityFrameworkCore.Firebird -o src/models --context MyDBContext2 --context-dir src/models/context -t TB_VENDOR --use-database-names --data-annotations
