@@ -6,13 +6,17 @@ using CriandoScaffoldComConsole.src.Models;
 namespace CriandoScaffoldComConsole.src.Generators;
 
 public class CodeBuilder {
-  public string BuildClassCode(string tableName, DataTable columnsTable, List<ConstraintInfo> constraints, DataTypeMapper dataTypeMapper) {
+  public ClassModel BuildClassCode(string tableName, string nameSpace, DataTable columnsTable, List<ConstraintInfo> constraints, DataTypeMapper dataTypeMapper) {
     var classBuilder = new StringBuilder();
     classBuilder.AppendLine("using System.ComponentModel.DataAnnotations;");
     classBuilder.AppendLine("using System.ComponentModel.DataAnnotations.Schema;");
+    if (nameSpace == null || !nameSpace.Equals("")) {
+      classBuilder.AppendLine();
+      classBuilder.AppendLine($"namespace {nameSpace};");
+    }
     classBuilder.AppendLine();
     classBuilder.AppendLine($"[Table(\"{tableName}\")]");
-    classBuilder.AppendLine($"public class {tableName.ToClassNameFromTableName()}");
+    classBuilder.AppendLine($"public class {tableName.ConvertToClassName()}");
     classBuilder.AppendLine("{");
 
     foreach (DataRow row in columnsTable.Rows) {
@@ -27,25 +31,29 @@ public class CodeBuilder {
           classBuilder.AppendLine("    [Key]");
         }
 
-        if (constraint.ConstraintType == "UNIQUE") {
-          classBuilder.AppendLine("    [Index(IsUnique = true)]");
-        }
+        // if (constraint.ConstraintType == "UNIQUE") {
+        //   classBuilder.AppendLine("    [Index(IsUnique = true)]");
+        // }
 
         if (constraint.ConstraintType == "FOREIGN KEY") {
           classBuilder.AppendLine($"    [ForeignKey(\"{columnName}\")]");
-          classBuilder.AppendLine($"    public {constraint.ReferencedTable.ToClassNameFromTableName()} {constraint.ReferencedTable.ToClassNameFromTableName()} {{ get; set; }}");
-          classBuilder.AppendLine($"    public {dataType} {columnName.ToColumnNameForClass()} {{ get; set; }}");
+          classBuilder.AppendLine($"    public {constraint.ReferencedTable.ConvertToClassName()} {columnName.ConvertToClassPropName()} {{ get; set; }}");
+          classBuilder.AppendLine($"    public {dataType} ID{columnName.ConvertToClassPropName()} {{ get; set; }}");
           classBuilder.AppendLine();
           continue;
         }
       }
 
       classBuilder.AppendLine($"    [Column(\"{columnName}\")]");
-      classBuilder.AppendLine($"    public {dataType} {columnName.ToColumnNameForClass()} {{ get; set; }}");
+      classBuilder.AppendLine($"    public {dataType} {columnName.ConvertToClassPropName()} {{ get; set; }}");
       classBuilder.AppendLine();
     }
 
     classBuilder.AppendLine("}");
-    return classBuilder.ToString();
+    var classe = new ClassModel {
+      ClassName = tableName.ConvertToClassName(),
+      ClassStructre = classBuilder.ToString()
+    };
+    return classe;
   }
 }
