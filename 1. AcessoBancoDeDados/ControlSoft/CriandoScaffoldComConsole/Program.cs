@@ -14,15 +14,14 @@ var connectionString = "User=SYSDBA;Password=masterkey;Database=C:\\BaseDeDados\
 var dbConnection = new DatabaseConnection(connectionString);
 var scaffoldGenerator = new ScaffoldGenerator(dbConnection);
 
-//var tableList = new List<string> { "TB_PAISES", "TB_CIDADES", "TB_ESTADOS", "TB_REGIAOUF" };
-var tableList = new List<string>();
+var tableList = new List<string> { "TB_PAISES", "TB_CIDADES", "TB_ESTADOS", "TB_REGIAOUF" };
+//var tableList = new List<string>();
 //var tableList = new List<string> { "TB_CONFIGFECHASAFRAPRODUTO" };
 var tabelas = scaffoldGenerator.GetTablesFromList(tableList);
 
 var totalTabelas = tabelas.Count;
 var processadas = 0;
-foreach (var tabela in tabelas)
-{
+foreach (var tabela in tabelas) {
   Console.Clear();
   processadas++;
   Console.WriteLine($"Processando: {processadas}/{totalTabelas}");
