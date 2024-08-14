@@ -29,6 +29,8 @@ public class CodeBuilder {
       if (constraint != null) {
         if (constraint.ConstraintType == "PRIMARY KEY") {
           classBuilder.AppendLine("    [Key]");
+          if (dataType == "int")
+            classBuilder.AppendLine("    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]");
         }
 
         // if (constraint.ConstraintType == "UNIQUE") {
@@ -37,8 +39,8 @@ public class CodeBuilder {
 
         if (constraint.ConstraintType == "FOREIGN KEY") {
           classBuilder.AppendLine($"    [ForeignKey(\"{columnName}\")]");
-          classBuilder.AppendLine($"    public {constraint.ReferencedTable.ConvertToClassName()} {columnName.ConvertToClassPropName()} {{ get; set; }}");
           classBuilder.AppendLine($"    public {dataType} ID{columnName.ConvertToClassPropName()} {{ get; set; }}");
+          classBuilder.AppendLine($"    public {constraint.ReferencedTable.ConvertToClassName()} {columnName.ConvertToClassPropName()} {{ get; set; }}");
           classBuilder.AppendLine();
           continue;
         }

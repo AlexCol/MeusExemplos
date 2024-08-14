@@ -20,7 +20,7 @@ public class DataTypeMapper {
       12 => "DateTime",
       13 => "TimeSpan",
       14 or 37 => "string", // CHAR or VARCHAR
-      16 => fieldSubType == 1 ? "decimal" : "long", // INT64 or NUMERIC/DECIMAL
+      16 => fieldLength == 0 ? "long" : "decimal", // INT64 or NUMERIC/DECIMAL
       27 => "double",
       35 => "DateTime",
       _ => "object", // Fallback to object if type is not explicitly handled
