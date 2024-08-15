@@ -8,17 +8,21 @@ using FirebirdSql.Data.FirebirdClient;
 
 namespace CriandoScaffoldComConsole.src.Generators {
   public class ScaffoldGenerator {
+    private List<string> TabelasProcessadas = new List<string>();
     private readonly DatabaseConnection _dbConnection;
     private readonly CodeBuilder _codeBuilder;
     private readonly DataTypeMapper _dataTypeMapper;
+    private readonly FileGenerator _fileGenerator;
 
-    public ScaffoldGenerator(DatabaseConnection dbConnection) {
+    public ScaffoldGenerator(DatabaseConnection dbConnection, FileGenerator fileGenerator) {
+      _fileGenerator = fileGenerator;
       _dbConnection = dbConnection;
       _codeBuilder = new CodeBuilder();
       _dataTypeMapper = new DataTypeMapper();
     }
 
-    public ClassModel GenerateClasses(string tableName, string nameSpace = "") {
+    public void GenerateClasses(string tableName, string nameSpace = "") {
+      if (TabelasProcessadas.Contains(tableName)) return;
       try {
         using var connection = _dbConnection.GetConnection();
         connection.Open();
@@ -30,7 +34,15 @@ namespace CriandoScaffoldComConsole.src.Generators {
         var constraints = GetConstraints(connection, tableName);
 
         var classCode = _codeBuilder.BuildClassCode(tableName, nameSpace, columnsTable, constraints, _dataTypeMapper);
-        return classCode;
+
+        _fileGenerator.SaveClass(classCode);
+        TabelasProcessadas.Add(tableName);
+
+        foreach (var constraint in constraints) {
+          if (!string.IsNullOrEmpty(constraint.ReferencedTable)) {
+            GenerateClasses(constraint.ReferencedTable, nameSpace);
+          }
+        }
       } catch (Exception e) {
         throw new InvalidDataException($"Erro na tabela {tableName}. {e.Message}");
       }

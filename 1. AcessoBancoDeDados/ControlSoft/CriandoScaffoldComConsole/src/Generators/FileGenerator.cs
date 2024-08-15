@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,12 +9,14 @@ using CriandoScaffoldComConsole.src.Models;
 namespace CriandoScaffoldComConsole.src.Generators;
 
 public class FileGenerator {
-  private readonly string _path;
+
+  private string _path = Debugger.IsAttached ? "../../../src/ScaffoldResult" : "./src/ScaffoldResult";
   private readonly string _contextPath;
   private readonly string _contextFileName = "MyDbContext";
 
-  public FileGenerator(string path) {
-    _path = path;
+  public FileGenerator(string path = "") {
+    if (path != "")
+      _path = path;
     Directory.CreateDirectory(_path);
 
     _contextPath = Path.Combine(_path, "context");
