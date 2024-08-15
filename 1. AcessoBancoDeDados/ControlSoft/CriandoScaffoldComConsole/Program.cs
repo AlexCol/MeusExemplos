@@ -20,8 +20,8 @@ var scaffoldGenerator = new ScaffoldGenerator(dbConnection);
 
 //* Lista tabelas as serem buscadas.
 //var tableList = new List<string> { "TB_PAISES", "TB_CIDADES", "TB_ESTADOS", "TB_REGIAOUF" };
-var tableList = new List<string>();
-//var tableList = new List<string> { "TB_SOLICITACAOLIBERACAO" };
+//var tableList = new List<string>();
+var tableList = new List<string> { "TB_PRODUTOS" };
 var tabelas = scaffoldGenerator.GetTablesFromList(tableList);
 
 //! Inicia Scaffold.

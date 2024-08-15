@@ -101,6 +101,25 @@ namespace CriandoScaffoldComConsole.src.Generators {
     }
 
     private List<ConstraintInfo> GetConstraints(FbConnection connection, string tableName) {
+      var query = QueryContraints(tableName);
+      var constraintsTable = DatabaseHelper.ExecuteQuery(connection, query);
+      var constraintsList = ConstraintInfo.FromDataTable(constraintsTable);
+
+      // for (int i = 0; i < constraintsList.Count; i++) {
+      //   constraintsList[i].CircularReference = CheckIfCircularReference(connection, tableName, constraintsList[i].ReferencedTable);
+      // }
+
+      return constraintsList;
+    }
+
+    private bool CheckIfCircularReference(FbConnection connection, string tableName, string referencedTable) {
+      var query = QueryContraints(referencedTable);
+      var constraintsRefTable = DatabaseHelper.ExecuteQuery(connection, query);
+      var constraintsRefList = ConstraintInfo.FromDataTable(constraintsRefTable);
+      return constraintsRefList.Any(l => l.ReferencedTable == tableName);
+    }
+
+    private string QueryContraints(string tableName) {
       var query = $@"
                   SELECT
                       rc.RDB$CONSTRAINT_NAME AS CONSTRAINT_NAME,
@@ -117,8 +136,7 @@ namespace CriandoScaffoldComConsole.src.Generators {
                   WHERE
                     rc.RDB$RELATION_NAME = '{tableName}'
             ";
-      var constraintsTable = DatabaseHelper.ExecuteQuery(connection, query);
-      return ConstraintInfo.FromDataTable(constraintsTable);
+      return query;
     }
   }
 }

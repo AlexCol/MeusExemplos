@@ -25,6 +25,8 @@ public class CodeBuilder {
     var nameofKeys = new List<string>();
     foreach (DataRow row in columnsTable.Rows) {
       var columnName = row["COLUMN_NAME"].ToString().Trim();
+      var columnPropName = columnName.ConvertToClassPropName() + (columnName.ConvertToClassPropName() == tableName.ConvertToClassName() ? "_" : "");
+
       var nullable = row["IS_NOT_NULL"].ToString().Trim().Equals("N") ? "?" : "";
 
       var dataType = dataTypeMapper.MapFromFirebirdType(row);
@@ -34,7 +36,7 @@ public class CodeBuilder {
       if (constraint != null) {
         if (constraint.ConstraintType == "PRIMARY KEY") {
           classBuilder.AppendLine("    [Key]");
-          nameofKeys.Add($"nameof({columnName.ConvertToClassPropName()})");
+          nameofKeys.Add($"nameof({columnPropName})");
           if (dataType == "int")
             classBuilder.AppendLine("    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]");
         }
@@ -46,17 +48,17 @@ public class CodeBuilder {
         if (constraint.ConstraintType == "FOREIGN KEY") {
           classBuilder.AppendLine($"    [Column(\"{columnName}\")]");
           classBuilder.AppendLine($"    [ForeignKey(\"{columnName}\")]");
-          classBuilder.AppendLine($"    public {dataType}{nullable} {columnName.ConvertToClassPropName()}Chave {{ get; set; }}");
-          // if (constraint.CircularReference)
-          //   classBuilder.AppendLine("    [NotMapped]");
-          classBuilder.AppendLine($"    public virtual {constraint.ReferencedTable.ConvertToClassName()} {columnName.ConvertToClassPropName()} {{ get; set; }}");
+          classBuilder.AppendLine($"    public {dataType}{nullable} {columnPropName}Chave {{ get; set; }}");
+          //if (constraint.CircularReference)
+          classBuilder.AppendLine("    [NotMapped]");
+          classBuilder.AppendLine($"    public virtual {constraint.ReferencedTable.ConvertToClassName()} {columnPropName} {{ get; set; }}");
           classBuilder.AppendLine();
           continue;
         }
       }
 
       classBuilder.AppendLine($"    [Column(\"{columnName}\")]");
-      classBuilder.AppendLine($"    public {dataType}{nullable} {columnName.ConvertToClassPropName()} {{ get; set; }}");
+      classBuilder.AppendLine($"    public {dataType}{nullable} {columnPropName} {{ get; set; }}");
       classBuilder.AppendLine();
     }
 

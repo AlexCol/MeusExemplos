@@ -29,7 +29,7 @@ public static class StringExtensions {
 
   public static string ConvertToClassName(this string tableName) {
     if (tableName.Contains("TB_")) {
-      return "Tb" + tableName.Substring(3).ConvertToClassPropName();
+      return tableName.Substring(3).ConvertToClassPropName();
     }
     return tableName.ConvertToClassPropName();
   }

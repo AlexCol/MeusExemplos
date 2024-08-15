@@ -11,6 +11,7 @@ public class ConstraintInfo {
   public string ConstraintType { get; set; }
   public string ColumnName { get; set; }
   public string ReferencedTable { get; set; }
+  public bool CircularReference { get; set; } = false;
 
   public static List<ConstraintInfo> FromDataTable(DataTable table) {
     var constraints = new List<ConstraintInfo>();
