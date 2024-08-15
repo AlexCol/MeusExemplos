@@ -10,17 +10,22 @@ public class CodeBuilder {
     var classBuilder = new StringBuilder();
     classBuilder.AppendLine("using System.ComponentModel.DataAnnotations;");
     classBuilder.AppendLine("using System.ComponentModel.DataAnnotations.Schema;");
+    classBuilder.AppendLine("using Microsoft.EntityFrameworkCore;");
+
     if (nameSpace == null || !nameSpace.Equals("")) {
       classBuilder.AppendLine();
       classBuilder.AppendLine($"namespace {nameSpace};");
     }
     classBuilder.AppendLine();
     classBuilder.AppendLine($"[Table(\"{tableName}\")]");
+    classBuilder.AppendLine($"/*primary key*/");
     classBuilder.AppendLine($"public class {tableName.ConvertToClassName()}");
     classBuilder.AppendLine("{");
 
+    var nameofKeys = new List<string>();
     foreach (DataRow row in columnsTable.Rows) {
-      var columnName = row["COLUMN_NAME"].ToString()?.Trim();
+      var columnName = row["COLUMN_NAME"].ToString().Trim();
+      var nullable = row["IS_NOT_NULL"].ToString().Trim().Equals("N") ? "?" : "";
 
       var dataType = dataTypeMapper.MapFromFirebirdType(row);
 
@@ -29,6 +34,7 @@ public class CodeBuilder {
       if (constraint != null) {
         if (constraint.ConstraintType == "PRIMARY KEY") {
           classBuilder.AppendLine("    [Key]");
+          nameofKeys.Add($"nameof({columnName.ConvertToClassPropName()})");
           if (dataType == "int")
             classBuilder.AppendLine("    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]");
         }
@@ -38,23 +44,36 @@ public class CodeBuilder {
         // }
 
         if (constraint.ConstraintType == "FOREIGN KEY") {
+          classBuilder.AppendLine($"    [Column(\"{columnName}\")]");
           classBuilder.AppendLine($"    [ForeignKey(\"{columnName}\")]");
-          classBuilder.AppendLine($"    public {dataType} ID{columnName.ConvertToClassPropName()} {{ get; set; }}");
-          classBuilder.AppendLine($"    public {constraint.ReferencedTable.ConvertToClassName()} {columnName.ConvertToClassPropName()} {{ get; set; }}");
+          classBuilder.AppendLine($"    public {dataType}{nullable} {columnName.ConvertToClassPropName()}Chave {{ get; set; }}");
+          // if (constraint.CircularReference)
+          //   classBuilder.AppendLine("    [NotMapped]");
+          classBuilder.AppendLine($"    public virtual {constraint.ReferencedTable.ConvertToClassName()} {columnName.ConvertToClassPropName()} {{ get; set; }}");
           classBuilder.AppendLine();
           continue;
         }
       }
 
       classBuilder.AppendLine($"    [Column(\"{columnName}\")]");
-      classBuilder.AppendLine($"    public {dataType} {columnName.ConvertToClassPropName()} {{ get; set; }}");
+      classBuilder.AppendLine($"    public {dataType}{nullable} {columnName.ConvertToClassPropName()} {{ get; set; }}");
       classBuilder.AppendLine();
     }
 
     classBuilder.AppendLine("}");
+
+    var classStructure = classBuilder.ToString();
+    if (nameofKeys.Count == 0) {
+      classStructure = classStructure.Replace("/*primary key*/", "[Keyless]");
+    } else if (nameofKeys.Count > 1) {
+      classStructure = classStructure.Replace("[Key]", "");
+      var tagPrimaryKey = "[PrimaryKey(" + String.Join(", ", nameofKeys) + ")]";
+      classStructure = classStructure.Replace("/*primary key*/", tagPrimaryKey);
+    }
+
     var classe = new ClassModel {
       ClassName = tableName.ConvertToClassName(),
-      ClassStructre = classBuilder.ToString()
+      ClassStructre = classStructure
     };
     return classe;
   }

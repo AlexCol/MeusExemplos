@@ -3,8 +3,9 @@ using CriandoScaffoldComConsole.Database;
 using CriandoScaffoldComConsole.src.Generators;
 
 //! caminho path padrao com base no modo de executação
+var isDebug = Debugger.IsAttached;
 string path;
-if (Debugger.IsAttached)
+if (isDebug)
   path = "../../../src/ScaffoldResult";
 else
   path = "./src/ScaffoldResult";
@@ -20,16 +21,18 @@ var scaffoldGenerator = new ScaffoldGenerator(dbConnection);
 //* Lista tabelas as serem buscadas.
 //var tableList = new List<string> { "TB_PAISES", "TB_CIDADES", "TB_ESTADOS", "TB_REGIAOUF" };
 var tableList = new List<string>();
-//var tableList = new List<string> { "TB_PRODUTOS" };
+//var tableList = new List<string> { "TB_SOLICITACAOLIBERACAO" };
 var tabelas = scaffoldGenerator.GetTablesFromList(tableList);
 
 //! Inicia Scaffold.
 var totalTabelas = tabelas.Count;
 var processadas = 0;
 foreach (var tabela in tabelas) {
-  Console.Clear();
-  processadas++;
-  Console.WriteLine($"Processando: {processadas}/{totalTabelas}");
+  if (!isDebug) {
+    Console.Clear();
+    processadas++;
+    Console.WriteLine($"Processando: {processadas}/{totalTabelas}");
+  }
   var classe = scaffoldGenerator.GenerateClasses(tabela, nameSpace); //? Gera a Classe.
   new FileGenerator(path).SaveClass(classe); //? Gera o arquivo da Classe.
 }

@@ -13,7 +13,7 @@ public class DataTypeMapper {
     var fieldLength = columnRow["FIELD_LENGTH"] != DBNull.Value ? Convert.ToInt32(columnRow["FIELD_LENGTH"]) : 0;
 
     return fieldType switch {
-      7 when fieldSubType == 1 => "short",
+      7 => "short",
       8 => "int",
       9 => "int", // Numeric or decimal
       10 => "float",
@@ -21,9 +21,11 @@ public class DataTypeMapper {
       13 => "TimeSpan",
       14 or 37 => "string", // CHAR or VARCHAR
       16 => fieldLength == 0 ? "long" : "decimal", // INT64 or NUMERIC/DECIMAL
+      23 => "bool",
       27 => "double",
       35 => "DateTime",
-      _ => "object", // Fallback to object if type is not explicitly handled
+      261 => "string", //!BLOB
+      _ => throw new Exception("Tipo não definido")
     };
   }
 }

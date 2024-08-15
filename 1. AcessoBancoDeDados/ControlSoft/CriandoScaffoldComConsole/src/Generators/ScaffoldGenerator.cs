@@ -88,7 +88,8 @@ namespace CriandoScaffoldComConsole.src.Generators {
                     f.RDB$FIELD_SUB_TYPE AS FIELD_SUB_TYPE,
                     f.RDB$FIELD_LENGTH AS FIELD_LENGTH,
                     f.RDB$FIELD_PRECISION AS FIELD_PRECISION,
-                    f.RDB$FIELD_SCALE AS FIELD_SCALE
+                    f.RDB$FIELD_SCALE AS FIELD_SCALE,
+                    CASE coalesce(rf.RDB$NULL_FLAG, 0) WHEN 1 THEN 'S' ELSE 'N' END AS IS_NOT_NULL
                 FROM
                     RDB$RELATION_FIELDS rf
                     JOIN RDB$FIELDS f ON rf.RDB$FIELD_SOURCE = f.RDB$FIELD_NAME
