@@ -23,9 +23,9 @@ public class FileGenerator {
     Directory.CreateDirectory(_contextPath);
   }
 
-  public void SaveClass(ClassModel classe) {
+  public void SaveClass(ClassModel classe, string nameSpace = "") {
     SaveClassFile(classe);
-    CreateOrUpdateContext(classe);
+    CreateOrUpdateContext(classe, nameSpace);
   }
 
   private void SaveClassFile(ClassModel classe) {
@@ -34,10 +34,10 @@ public class FileGenerator {
       sw.Write(classe.ClassStructre);
     }
   }
-  private void CreateOrUpdateContext(ClassModel classe) {
+  private void CreateOrUpdateContext(ClassModel classe, string nameSpace) {
     var contextPath = Path.Combine(_path, "context");
     if (!File.Exists(Path.Combine(contextPath, _contextFileName + ".cs"))) {
-      CriaDbContext();
+      CriaDbContext(nameSpace);
     }
     AtualizaDbSet(classe.ClassName);
   }
@@ -51,9 +51,9 @@ public class FileGenerator {
     }
   }
 
-  private void CriaDbContext() {
+  private void CriaDbContext(string nameSpace) {
     var builder = new StringBuilder();
-    builder.AppendLine("using Models;");
+    builder.AppendLine($"using {nameSpace};");
     builder.AppendLine("using Microsoft.EntityFrameworkCore;");
     builder.AppendLine("");
     builder.AppendLine("public class MyDBContext : DbContext {");

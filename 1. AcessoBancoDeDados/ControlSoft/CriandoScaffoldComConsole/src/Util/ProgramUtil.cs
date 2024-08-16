@@ -27,9 +27,8 @@ public static class ProgramUtil {
     return Console.ReadLine();
   }
 
-  public static ScaffoldGenerator GetScafolldGenerator() {
+  public static ScaffoldGenerator GetScafolldGenerator(string connectionString) {
     //* cria dbconnection
-    var connectionString = "User=SYSDBA;Password=masterkey;Database=C:\\BaseDeDados\\CAROL\\DBFAZENDA_CAROL_30.FDB;DataSource=localhost;Port=3050;Charset=NONE;Role=;Connection lifetime=15;Pooling=true;MinPoolSize=0;MaxPoolSize=50;";
     var dbConnection = new DatabaseConnection(connectionString);
 
     //!cria o scaffold generator, passando a conexão

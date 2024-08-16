@@ -35,7 +35,7 @@ namespace CriandoScaffoldComConsole.src.Generators {
 
         var classCode = _codeBuilder.BuildClassCode(tableName, nameSpace, columnsTable, constraints, _dataTypeMapper);
 
-        _fileGenerator.SaveClass(classCode);
+        _fileGenerator.SaveClass(classCode, nameSpace);
         TabelasProcessadas.Add(tableName);
 
         foreach (var constraint in constraints) {
