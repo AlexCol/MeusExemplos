@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using CriandoScaffoldComConsole.src.Models;
 
 namespace CriandoScaffoldComConsole.src.Generators;
@@ -15,54 +11,75 @@ public class FileGenerator {
   private readonly string _contextFileName = "MyDbContext";
 
   public FileGenerator(string path = "") {
-    if (path != "")
-      _path = path;
+    _path = !string.IsNullOrEmpty(path) ? path : _path;
     Directory.CreateDirectory(_path);
-
     _contextPath = Path.Combine(_path, "context");
     Directory.CreateDirectory(_contextPath);
   }
 
-  public void SaveClass(ClassModel classe, string nameSpace = "") {
+  public void SaveClass(ClassModel classe, string nameSpace, string baseClass) {
+    if (!string.IsNullOrEmpty(baseClass)) {
+      VerifyOrCreateBaseClass(baseClass, nameSpace);
+    }
+
     SaveClassFile(classe);
     CreateOrUpdateContext(classe, nameSpace);
   }
 
+  private void VerifyOrCreateBaseClass(string baseClass, string nameSpace) {
+    var baseClassPath = Path.Combine(_contextPath, $"{baseClass}.cs");
+
+    // Verificar se a classe base já existe
+    if (!File.Exists(baseClassPath)) {
+      // Criar a classe base vazia
+      var builder = new StringBuilder();
+      if (!string.IsNullOrEmpty(nameSpace)) {
+        builder.AppendLine($"namespace {nameSpace};");
+        builder.AppendLine();
+      }
+      builder.AppendLine($"public class {baseClass} {{ }}");
+
+      // Salvar a classe base no mesmo diretório do DbContext
+      using StreamWriter sw = new StreamWriter(baseClassPath, false);
+      sw.Write(builder.ToString());
+    }
+  }
+
   private void SaveClassFile(ClassModel classe) {
     var classPath = Path.Combine(_path, $"{classe.ClassName}.cs");
-    using (StreamWriter sw = new StreamWriter(classPath, false)) {
-      sw.Write(classe.ClassStructre);
-    }
+    using StreamWriter sw = new StreamWriter(classPath, false);
+    sw.Write(classe.ClassStructre);
   }
+
   private void CreateOrUpdateContext(ClassModel classe, string nameSpace) {
-    var contextPath = Path.Combine(_path, "context");
-    if (!File.Exists(Path.Combine(contextPath, _contextFileName + ".cs"))) {
-      CriaDbContext(nameSpace);
+    if (!File.Exists(Path.Combine(_contextPath, $"{_contextFileName}.cs"))) {
+      CreateDbContext(nameSpace);
     }
-    AtualizaDbSet(classe.ClassName);
+    UpdateDbSet(classe.ClassName);
   }
 
-  private void AtualizaDbSet(string classe) {
-    var filePath = Path.Combine(_contextPath, _contextFileName + ".cs");
-    string conteudo = File.ReadAllText(filePath);
+  private void UpdateDbSet(string classe) {
+    var filePath = Path.Combine(_contextPath, $"{_contextFileName}.cs");
+    var conteudo = File.ReadAllText(filePath);
     if (!conteudo.Contains(classe)) {
-      var atualizado = conteudo.Replace("/*atualizar aqui*/", "public DbSet<" + classe + "> " + classe + " { get; set; }" + '\n' + "/*atualizar aqui*/");
-      File.WriteAllText(filePath, atualizado);
+      var updatedContent = conteudo.Replace("/*atualizar aqui*/", $"public DbSet<{classe}> {classe} {{ get; set; }}\n/*atualizar aqui*/");
+      File.WriteAllText(filePath, updatedContent);
     }
   }
 
-  private void CriaDbContext(string nameSpace) {
+  private void CreateDbContext(string nameSpace) {
     var builder = new StringBuilder();
-    builder.AppendLine($"using {nameSpace};");
+    if (!string.IsNullOrEmpty(nameSpace))
+      builder.AppendLine($"using {nameSpace};");
+
     builder.AppendLine("using Microsoft.EntityFrameworkCore;");
-    builder.AppendLine("");
-    builder.AppendLine("public class MyDBContext : DbContext {");
+    builder.AppendLine();
+    builder.AppendLine("public class MyDbContext : DbContext {");
     builder.AppendLine("  /*atualizar aqui*/");
-    builder.AppendLine("  public MyDBContext(DbContextOptions<MyDBContext> options) : base(options) { }");
+    builder.AppendLine("  public MyDbContext(DbContextOptions<MyDbContext> options) : base(options) { }");
     builder.AppendLine("}");
     var contextPath = Path.Combine(_contextPath, $"{_contextFileName}.cs");
-    using (StreamWriter sw = new StreamWriter(contextPath, false)) {
-      sw.Write(builder);
-    }
+    using StreamWriter sw = new StreamWriter(contextPath, false);
+    sw.Write(builder.ToString());
   }
 }

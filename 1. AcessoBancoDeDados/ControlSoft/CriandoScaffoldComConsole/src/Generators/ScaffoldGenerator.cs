@@ -13,6 +13,8 @@ namespace CriandoScaffoldComConsole.src.Generators {
     private readonly CodeBuilder _codeBuilder;
     private readonly DataTypeMapper _dataTypeMapper;
     private readonly FileGenerator _fileGenerator;
+    public string NameSpace { get; set; } = "";
+    public string BaseClass { get; set; } = "";
 
     public ScaffoldGenerator(DatabaseConnection dbConnection, FileGenerator fileGenerator) {
       _fileGenerator = fileGenerator;
@@ -21,28 +23,25 @@ namespace CriandoScaffoldComConsole.src.Generators {
       _dataTypeMapper = new DataTypeMapper();
     }
 
-    public void GenerateClasses(string tableName, string nameSpace = "") {
+    public void GenerateClasses(string tableName) {
       if (TabelasProcessadas.Contains(tableName)) return;
       try {
         using var connection = _dbConnection.GetConnection();
         connection.Open();
 
-        // Obter informações de colunas e constraints
         var columnsTable = GetColumnsTable(connection, tableName);
         if (columnsTable.Rows.Count == 0) throw new InvalidDataException($"Tabela {tableName} não existe.");
 
-        var constraints = GetConstraints(connection, tableName);
+        var constraints = GetConstraints(connection, tableName).OrderByDescending(c => c.ConstraintType).ToList();
+        // foreach (var constraint in constraints)
+        //   if (!string.IsNullOrEmpty(constraint.ReferencedTable))
+        //     constraint.CircularReference = CheckIfCircularReference(connection, tableName, constraint.ReferencedTable);
 
-        var classCode = _codeBuilder.BuildClassCode(tableName, nameSpace, columnsTable, constraints, _dataTypeMapper);
-
-        _fileGenerator.SaveClass(classCode, nameSpace);
+        var classCode = _codeBuilder.BuildClassCode(tableName, BaseClass, NameSpace, columnsTable, constraints, _dataTypeMapper);
+        _fileGenerator.SaveClass(classCode, NameSpace, BaseClass);
         TabelasProcessadas.Add(tableName);
 
-        foreach (var constraint in constraints) {
-          if (!string.IsNullOrEmpty(constraint.ReferencedTable)) {
-            GenerateClasses(constraint.ReferencedTable, nameSpace);
-          }
-        }
+        GenerateReferencedClasses(constraints);
       } catch (Exception e) {
         throw new InvalidDataException($"Erro na tabela {tableName}. {e.Message}");
       }
@@ -124,11 +123,19 @@ namespace CriandoScaffoldComConsole.src.Generators {
       return constraintsList;
     }
 
+    private void GenerateReferencedClasses(List<ConstraintInfo> constraints) {
+      foreach (var constraint in constraints.Where(c => !string.IsNullOrEmpty(c.ReferencedTable))) {
+        GenerateClasses(constraint.ReferencedTable);
+      }
+    }
+
     private bool CheckIfCircularReference(FbConnection connection, string tableName, string referencedTable) {
       var query = QueryContraints(referencedTable);
       var constraintsRefTable = DatabaseHelper.ExecuteQuery(connection, query);
       var constraintsRefList = ConstraintInfo.FromDataTable(constraintsRefTable);
-      return constraintsRefList.Any(l => l.ReferencedTable == tableName);
+
+      var circularConstraint = constraintsRefList.Any(l => l.ReferencedTable == tableName);
+      return circularConstraint;
     }
 
     private string QueryContraints(string tableName) {
@@ -138,7 +145,8 @@ namespace CriandoScaffoldComConsole.src.Generators {
                       rc.RDB$CONSTRAINT_TYPE AS CONSTRAINT_TYPE,
                       iseg.RDB$FIELD_NAME AS COLUMN_NAME,
                       rc.RDB$RELATION_NAME AS TABLE_NAME,
-                      trim(ref_tbl.RDB$RELATION_NAME) AS REFERENCED_TABLE
+                      trim(ref_tbl.RDB$RELATION_NAME) AS REFERENCED_TABLE,
+                      ROW_NUMBER() OVER (PARTITION BY rc.RDB$CONSTRAINT_TYPE) AS CONSTRAINT_NUMBER
                   FROM
                       RDB$RELATION_CONSTRAINTS rc
                       JOIN RDB$INDEX_SEGMENTS iseg ON rc.RDB$INDEX_NAME = iseg.RDB$INDEX_NAME

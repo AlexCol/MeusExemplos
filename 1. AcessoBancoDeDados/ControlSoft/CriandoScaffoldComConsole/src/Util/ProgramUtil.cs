@@ -22,6 +22,12 @@ public static class ProgramUtil {
     return tablesList;
   }
 
+  public static string AskBaseClass() {
+    Console.WriteLine("Classe base? Em branco se nenhuma.");
+    var baseClass = Console.ReadLine();
+    return baseClass.Trim();
+  }
+
   public static string AskNamesSpace() {
     Console.WriteLine("Qual o nameSpace para as classes. Vazio se nenhuma.");
     return Console.ReadLine();
@@ -35,7 +41,7 @@ public static class ProgramUtil {
     return new ScaffoldGenerator(dbConnection, new FileGenerator());
   }
 
-  public static void StartScaffolding(List<string> tabelas, string nameSpace, ScaffoldGenerator scaffoldGenerator) {
+  public static void StartScaffolding(List<string> tabelas, ScaffoldGenerator scaffoldGenerator) {
     var isDebug = Debugger.IsAttached;
     if (tabelas.Count == 0)
       tabelas = scaffoldGenerator.GetTablesFromList(tabelas);
@@ -48,7 +54,7 @@ public static class ProgramUtil {
         processadas++;
         Console.WriteLine($"Processando: {processadas}/{totalTabelas}");
       }
-      scaffoldGenerator.GenerateClasses(tabela, nameSpace); //? Gera a Classe.
+      scaffoldGenerator.GenerateClasses(tabela); //? Gera a Classe.
     }
   }
 }

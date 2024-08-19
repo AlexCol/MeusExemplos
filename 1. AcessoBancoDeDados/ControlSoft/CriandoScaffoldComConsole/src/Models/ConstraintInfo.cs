@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CriandoScaffoldComConsole.src.Models;
 
@@ -11,18 +7,16 @@ public class ConstraintInfo {
   public string ConstraintType { get; set; }
   public string ColumnName { get; set; }
   public string ReferencedTable { get; set; }
+  public int ConstraintNumber { get; set; }
   public bool CircularReference { get; set; } = false;
 
   public static List<ConstraintInfo> FromDataTable(DataTable table) {
-    var constraints = new List<ConstraintInfo>();
-    foreach (DataRow row in table.Rows) {
-      constraints.Add(new ConstraintInfo {
-        ConstraintName = row["CONSTRAINT_NAME"].ToString()?.Trim(),
-        ConstraintType = row["CONSTRAINT_TYPE"].ToString()?.Trim(),
-        ColumnName = row["COLUMN_NAME"].ToString()?.Trim(),
-        ReferencedTable = row["REFERENCED_TABLE"].ToString()?.Trim()
-      });
-    }
-    return constraints;
+    return table.AsEnumerable().Select(row => new ConstraintInfo {
+      ConstraintName = row["CONSTRAINT_NAME"].ToString()?.Trim(),
+      ConstraintType = row["CONSTRAINT_TYPE"].ToString()?.Trim(),
+      ColumnName = row["COLUMN_NAME"].ToString()?.Trim(),
+      ReferencedTable = row["REFERENCED_TABLE"].ToString()?.Trim(),
+      ConstraintNumber = int.Parse(row["CONSTRAINT_NUMBER"].ToString()?.Trim())
+    }).ToList();
   }
 }
