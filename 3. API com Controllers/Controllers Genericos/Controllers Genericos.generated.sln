@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "3. API com Controllers", "3. API com Controllers.csproj", "{818D4A91-22DD-4F3C-9D95-F747A53D8F57}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Controllers Genericos", "Controllers Genericos.csproj", "{7938EF69-9B43-4220-94BA-085157BB81A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{818D4A91-22DD-4F3C-9D95-F747A53D8F57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{818D4A91-22DD-4F3C-9D95-F747A53D8F57}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{818D4A91-22DD-4F3C-9D95-F747A53D8F57}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{818D4A91-22DD-4F3C-9D95-F747A53D8F57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7938EF69-9B43-4220-94BA-085157BB81A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7938EF69-9B43-4220-94BA-085157BB81A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7938EF69-9B43-4220-94BA-085157BB81A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7938EF69-9B43-4220-94BA-085157BB81A0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {C4765A46-071C-4926-A21C-A72BA551D8AE}
+		SolutionGuid = {3036D5F7-F58B-4FAB-80A2-7E7B177C982A}
 	EndGlobalSection
 EndGlobal
