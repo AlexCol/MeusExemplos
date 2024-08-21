@@ -1,0 +1,235 @@
+
+using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
+
+namespace CS_Server.Repositories.Entity.GenericEntityRepository;
+
+public interface IGenericEntityRepository<T> where T : ModelBase
+{
+  EntityDbContext GetContext();
+  Task<T> GetById(object id);
+  Task<T> GetByIdWithReferences(object id);
+  Task<IEnumerable<T>> GetAll();
+  Task<T> FindOneWithPredicate(Expression<Func<T, bool>> predicate);
+  Task<T> FindOneWithPredicateWithReferences(Expression<Func<T, bool>> predicate);
+  Task<IEnumerable<T>> SearchWithPredicate(Expression<Func<T, bool>> predicate);
+  Task<IEnumerable<T>> SearchWithPredicateWithReferences(Expression<Func<T, bool>> predicate);
+  Task<T> FindByEntity(T entity);
+  Task<T> Insert(T obj);
+  //IEnumerable<long> Inserts<T>(IEnumerable<T> objs) where T : class;
+  Task<bool> Update(T obj);
+  Task<bool> Delete(int id);
+}
+
+public class GenericEntityRepository<T> : IGenericEntityRepository<T> where T : ModelBase
+{
+
+  private readonly EntityDbContext _context;
+  private readonly IServiceProvider _service;
+  public GenericEntityRepository(EntityDbContext context, IServiceProvider service)
+  {
+    _context = context;
+    _service = service;
+  }
+
+  public EntityDbContext GetContext()
+  {
+    return _context;
+  }
+
+  public async Task<T> GetById(object id)
+  {
+    return await FindById(id, false);
+  }
+
+  public async Task<T> GetByIdWithReferences(object id)
+  {
+    return await FindById(id, true);
+  }
+
+  public async Task<IEnumerable<T>> GetAll()
+  {
+    return await _context.Set<T>().IncludeAll().ToListAsync();
+  }
+
+  public async Task<T> FindOneWithPredicate(Expression<Func<T, bool>> predicate)
+  {
+    return await _context.Set<T>().FirstOrDefaultAsync(predicate);
+  }
+
+  public async Task<T> FindOneWithPredicateWithReferences(Expression<Func<T, bool>> predicate)
+  {
+    return await _context.Set<T>().IncludeAll().FirstOrDefaultAsync(predicate);
+  }
+
+  public async Task<IEnumerable<T>> SearchWithPredicate(Expression<Func<T, bool>> predicate)
+  {
+    return await _context.Set<T>().Where(predicate).IncludeAll().ToListAsync();
+  }
+
+  public Task<IEnumerable<T>> SearchWithPredicateWithReferences(Expression<Func<T, bool>> predicate)
+  {
+    throw new NotImplementedException();
+  }
+
+  public async Task<T> FindByEntity(T entity)
+  {
+    var entityType = _context.Model.FindEntityType(typeof(T));
+    var keyProperties = entityType.FindPrimaryKey().Properties;
+    var keyValues = keyProperties.Select(p => GetKeyValue(entity.GetType().GetProperty(p.Name).GetValue(entity), p.ClrType)).ToArray();
+    return await _context.Set<T>().FindAsync(keyValues);
+  }
+
+  public async Task<T> Insert(T obj)
+  {
+    await UpdateRelatedEntities(obj);
+    await _context.Set<T>().AddAsync(obj);
+    await _context.SaveChangesAsync();
+    return obj;
+  }
+
+  public async Task<bool> Update(T obj)
+  {
+    var currentObj = await FindByEntity(obj);
+    if (currentObj == null) return false;
+
+    // Atualiza os valores
+    _context.Entry(currentObj).CurrentValues.SetValues(obj);
+    await UpdateRelatedEntities(currentObj, obj);
+    await _context.SaveChangesAsync();
+    return true;
+  }
+
+  public async Task<bool> Delete(int id)
+  {
+    var obj = await GetById(id);
+    if (obj == null) return false;
+
+    _context.Remove(obj);
+    await _context.SaveChangesAsync();
+    return true;
+  }
+
+  // ? FIM DAS CLASSES PUBLICAS
+  /*
+  ! Propriedades Privadas. Servem como processos auxiliares,
+  ! Pensar se pertinente criar uma Partial para elas.
+  */
+
+  /*
+  *
+  * Metodos para auxilio nas Buscas
+  *
+  */
+
+  private async Task<T> FindById(object id, bool includeReferences)
+  {
+    var query = _context.Set<T>().AsQueryable();
+
+    if (includeReferences)
+      query = query.IncludeAll();
+
+    var keyName = _context.Model.FindEntityType(typeof(T))
+                                .FindPrimaryKey()
+                                .Properties
+                                .Select(p => p.Name)
+                                .FirstOrDefault();
+
+    if (keyName == null)
+      throw new InvalidOperationException("Primary key not found.");
+
+    var parameter = Expression.Parameter(typeof(T), "e");
+    var predicate = Expression.Lambda<Func<T, bool>>(
+        Expression.Equal(
+            Expression.Property(parameter, keyName),
+            Expression.Constant(id)
+        ),
+        parameter
+    );
+    return await query.FirstOrDefaultAsync(predicate);
+  }
+
+  private object GetKeyValue(object value, Type propertyType)
+  {
+    if (propertyType == typeof(int) && (int)value == 0)
+    {
+      return -1;
+    }
+    return value;
+  }
+
+  /*
+  *
+  * Metodos para auxilio nas no Update e Insert
+  *
+  */
+
+  private async Task UpdateRelatedEntities(T newItem)
+  { // Atualiza as entidades relacionadas de um item novo usando o mesmo item como base
+    await UpdateRelatedEntities(newItem, newItem); // Chama a versão sobrecarregada do método passando o item novo como existente também
+  }
+
+  private async Task UpdateRelatedEntities(T existingItem, T newItem)
+  { // Atualiza as entidades relacionadas entre o item existente e o novo item
+    var navigationProperties = GetNavigationProperties(); // Obtém todas as propriedades de navegação do tipo T que são do tipo _BaseEntityWithId
+
+    foreach (var property in navigationProperties)
+    { // Itera sobre cada propriedade de navegação
+      var newValue = property.GetValue(newItem);
+      if (newValue is ModelBase)
+      {
+        await UpdateSingleEntityAsync(existingItem, newItem, property); // Atualiza a propriedade de navegação específica
+      }
+    }
+  }
+  private IEnumerable<PropertyInfo> GetNavigationProperties()
+  { // Obtém as propriedades de navegação do tipo T que são do tipo _BaseEntityWithId
+    return typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance) // Obtém todas as propriedades públicas e de instância
+        .Where(p =>
+              typeof(ModelBase).IsAssignableFrom(p.PropertyType) &&
+              p.GetMethod.IsVirtual &&
+              p.GetCustomAttribute<NotMappedAttribute>() == null
+        );
+  }
+
+  private async Task UpdateSingleEntityAsync(T existingItem, T newItem, PropertyInfo property)
+  {
+    var newValue = property.GetValue(newItem); // Obtém o valor da propriedade no novo item
+
+    if (newValue != null)
+    {
+      var newEntity = newValue as ModelBase;
+      if (newEntity != null)
+      {
+        var currentEntity = await GetCurrentValueOfProperty(newEntity); // Obtém a entidade atual correspondente ao novo valor
+
+        if (currentEntity == null)
+        {
+          //currentEntity = newEntity;
+          throw new InvalidOperationException("Registro relacionado não encontrado.");
+
+        }
+
+        property.SetValue(existingItem, currentEntity); // Define o valor da propriedade no item existente com a entidade atualizada
+      }
+    }
+  }
+
+  private async Task<object> GetCurrentValueOfProperty(ModelBase newProperty)
+  {
+    var repositoryType = typeof(IGenericEntityRepository<>).MakeGenericType(newProperty.GetType()); // Obtém o tipo do repositório genérico para o tipo da nova propriedade
+    var repository = _service.GetRequiredService(repositoryType); // Obtém o repositório genérico do serviço de injeção de dependência
+    var method = repositoryType.GetMethod("FindByEntity"); // Obtém o método FindById do repositório
+
+    var parameters = new object[] { newProperty }; // Prepara os parâmetros para o método FindById (neste caso, o ID da nova entidade)
+    var task = (Task)method.Invoke(repository, parameters);
+    await task.ConfigureAwait(false); // Invoca o método FindById de forma assíncrona
+    var resultProperty = task.GetType().GetProperty("Result"); // Obtém a propriedade Result da task, que contém a entidade encontrada
+    return resultProperty.GetValue(task); // Retorna o valor da entidade encontrada
+  }
+
+  /*
+  ! Fundo deve conter apenas classes privadas. Se for classe publica, que está na interface, adicionar acima do comentário 'FIM DAS CLASSES PUBLICAS' 
+  */
+}

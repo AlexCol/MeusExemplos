@@ -9,6 +9,7 @@ public class ConstraintInfo {
   public string ReferencedTable { get; set; }
   public int ConstraintNumber { get; set; }
   public bool CircularReference { get; set; } = false;
+  public int PKNumberFromReferenceTable { get; set; } = 0;
 
   public static List<ConstraintInfo> FromDataTable(DataTable table) {
     return table.AsEnumerable().Select(row => new ConstraintInfo {

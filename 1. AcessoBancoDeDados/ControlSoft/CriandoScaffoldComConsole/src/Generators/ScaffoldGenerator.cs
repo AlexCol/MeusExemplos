@@ -33,9 +33,6 @@ namespace CriandoScaffoldComConsole.src.Generators {
         if (columnsTable.Rows.Count == 0) throw new InvalidDataException($"Tabela {tableName} não existe.");
 
         var constraints = GetConstraints(connection, tableName).OrderByDescending(c => c.ConstraintType).ToList();
-        // foreach (var constraint in constraints)
-        //   if (!string.IsNullOrEmpty(constraint.ReferencedTable))
-        //     constraint.CircularReference = CheckIfCircularReference(connection, tableName, constraint.ReferencedTable);
 
         var classCode = _codeBuilder.BuildClassCode(tableName, BaseClass, NameSpace, columnsTable, constraints, _dataTypeMapper);
         _fileGenerator.SaveClass(classCode, NameSpace, BaseClass);
@@ -116,11 +113,29 @@ namespace CriandoScaffoldComConsole.src.Generators {
       var constraintsTable = DatabaseHelper.ExecuteQuery(connection, query);
       var constraintsList = ConstraintInfo.FromDataTable(constraintsTable);
 
-      // for (int i = 0; i < constraintsList.Count; i++) {
-      //   constraintsList[i].CircularReference = CheckIfCircularReference(connection, tableName, constraintsList[i].ReferencedTable);
-      // }
+      SetCircularReferences(connection, tableName, constraintsList);
+      SetPKFromReferenceNumber(connection, constraintsList);
 
       return constraintsList;
+    }
+
+    public void SetCircularReferences(FbConnection connection, string tableName, List<ConstraintInfo> constraintsList) {
+      for (int i = 0; i < constraintsList.Count; i++) {
+        constraintsList[i].CircularReference = CheckIfCircularReference(connection, tableName, constraintsList[i].ReferencedTable);
+      }
+    }
+
+    public void SetPKFromReferenceNumber(FbConnection connection, List<ConstraintInfo> constraintsList) {
+      for (int i = 0; i < constraintsList.Count; i++) {
+        if (constraintsList[i].ConstraintType != "FOREIGN KEY") continue;
+        if (constraintsList[i].ConstraintNumber <= 1) continue;
+
+        var query = QueryContraints(constraintsList[i].ReferencedTable);
+        var constraintsTable = DatabaseHelper.ExecuteQuery(connection, query);
+        var referenceConstraints = ConstraintInfo.FromDataTable(constraintsTable);
+
+        constraintsList[i].PKNumberFromReferenceTable = referenceConstraints.Count(r => r.ConstraintType == "PRIMARY KEY");
+      }
     }
 
     private void GenerateReferencedClasses(List<ConstraintInfo> constraints) {
@@ -146,7 +161,7 @@ namespace CriandoScaffoldComConsole.src.Generators {
                       iseg.RDB$FIELD_NAME AS COLUMN_NAME,
                       rc.RDB$RELATION_NAME AS TABLE_NAME,
                       trim(ref_tbl.RDB$RELATION_NAME) AS REFERENCED_TABLE,
-                      ROW_NUMBER() OVER (PARTITION BY rc.RDB$CONSTRAINT_TYPE) AS CONSTRAINT_NUMBER
+                      COUNT(*) OVER (PARTITION BY rc.RDB$CONSTRAINT_TYPE, ref_tbl.RDB$RELATION_NAME) AS CONSTRAINT_NUMBER
                   FROM
                       RDB$RELATION_CONSTRAINTS rc
                       JOIN RDB$INDEX_SEGMENTS iseg ON rc.RDB$INDEX_NAME = iseg.RDB$INDEX_NAME

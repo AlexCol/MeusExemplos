@@ -1,0 +1,9 @@
+
+The indexes {'CodigoPatrimonioChave'} on 'PatrimonioEmpresa' and {'CodigoEmpresaChave'} on 'PatrimonioEmpresa' are both mapped to 'TB_PATRIMONIOEMPRESA.IX_TB_PATRIMONIOEMPRESA_CODIGO~', but with different columns ({'CODIGOPATRIMONIO'} and {'CODIGOEMPRESA'}).",
+--Tabela tem FKs mas não tem uma PK, gera o erro. Tem que informar a PK na classe.
+
+Devido a erros de relacionamento, mantido padrão de nome das properties virtuais com obj no nome
+    [Column("ORDEMMOVCEREAL")]
+    public int OrdemMOVCEREAL { get; set; }
+    [ForeignKey("OrdemMOVCEREAL")]
+    public virtual MOVCEREAL ORDEMMOVCEREALObj { get; set; }

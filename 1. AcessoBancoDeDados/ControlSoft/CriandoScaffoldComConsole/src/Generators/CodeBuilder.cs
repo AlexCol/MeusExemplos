@@ -37,7 +37,7 @@ public class CodeBuilder {
     classBuilder.AppendLine();
     classBuilder.AppendLine($"[Table(\"{tableName}\")]");
     classBuilder.AppendLine($"/*primary key*/");
-    classBuilder.AppendLine($"public class {tableName.ConvertToClassName()}" + (string.IsNullOrEmpty(baseClass) ? "" : $": {baseClass}"));
+    classBuilder.AppendLine($"public class {tableName.ConvertToClassName()}" + (string.IsNullOrEmpty(baseClass) ? "" : $" : {baseClass}"));
     classBuilder.AppendLine("{");
   }
 
@@ -64,27 +64,54 @@ public class CodeBuilder {
   }
 
   private void AdicionaPropertyComConstraint(StringBuilder classBuilder, List<ConstraintInfo> constraintsDaColuna, string columnName, string dataType, string nullable, string columnPropName) {
-    var isKey = false;
-    var constraintPK = constraintsDaColuna.FirstOrDefault(ci => ci.ConstraintType == "PRIMARY KEY");
-    if (constraintPK != null) {
+    var isPKey = constraintsDaColuna.FirstOrDefault(ci => ci.ConstraintType == "PRIMARY KEY") != null;
+    var constraintFK = constraintsDaColuna.FirstOrDefault(ci => ci.ConstraintType == "FOREIGN KEY" && ci.ColumnName == columnName);
+    var isFKey = constraintFK != null;
+    // if (isFKey)
+    //   columnPropName += "Chave";
+
+    if (isPKey) {
       classBuilder.AppendLine("    [Key]");
-      isKey = true;
-      nameofKeys.Add("nameof(" + columnPropName + ")");
+      nameofKeys.Add($"\"{columnPropName}\"");
     }
 
-    var constraintFK = constraintsDaColuna.FirstOrDefault(ci => ci.ConstraintType == "FOREIGN KEY" && ci.ColumnName == columnName);
-    if (constraintFK != null && !isKey) {
-      classBuilder.AppendLine($"    [Column(\"{columnName}\")]");
-      classBuilder.AppendLine($"    [ForeignKey(\"{columnName}\")]");
-      classBuilder.AppendLine($"    public {dataType}{nullable} {columnPropName}Chave {{ get; set; }}");
-      //if (constraint.CircularReference)
-      if (!isKey)
-        classBuilder.AppendLine("    [NotMapped]");
-      classBuilder.AppendLine($"    public virtual {constraintFK.ReferencedTable.ConvertToClassName()} {columnName} {{ get; set; }}");
-      classBuilder.AppendLine();
+    if (isFKey) {
+      AddForeignKeyProp(classBuilder, constraintFK, columnName, dataType, nullable, columnPropName);
     } else {
       AdicionaProperty(classBuilder, columnName, dataType, nullable, columnPropName);
     }
+  }
+
+  private void AddForeignKeyProp(StringBuilder classBuilder, ConstraintInfo constraintFK, string columnName, string dataType, string nullable, string columnPropName) {
+    classBuilder.AppendLine($"    [Column(\"{columnName}\")]");
+    classBuilder.AppendLine($"    public {dataType}{nullable} {columnPropName} {{ get; set; }}");
+
+    var isCompositeKey = constraintFK.ConstraintNumber > 1;
+    if (isCompositeKey && constraintFK.PKNumberFromReferenceTable == constraintFK.ConstraintNumber) {
+      AddCompositeFK(classBuilder, constraintFK, columnPropName);
+    } else {
+      AddSimpleFK(classBuilder, constraintFK, columnPropName);
+    }
+  }
+
+  private void AddCompositeFK(StringBuilder classBuilder, ConstraintInfo constraintFK, string columnPropName) {
+    var alreadyMapped = classBuilder.ToString().Contains($"public virtual {constraintFK.ReferencedTable.ConvertToClassName()}");
+    if (alreadyMapped) {
+      classBuilder.Replace($"\" /*fk - {constraintFK.ReferencedTable}*/", $", {columnPropName}\" /*fk - {constraintFK.ReferencedTable}*/");
+    } else {
+      classBuilder.AppendLine($"    [ForeignKey(\"{columnPropName}\" /*fk - {constraintFK.ReferencedTable}*/)]");
+      classBuilder.AppendLine($"    public virtual {constraintFK.ReferencedTable.ConvertToClassName()} {constraintFK.ReferencedTable.ConvertToClassName()}Obj {{ get; set; }}");
+      classBuilder.AppendLine();
+    }
+  }
+
+  private void AddSimpleFK(StringBuilder classBuilder, ConstraintInfo constraintFK, string columnPropName) {
+    if (constraintFK.CircularReference)
+      classBuilder.AppendLine($"    [NotMapped]");
+    else
+      classBuilder.AppendLine($"    [ForeignKey(\"{columnPropName}\")]");
+    classBuilder.AppendLine($"    public virtual {constraintFK.ReferencedTable.ConvertToClassName()} {columnPropName}Obj {{ get; set; }}");
+    classBuilder.AppendLine();
   }
 
   private void AdicionaFinalizacaoClasse(StringBuilder classBuilder, List<ConstraintInfo> constraints) {
