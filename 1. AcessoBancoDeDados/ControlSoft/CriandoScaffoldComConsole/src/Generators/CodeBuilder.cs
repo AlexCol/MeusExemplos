@@ -106,10 +106,10 @@ public class CodeBuilder {
   }
 
   private void AddSimpleFK(StringBuilder classBuilder, ConstraintInfo constraintFK, string columnPropName) {
-    if (constraintFK.CircularReference)
-      classBuilder.AppendLine($"    [NotMapped]");
-    else
-      classBuilder.AppendLine($"    [ForeignKey(\"{columnPropName}\")]");
+    classBuilder.AppendLine($"    [ForeignKey(\"{columnPropName}\")]");
+
+    if (constraintFK.CircularReference) classBuilder.AppendLine($"    [NotMapped]");
+
     classBuilder.AppendLine($"    public virtual {constraintFK.ReferencedTable.ConvertToClassName()} {columnPropName}Obj {{ get; set; }}");
     classBuilder.AppendLine();
   }
