@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CriandoScaffoldComConsole", "CriandoScaffoldComConsole.csproj", "{0D5EA262-6920-4C45-9DE4-9A5C09043510}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PollyApp", "PollyApp.csproj", "{CD97C302-A6D7-48B4-A3C4-C05E9DD30CA3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0D5EA262-6920-4C45-9DE4-9A5C09043510}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0D5EA262-6920-4C45-9DE4-9A5C09043510}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0D5EA262-6920-4C45-9DE4-9A5C09043510}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0D5EA262-6920-4C45-9DE4-9A5C09043510}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD97C302-A6D7-48B4-A3C4-C05E9DD30CA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD97C302-A6D7-48B4-A3C4-C05E9DD30CA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD97C302-A6D7-48B4-A3C4-C05E9DD30CA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD97C302-A6D7-48B4-A3C4-C05E9DD30CA3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {96ABEFB7-A330-405D-B72E-50A3EC8BBE72}
+		SolutionGuid = {08B333EF-4099-43A8-8C06-7A0E2800CE2C}
 	EndGlobalSection
 EndGlobal
