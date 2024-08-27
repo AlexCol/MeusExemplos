@@ -12,6 +12,7 @@ public static class LogBuilder {
       configuration.MinimumLevel.Information();
       configuration.MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning);
       configuration.MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Error);
+      configuration.MinimumLevel.Override("System.Net.Http.HttpClient", LogEventLevel.Error);
       configuration.Enrich.FromLogContext();
       configuration.WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj} - {SourceContext}{NewLine}{Exception}"); //SourceContext diz quem gerou
     });

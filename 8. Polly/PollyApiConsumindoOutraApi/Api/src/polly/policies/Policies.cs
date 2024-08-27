@@ -12,13 +12,13 @@ public static class Policies {
   public static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy(IServiceProvider provider, HttpRequestMessage request, int numberOfTries, int secondsBetweenTries) {
     return HttpPolicyExtensions.HandleTransientHttpError()
                                .OrResult(response => {
-                                 Log.Error("Passando no OrResult");
+                                 Log.Error($"Passando no OrResult, o resultado dela não foi 500, mas sim: {(int)response.StatusCode}");
                                  return !response.IsSuccessStatusCode;
                                }) // Inclui códigos 4xx e 5xx
                                .WaitAndRetryAsync(numberOfTries,
                                                   retryAttempt => TimeSpan.FromSeconds(secondsBetweenTries),
                                                   onRetry: (response, delay, retryCount, context) => {
-                                                    Serilog.Log.Error($"[GetRetryPolicy] Erro na requisição. Tentativa {retryCount}. URL: {request.RequestUri}, Status Code: {response.Result.StatusCode}");
+                                                    Log.Fatal($"[GetRetryPolicy] Erro na requisição. Tentativa {retryCount}. URL: {request.RequestUri}, Status Code: {response.Result.StatusCode}");
                                                   });
   }
 
