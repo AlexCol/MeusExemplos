@@ -5,10 +5,8 @@ using System.Threading.Tasks;
 
 namespace CriandoScaffoldComConsole.src.Util;
 
-public static class WordsReference
-{
-  public static Dictionary<string, string> GetReferenceWordsToCamelCase()
-  {
+public static class WordsReference {
+  public static Dictionary<string, string> GetReferenceWordsToCamelCase() {
     var dictionaty = new Dictionary<string, string>() {
       { "WEBSERVICE", "Webservice" },
       { "WARRANTS", "Warrants" },

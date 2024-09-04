@@ -1,17 +1,21 @@
 using System.Diagnostics;
 using System.Text;
 using CriandoScaffoldComConsole.src.Models;
+using CriandoScaffoldComConsole.src.Util;
+using Microsoft.Extensions.Configuration;
 
 namespace CriandoScaffoldComConsole.src.Generators;
 
 public class FileGenerator {
 
-  private string _path = Debugger.IsAttached ? "../../../src/ScaffoldResult" : "./src/ScaffoldResult";
+  private readonly IConfiguration _config;
+  private string _path = new ConfigData().GetConfig()["PastaScaffold"];
   private readonly string _contextPath;
   private readonly string _contextFileName = "MyDbContext";
 
   public FileGenerator(string path = "") {
-    _path = !string.IsNullOrEmpty(path) ? path : _path;
+    _config = new ConfigData().GetConfig();
+    _path = !string.IsNullOrEmpty(path) ? path : _config["PastaScaffold"];
     Directory.CreateDirectory(_path);
     _contextPath = Path.Combine(_path, "context");
     Directory.CreateDirectory(_contextPath);

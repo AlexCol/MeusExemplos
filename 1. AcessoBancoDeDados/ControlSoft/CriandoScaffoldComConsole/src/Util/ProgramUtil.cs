@@ -11,7 +11,9 @@ namespace CriandoScaffoldComConsole.src.Util;
 public static class ProgramUtil {
 
   public static List<string> AskTables() {
+    Console.ForegroundColor = ConsoleColor.Green;
     Console.WriteLine("Informe as tabelas que deseja resgatar. Separadas por virgula (vazio busca todas).");
+    Console.ResetColor();
     var tablesString = Console.ReadLine();
     var tablesArray = tablesString.Split(",");
     var tablesList = new List<string>();
@@ -23,13 +25,17 @@ public static class ProgramUtil {
   }
 
   public static string AskBaseClass() {
+    Console.ForegroundColor = ConsoleColor.Blue;
     Console.WriteLine("Classe base? Em branco se nenhuma.");
+    Console.ResetColor();
     var baseClass = Console.ReadLine();
     return baseClass.Trim();
   }
 
   public static string AskNamesSpace() {
+    Console.ForegroundColor = ConsoleColor.Yellow;
     Console.WriteLine("Qual o nameSpace para as classes. Vazio se nenhuma.");
+    Console.ResetColor();
     return Console.ReadLine();
   }
 
@@ -52,9 +58,28 @@ public static class ProgramUtil {
       if (!isDebug) {
         Console.Clear();
         processadas++;
-        Console.WriteLine($"Processando: {processadas}/{totalTabelas}");
+
+        var processado = ((processadas * 1.0) / totalTabelas) * 100;
+        if (processado <= 20)
+          Console.ForegroundColor = ConsoleColor.Green;
+        else if (processado <= 60)
+          Console.ForegroundColor = ConsoleColor.Yellow;
+        else
+          Console.ForegroundColor = ConsoleColor.Blue;
+        Console.WriteLine($"Processando:  {processadas} / {totalTabelas} - {processado.ToString("F2")}%");
+        Console.ResetColor();
       }
       scaffoldGenerator.GenerateClasses(tabela); //? Gera a Classe.
     }
+  }
+
+  public static void MensagemFinalizado() {
+    Console.ForegroundColor = ConsoleColor.Blue;
+    Console.BackgroundColor = ConsoleColor.White;
+    Console.WriteLine("Processo finalizado.");
+    Console.ForegroundColor = ConsoleColor.Red;
+    var pasta = new ConfigData().GetConfig()["PastaScaffold"];
+    Console.WriteLine($"Arquivos salvos em: {pasta}.");
+    Console.ResetColor();
   }
 }
