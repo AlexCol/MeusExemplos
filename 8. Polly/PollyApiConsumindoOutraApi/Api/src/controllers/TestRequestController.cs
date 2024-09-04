@@ -18,6 +18,8 @@ public class TestRequestController : ControllerBase {
 
   [HttpGet]
   public async Task<IActionResult> Get() {
-    return Ok(await _request.SendAsync("test"));
+    Console.WriteLine("Entrou no controller.");
+    var retorno = await _request.SendAsync("test");
+    return Ok(retorno);
   }
 }

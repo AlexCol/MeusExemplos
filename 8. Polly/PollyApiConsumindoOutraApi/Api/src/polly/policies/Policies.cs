@@ -13,6 +13,7 @@ public static class Policies {
     return HttpPolicyExtensions.HandleTransientHttpError()
                                .OrResult(response => {
                                  Log.Error($"Passando no OrResult, o resultado dela não foi 500, mas sim: {(int)response.StatusCode}");
+                                 if (response.IsSuccessStatusCode) Log.Warning("Sucesso");
                                  return !response.IsSuccessStatusCode;
                                }) // Inclui códigos 4xx e 5xx
                                .WaitAndRetryAsync(numberOfTries,
