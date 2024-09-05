@@ -10,8 +10,8 @@ public partial class CodeBuilder {
     foreach (DataRow row in columnsTable.Rows) {
       var columnName = row["COLUMN_NAME"].ToString().Trim();
       var columnPropName = columnName.ConvertToClassPropName() + (columnName.ConvertToClassPropName() == tableName.ConvertToClassName() ? "_" : "");
-      var nullable = row["IS_NOT_NULL"].ToString().Trim().Equals("N") ? "?" : "";
       var dataType = dataTypeMapper.MapFromFirebirdType(row);
+      var nullable = dataType.Nullable ? "?" : "";
       var constraintsDaColuna = constraints.Where(c => c.ColumnName == columnName).ToList();
 
       if (constraintsDaColuna.Count == 0) {
@@ -22,13 +22,13 @@ public partial class CodeBuilder {
     }
   }
 
-  private void AdicionaProperty(StringBuilder classBuilder, string columnName, string dataType, string nullable, string columnPropName) {
-    classBuilder.AppendLine($"    [Column(\"{columnName}\")]");
-    classBuilder.AppendLine($"    public {dataType}{nullable} {columnPropName} {{ get; set; }}");
+  private void AdicionaProperty(StringBuilder classBuilder, string columnName, DBDataType dataType, string nullable, string columnPropName) {
+    classBuilder.AppendLine($"    [Column(\"{columnName}\"{dataType.TypeName})]");
+    classBuilder.AppendLine($"    public {dataType.PropName}{nullable} {columnPropName} {{ get; set; }}");
     classBuilder.AppendLine();
   }
 
-  private void AdicionaPropertyComConstraint(StringBuilder classBuilder, List<ConstraintInfo> constraintsDaColuna, string columnName, string dataType, string nullable, string columnPropName, List<string> nameofKeys) {
+  private void AdicionaPropertyComConstraint(StringBuilder classBuilder, List<ConstraintInfo> constraintsDaColuna, string columnName, DBDataType dataType, string nullable, string columnPropName, List<string> nameofKeys) {
     var isPKey = constraintsDaColuna.FirstOrDefault(ci => ci.ConstraintType == "PRIMARY KEY") != null;
     var constraintFK = constraintsDaColuna.FirstOrDefault(ci => ci.ConstraintType == "FOREIGN KEY" && ci.ColumnName == columnName);
     var isFKey = constraintFK != null;
