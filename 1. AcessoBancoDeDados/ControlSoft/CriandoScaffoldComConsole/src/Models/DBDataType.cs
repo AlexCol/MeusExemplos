@@ -55,12 +55,11 @@ public class DBDataType {
       10 => "float",
       12 => "DateTime",
       13 => "TimeSpan",
-      14 => "char",
+      14 or 37 => "string",
       16 => FieldLength == 0 ? "long" : "decimal", // INT64 or NUMERIC/DECIMAL
       23 => "bool",
       27 => "double",
       35 => "DateTime",
-      37 => "string",
       261 => "string", //!BLOB
       _ => throw new Exception("Tipo não definido")
     };
