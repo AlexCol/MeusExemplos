@@ -1,3 +1,8 @@
 site para testar consumo de api
 
 https://jsonplaceholder.typicode.com/
+
+
+
+https://github.com/quozd/awesome-dotnet?tab=readme-ov-file
+https://github.com/ara3d/extra-awesome-dotnet?tab=readme-ov-file
