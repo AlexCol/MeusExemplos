@@ -8,13 +8,10 @@ using QuestPDF.Infrastructure;
 
 namespace Teste.src.QuestPdfSpace;
 
-public partial class QuestPdf
-{
-    private static void ConfigHeader(PageDescriptor page)
-    {
+public partial class QuestPdf {
+    private static void ConfigHeader(PageDescriptor page) {
         page.Header()
-            .Text(txt =>
-            {
+            .Text(txt => {
                 txt.Span("Cabeçalho")
                     .Style(new TextStyle()
                         .Bold()

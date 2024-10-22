@@ -6,18 +6,15 @@ using System.Threading.Tasks;
 
 namespace Teste.src.Model;
 
-public class Article
-{
+public class Article {
     public int ArticleId { get; set; }
     public string ProductName { get; set; }
     public int Stock { get; set; }
     public decimal Price { get; set; }
 }
 
-public static class ArticleData
-{
-    public static IEnumerable<Article> getMockArticles()
-    {
+public static class ArticleData {
+    public static IEnumerable<Article> getMockArticles() {
         return new List<Article>
         {
             new Article { ArticleId = 1, ProductName = "Product 1", Stock = 10, Price = 100 },

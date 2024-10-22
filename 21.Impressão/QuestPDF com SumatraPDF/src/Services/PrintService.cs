@@ -12,25 +12,20 @@ using Teste.src.QuestPdfSpace;
 
 namespace Teste.src.Services;
 
-public interface IPrintService
-{
+public interface IPrintService {
     Task PrintFile(IFormFile file, string printerName);
     void PrintGeneratedPdf(IEnumerable<Article> articles, string printerName);
 }
 
-public class PrintService : IPrintService
-{
-    public async Task PrintFile(IFormFile file, string printerName)
-    {
-        if (file == null || string.IsNullOrEmpty(printerName))
-        {
+public class PrintService : IPrintService {
+    public async Task PrintFile(IFormFile file, string printerName) {
+        if (file == null || string.IsNullOrEmpty(printerName)) {
             throw new Exception("Arquivo e nome da impressora são obrigatórios.");
         }
 
         // Verifica se a impressora existe
         PrinterSettings printerSettings = new PrinterSettings();
-        if (!printerSettings.IsValid || printerSettings.PrinterName != printerName)
-        {
+        if (!printerSettings.IsValid || printerSettings.PrinterName != printerName) {
             throw new Exception("Impressora não encontrada.");
         }
 
@@ -40,15 +35,12 @@ public class PrintService : IPrintService
         string tempFilePath = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}{fileExtension}");
 
         // Salvar o arquivo temporariamente com a extensão correta
-        using (var stream = new FileStream(tempFilePath, FileMode.Create))
-        {
+        using (var stream = new FileStream(tempFilePath, FileMode.Create)) {
             await file.CopyToAsync(stream);
         }
 
-        try
-        {
-            switch (fileExtension)
-            {
+        try {
+            switch (fileExtension) {
                 case ".png":
                 case ".jpg":
                 case ".jpeg":
@@ -77,15 +69,12 @@ public class PrintService : IPrintService
             }
 
             System.IO.File.Delete(tempFilePath); // Limpar o arquivo temporário
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             throw new Exception($"Erro ao tentar imprimir: {ex.Message}");
         }
     }
 
-    public void PrintGeneratedPdf(IEnumerable<Article> articles, string printerName)
-    {
+    public void PrintGeneratedPdf(IEnumerable<Article> articles, string printerName) {
         string pdfFilePath = QuestPdf.Init(articles, true);
 
         PrintPdf(pdfFilePath, printerName);
@@ -94,13 +83,11 @@ public class PrintService : IPrintService
             File.Delete(pdfFilePath);
     }
 
-    private void PrintMetaFile(string tempFilePath, string printerName)
-    {
+    private void PrintMetaFile(string tempFilePath, string printerName) {
         Metafile metafile = new Metafile(tempFilePath);
         PrintDocument printDocument = new PrintDocument();
         printDocument.PrinterSettings.PrinterName = printerName;
-        printDocument.PrintPage += (sender, e) =>
-        {
+        printDocument.PrintPage += (sender, e) => {
             RectangleF printArea = e.PageBounds;
             e.Graphics.DrawImage(metafile, printArea);
         };
@@ -110,14 +97,12 @@ public class PrintService : IPrintService
     }
 
     // Método para imprimir imagens
-    private void PrintImage(string filePath, string printerName)
-    {
+    private void PrintImage(string filePath, string printerName) {
         Image image = Image.FromFile(filePath);
         PrintDocument printDocument = new PrintDocument();
         printDocument.PrinterSettings.PrinterName = printerName;
 
-        printDocument.PrintPage += (sender, e) =>
-        {
+        printDocument.PrintPage += (sender, e) => {
             RectangleF printArea = e.PageBounds;
             e.Graphics.DrawImage(image, printArea);
         };
@@ -127,14 +112,12 @@ public class PrintService : IPrintService
     }
 
     // Método para imprimir arquivos de texto
-    private void PrintTextFile(string filePath, string printerName)
-    {
+    private void PrintTextFile(string filePath, string printerName) {
         string fileContent = System.IO.File.ReadAllText(filePath);
         PrintDocument printDocument = new PrintDocument();
         printDocument.PrinterSettings.PrinterName = printerName;
 
-        printDocument.PrintPage += (sender, e) =>
-        {
+        printDocument.PrintPage += (sender, e) => {
             e.Graphics.DrawString(fileContent, new Font("Arial", 12), System.Drawing.Brushes.Black, new RectangleF(0, 0, e.PageBounds.Width, e.PageBounds.Height));
         };
 
@@ -142,8 +125,7 @@ public class PrintService : IPrintService
     }
 
     // Método para imprimir PDFs (usa PdfiumViewer)
-    private void PrintPdf(string filePath, string printerName)
-    {
+    private void PrintPdf(string filePath, string printerName) {
         // Caminho para o executável do SumatraPDF
         string sumatraPdfPath = @"C:\Program Files\SumatraPDF\SumatraPDF.exe"; // Ajuste o caminho conforme necessário
 
@@ -151,8 +133,7 @@ public class PrintService : IPrintService
         string arguments = $"-print-to \"{printerName}\" \"{filePath}\"";
 
         // Criação do processo para chamar o SumatraPDF
-        var processStartInfo = new ProcessStartInfo
-        {
+        var processStartInfo = new ProcessStartInfo {
             FileName = sumatraPdfPath,
             Arguments = arguments,
             UseShellExecute = false,
@@ -164,18 +145,15 @@ public class PrintService : IPrintService
     }
 
     // Método para imprimir documentos Word (usa OpenXML ou Aspose.Words)
-    private void PrintWordDocument(string filePath, string printerName)
-    {
-        using (WordprocessingDocument wordDoc = WordprocessingDocument.Open(filePath, false))
-        {
+    private void PrintWordDocument(string filePath, string printerName) {
+        using (WordprocessingDocument wordDoc = WordprocessingDocument.Open(filePath, false)) {
             // Extrair o texto do documento Word
             string text = wordDoc.MainDocumentPart.Document.Body.InnerText;
 
             PrintDocument printDocument = new PrintDocument();
             printDocument.PrinterSettings.PrinterName = printerName;
 
-            printDocument.PrintPage += (sender, e) =>
-            {
+            printDocument.PrintPage += (sender, e) => {
                 e.Graphics.DrawString(text, new Font("Arial", 12), System.Drawing.Brushes.Black, new RectangleF(0, 0, e.PageBounds.Width, e.PageBounds.Height));
             };
 

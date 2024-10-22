@@ -8,10 +8,8 @@ using QuestPDF.Infrastructure;
 
 namespace Teste.src.QuestPdfSpace;
 
-public partial class QuestPdf
-{
-    private static void ConfigFooter(PageDescriptor page)
-    {
+public partial class QuestPdf {
+    private static void ConfigFooter(PageDescriptor page) {
         TextStyle style1 = new TextStyle()
             .FontColor(Colors.Red.Darken1)
             .Underline()
@@ -26,8 +24,7 @@ public partial class QuestPdf
             .BorderColor(Colors.Cyan.Lighten1)
             .Background(Colors.Yellow.Lighten4)
             .AlignCenter()
-            .Text(txt =>
-            {
+            .Text(txt => {
                 txt.Span("Page ").Style(style1);
                 txt.CurrentPageNumber().Underline().FontColor(Colors.Blue.Accent4);
             });

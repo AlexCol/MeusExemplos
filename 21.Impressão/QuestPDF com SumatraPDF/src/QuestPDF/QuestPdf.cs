@@ -9,17 +9,13 @@ using Teste.src.Services;
 
 namespace Teste.src.QuestPdfSpace;
 
-public static partial class QuestPdf
-{
-    public static string Init(IEnumerable<Article> article, bool print = false)
-    {
+public static partial class QuestPdf {
+    public static string Init(IEnumerable<Article> article, bool print = false) {
 
         QuestPDF.Settings.License = LicenseType.Community;
-        var document = Document.Create(container =>
-        {
+        var document = Document.Create(container => {
 
-            container.Page(page =>
-            {
+            container.Page(page => {
                 ConfigGeral(page);
                 ConfigHeader(page);
                 ConfigContent(page, article);
@@ -30,8 +26,7 @@ public static partial class QuestPdf
         //! pra mostrar o documento
         //
 
-        if (!print)
-        {
+        if (!print) {
             document.ShowInCompanionAsync(12500);
             return string.Empty;
         }

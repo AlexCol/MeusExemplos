@@ -5,14 +5,11 @@ using Teste.src.Model;
 
 namespace Teste.src.QuestPdfSpace;
 
-public partial class QuestPdf
-{
-    private static void ConfigContent(PageDescriptor page, IEnumerable<Article> articles)
-    {
+public partial class QuestPdf {
+    private static void ConfigContent(PageDescriptor page, IEnumerable<Article> articles) {
         page.Content()
             .PaddingVertical(1, Unit.Centimetre)
-            .Column(x =>
-            {
+            .Column(x => {
                 x.Spacing(20);
 
                 x.Item().Text(Placeholders.LoremIpsum());
@@ -23,10 +20,8 @@ public partial class QuestPdf
                     .Height(150)  // Define a altura do container
                     .Image("c:\\Users\\A1988\\OneDrive\\Área de Trabalho\\ControLogo.png");
 
-                x.Item().Table(table =>
-                {
-                    table.ColumnsDefinition(columns =>
-                    {
+                x.Item().Table(table => {
+                    table.ColumnsDefinition(columns => {
                         columns.ConstantColumn(50);
                         columns.RelativeColumn(2);
                         columns.ConstantColumn(60);
@@ -39,8 +34,7 @@ public partial class QuestPdf
                     table.Cell().Row(1).Column(4).Element(Block).Text("Price").FontSize(12).SemiBold();
 
                     uint rowIndex = 2;
-                    foreach (var article in articles)
-                    {
+                    foreach (var article in articles) {
                         table.Cell().Row(rowIndex).Column(1).Element(Entry).Text(article.ArticleId.ToString());
                         table.Cell().Row(rowIndex).Column(2).Element(Entry).AlignLeft().Text(article.ProductName);
                         table.Cell().Row(rowIndex).Column(3).Element(Entry).Text(article.Stock.ToString());
@@ -69,8 +63,7 @@ public partial class QuestPdf
             });
     }
 
-    static IContainer Block(this IContainer container)
-    {
+    static IContainer Block(this IContainer container) {
         return container
             .Border(1)
             .Background(Colors.Grey.Lighten1)
@@ -81,8 +74,7 @@ public partial class QuestPdf
             .AlignMiddle();
     }
 
-    static IContainer Entry(this IContainer container)
-    {
+    static IContainer Entry(this IContainer container) {
         return container
             .Border(1)
             .PaddingTop(1)

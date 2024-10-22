@@ -10,19 +10,16 @@ namespace Teste.src.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ArticlesController : ControllerBase
-{
+public class ArticlesController : ControllerBase {
 
     private readonly IPrintService _printService;
 
-    public ArticlesController(IPrintService printService)
-    {
+    public ArticlesController(IPrintService printService) {
         _printService = printService;
     }
 
     [HttpPost]
-    public IActionResult Get([FromBody] IEnumerable<Article> articles)
-    {
+    public IActionResult Get([FromBody] IEnumerable<Article> articles) {
         _printService.PrintGeneratedPdf(articles, "CutePDF Writer");
         return Ok(articles);
     }
