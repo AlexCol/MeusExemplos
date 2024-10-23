@@ -124,7 +124,7 @@ public class PrintService : IPrintService {
         printDocument.Print();
     }
 
-    // Método para imprimir PDFs (usa PdfiumViewer)
+    // Método para imprimir PDFs (usa SumatraPDF)
     private void PrintPdf(string filePath, string printerName) {
         // Caminho para o executável do SumatraPDF
         string sumatraPdfPath = @"C:\Program Files\SumatraPDF\SumatraPDF.exe"; // Ajuste o caminho conforme necessário
