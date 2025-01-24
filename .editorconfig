@@ -4,7 +4,11 @@ csharp_new_line_before_else = false
 csharp_new_line_before_catch = false
 csharp_new_line_before_finally = false
 
+insert_final_newline = true
 trim_trailing_whitespace = true
+
+######### Erros para travar Build.
+dotnet_diagnostic.IDE1006.severity = error
 
 ######### Interface 
 # Regra: Devem iniciar com I e o resto do nome da interface deve ser PascalCase (IMinhaInterface)
@@ -96,3 +100,4 @@ trim_trailing_whitespace = true
   dotnet_naming_rule.async_method.severity = error
   dotnet_naming_rule.async_method.symbols = async_method
   dotnet_naming_rule.async_method.style = async_method  
+
