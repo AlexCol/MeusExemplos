@@ -4,7 +4,6 @@ csharp_new_line_before_else = false
 csharp_new_line_before_catch = false
 csharp_new_line_before_finally = false
 
-insert_final_newline = true
 trim_trailing_whitespace = true
 
 ######### Interface 
@@ -45,12 +44,12 @@ trim_trailing_whitespace = true
   dotnet_naming_rule.types_must_be_pascal.symbols = types_pascal_case
   dotnet_naming_rule.types_must_be_pascal.style = types_pascal_case
 
-######### Variaveis Locais
+######### Variaveis Locais e Parametros de Metodos
 # Regra: Devem ser camelCase (iniciar com letra minuscula)
   # Definindo estilos
   dotnet_naming_style.local_var.capitalization = camel_case
   # Definindo simbolos
-  dotnet_naming_symbols.local_var.applicable_kinds = local
+  dotnet_naming_symbols.local_var.applicable_kinds = local, parameter
   dotnet_naming_symbols.local_var.applicable_accessibilities = *
   # Criando regras
   dotnet_naming_rule.local_var.severity = error
