@@ -7,7 +7,7 @@ csharp_new_line_before_finally = false
 trim_trailing_whitespace = true
 
 ######### Interface 
-# Regra: Devem iniciar com I e a primeira letra da interface deve ser PascalCase (IMinhaInterface)
+# Regra: Devem iniciar com I e o resto do nome da interface deve ser PascalCase (IMinhaInterface)
   # Definindo estilos
   dotnet_naming_style.interface.capitalization = pascal_case
   dotnet_naming_style.interface.required_prefix = I
@@ -20,7 +20,7 @@ trim_trailing_whitespace = true
   dotnet_naming_rule.interface_must_begin_with_i.style = interface
 
 ######### Enum
-# Regra: Devem iniciar com E e a primeira letra do Enum deve ser PascalCase (EMeuEnum)
+# Regra: Devem iniciar com E e o resto do nome do Enum deve ser PascalCase (EMeuEnum)
   # Definindo estilos
   dotnet_naming_style.enum.capitalization = pascal_case
   dotnet_naming_style.enum.required_prefix = E
@@ -82,3 +82,17 @@ trim_trailing_whitespace = true
   dotnet_naming_rule.constant.severity = error
   dotnet_naming_rule.constant.symbols = constant
   dotnet_naming_rule.constant.style = constant
+
+########## Metodos Assincronos
+# Regra: Metodos Assincronos devem terminar com Async
+  # Definindo estilos
+  dotnet_naming_style.async_method.capitalization = pascal_case
+  dotnet_naming_style.async_method.required_suffix = Async
+  # Definindo simbolos
+  dotnet_naming_symbols.async_method.applicable_kinds = method
+  dotnet_naming_symbols.async_method.applicable_accessibilities = *
+  dotnet_naming_symbols.async_method.required_modifiers = async
+  # Criando regras
+  dotnet_naming_rule.async_method.severity = error
+  dotnet_naming_rule.async_method.symbols = async_method
+  dotnet_naming_rule.async_method.style = async_method  
