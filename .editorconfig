@@ -7,6 +7,10 @@ csharp_new_line_before_finally = false
 insert_final_newline = true
 trim_trailing_whitespace = true
 
+#link documentação
+## https://learn.microsoft.com/pt-br/dotnet/fundamentals/code-analysis/style-rules/naming-rules
+### se abrir no Visual Studio (não o Code), vai ter várias opções prontas, as abaixo eu montei, mas no fim do arquivo tem tres exemplos pegos do vistual studio
+
 ######### Erros para travar Build.
 dotnet_diagnostic.IDE1006.severity = error
 
@@ -101,3 +105,7 @@ dotnet_diagnostic.IDE1006.severity = error
   dotnet_naming_rule.async_method.symbols = async_method
   dotnet_naming_rule.async_method.style = async_method  
 
+
+# dotnet_style_allow_multiple_blank_lines_experimental = false:warning
+# dotnet_style_allow_statement_immediately_after_block_experimental = false:error
+# csharp_style_allow_blank_lines_between_consecutive_braces_experimental = false:warning
