@@ -28,3 +28,6 @@ move bin\Release\%VERSAODOTNET%\win-x64\publish\*.* src\published
 
 REM Limpa a pasta publish da bin após mover os arquivos
 rd /s /q bin\Release\%VERSAODOTNET
+
+
+REM https://chatgpt.com/c/6824bbdb-c82c-8004-a11a-d857549d0bf6 -- PARA PUBLICAR PARA IIS
