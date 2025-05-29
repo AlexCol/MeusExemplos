@@ -7,105 +7,104 @@ csharp_new_line_before_finally = false
 insert_final_newline = true
 trim_trailing_whitespace = true
 
-#link documentação
-## https://learn.microsoft.com/pt-br/dotnet/fundamentals/code-analysis/style-rules/naming-rules
-### se abrir no Visual Studio (não o Code), vai ter várias opções prontas, as abaixo eu montei, mas no fim do arquivo tem tres exemplos pegos do vistual studio
+# #link documentação
+# ## https://learn.microsoft.com/pt-br/dotnet/fundamentals/code-analysis/style-rules/naming-rules
+# ### se abrir no Visual Studio (não o Code), vai ter várias opções prontas, as abaixo eu montei, mas no fim do arquivo tem tres exemplos pegos do vistual studio
 
-######### Erros para travar Build.
-dotnet_diagnostic.IDE1006.severity = error
+# ######### Erros para travar Build.
+# dotnet_diagnostic.IDE1006.severity = error
 
-######### Interface 
-# Regra: Devem iniciar com I e o resto do nome da interface deve ser PascalCase (IMinhaInterface)
-  # Definindo estilos
-  dotnet_naming_style.interface.capitalization = pascal_case
-  dotnet_naming_style.interface.required_prefix = I
-  # Definindo simbolos
-  dotnet_naming_symbols.interface.applicable_kinds = interface
-  dotnet_naming_symbols.interface.applicable_accessibilities = *
-  # Criando regras
-  dotnet_naming_rule.interface_must_begin_with_i.severity = error
-  dotnet_naming_rule.interface_must_begin_with_i.symbols = interface
-  dotnet_naming_rule.interface_must_begin_with_i.style = interface
+# ######### Interface 
+# # Regra: Devem iniciar com I e o resto do nome da interface deve ser PascalCase (IMinhaInterface)
+#   # Definindo estilos
+#   dotnet_naming_style.interface.capitalization = pascal_case
+#   dotnet_naming_style.interface.required_prefix = I
+#   # Definindo simbolos
+#   dotnet_naming_symbols.interface.applicable_kinds = interface
+#   dotnet_naming_symbols.interface.applicable_accessibilities = *
+#   # Criando regras
+#   dotnet_naming_rule.interface_must_begin_with_i.severity = error
+#   dotnet_naming_rule.interface_must_begin_with_i.symbols = interface
+#   dotnet_naming_rule.interface_must_begin_with_i.style = interface
 
-######### Enum
-# Regra: Devem iniciar com E e o resto do nome do Enum deve ser PascalCase (EMeuEnum)
-  # Definindo estilos
-  dotnet_naming_style.enum.capitalization = pascal_case
-  dotnet_naming_style.enum.required_prefix = E
-  # Definindo simbolos
-  dotnet_naming_symbols.enum.applicable_kinds = enum
-  dotnet_naming_symbols.enum.applicable_accessibilities = *
-  # Criando regras
-  dotnet_naming_rule.enum_must_be_pascal.severity = error
-  dotnet_naming_rule.enum_must_be_pascal.symbols = enum
-  dotnet_naming_rule.enum_must_be_pascal.style = enum
+# ######### Enum
+# # Regra: Devem iniciar com E e o resto do nome do Enum deve ser PascalCase (EMeuEnum)
+#   # Definindo estilos
+#   dotnet_naming_style.enum.capitalization = pascal_case
+#   dotnet_naming_style.enum.required_prefix = E
+#   # Definindo simbolos
+#   dotnet_naming_symbols.enum.applicable_kinds = enum
+#   dotnet_naming_symbols.enum.applicable_accessibilities = *
+#   # Criando regras
+#   dotnet_naming_rule.enum_must_be_pascal.severity = error
+#   dotnet_naming_rule.enum_must_be_pascal.symbols = enum
+#   dotnet_naming_rule.enum_must_be_pascal.style = enum
 
-######### Classe, Struct, Metodo, Campos(Field) e Propriedades(Property)
-# Regra: Devem ser PascalCase (iniciar com letra maiuscula)
-  # Definindo estilos
-  dotnet_naming_style.types_pascal_case.capitalization = pascal_case
-  # Definindo simbolos
-  dotnet_naming_symbols.types_pascal_case.applicable_kinds = class, struct, method, property, field
-  dotnet_naming_symbols.types_pascal_case.applicable_accessibilities = *
-  # Criando regras
-  dotnet_naming_rule.types_must_be_pascal.severity = error
-  dotnet_naming_rule.types_must_be_pascal.symbols = types_pascal_case
-  dotnet_naming_rule.types_must_be_pascal.style = types_pascal_case
+# ######### Classe, Struct, Metodo, Campos(Field) e Propriedades(Property)
+# # Regra: Devem ser PascalCase (iniciar com letra maiuscula)
+#   # Definindo estilos
+#   dotnet_naming_style.types_pascal_case.capitalization = pascal_case
+#   # Definindo simbolos
+#   dotnet_naming_symbols.types_pascal_case.applicable_kinds = class, struct, method, property, field
+#   dotnet_naming_symbols.types_pascal_case.applicable_accessibilities = *
+#   # Criando regras
+#   dotnet_naming_rule.types_must_be_pascal.severity = error
+#   dotnet_naming_rule.types_must_be_pascal.symbols = types_pascal_case
+#   dotnet_naming_rule.types_must_be_pascal.style = types_pascal_case
 
-######### Variaveis Locais e Parametros de Metodos
-# Regra: Devem ser camelCase (iniciar com letra minuscula)
-  # Definindo estilos
-  dotnet_naming_style.local_var.capitalization = camel_case
-  # Definindo simbolos
-  dotnet_naming_symbols.local_var.applicable_kinds = local, parameter
-  dotnet_naming_symbols.local_var.applicable_accessibilities = *
-  # Criando regras
-  dotnet_naming_rule.local_var.severity = error
-  dotnet_naming_rule.local_var.symbols = local_var
-  dotnet_naming_rule.local_var.style = local_var
+# ######### Variaveis Locais e Parametros de Metodos
+# # Regra: Devem ser camelCase (iniciar com letra minuscula)
+#   # Definindo estilos
+#   dotnet_naming_style.local_var.capitalization = camel_case
+#   # Definindo simbolos
+#   dotnet_naming_symbols.local_var.applicable_kinds = local, parameter
+#   dotnet_naming_symbols.local_var.applicable_accessibilities = *
+#   # Criando regras
+#   dotnet_naming_rule.local_var.severity = error
+#   dotnet_naming_rule.local_var.symbols = local_var
+#   dotnet_naming_rule.local_var.style = local_var
 
-######### Campos(Field) Privados Readonly
-# Regra: Devem ser camelCase (iniciar com letra minuscula) e ter um underline (_) no inicio
-  # Definindo estilos
-  dotnet_naming_style.private_readonly.capitalization = camel_case
-  dotnet_naming_style.private_readonly.required_prefix = _
-  # Definindo simbolos
-  dotnet_naming_symbols.private_readonly.applicable_kinds = field
-  dotnet_naming_symbols.private_readonly.applicable_accessibilities = private
-  dotnet_naming_symbols.private_readonly.required_modifiers = readonly
-  # Criando regras
-  dotnet_naming_rule.private_readonly.severity = error
-  dotnet_naming_rule.private_readonly.symbols = private_readonly
-  dotnet_naming_rule.private_readonly.style = private_readonly
+# ######### Campos(Field) Privados Readonly
+# # Regra: Devem ser camelCase (iniciar com letra minuscula) e ter um underline (_) no inicio
+#   # Definindo estilos
+#   dotnet_naming_style.private_readonly.capitalization = camel_case
+#   dotnet_naming_style.private_readonly.required_prefix = _
+#   # Definindo simbolos
+#   dotnet_naming_symbols.private_readonly.applicable_kinds = field
+#   dotnet_naming_symbols.private_readonly.applicable_accessibilities = private
+#   dotnet_naming_symbols.private_readonly.required_modifiers = readonly
+#   # Criando regras
+#   dotnet_naming_rule.private_readonly.severity = error
+#   dotnet_naming_rule.private_readonly.symbols = private_readonly
+#   dotnet_naming_rule.private_readonly.style = private_readonly
 
-########## Campos(Field) Constantes
-# Regra: Devem ser ALL_UPPER
-  # Definindo estilos
-  dotnet_naming_style.constant.capitalization = all_upper
-  # Definindo simbolos
-  dotnet_naming_symbols.constant.applicable_kinds = field, local
-  dotnet_naming_symbols.constant.applicable_accessibilities = *
-  dotnet_naming_symbols.constant.required_modifiers = const
-  # Criando regras
-  dotnet_naming_rule.constant.severity = error
-  dotnet_naming_rule.constant.symbols = constant
-  dotnet_naming_rule.constant.style = constant
+# ########## Campos(Field) Constantes
+# # Regra: Devem ser ALL_UPPER
+#   # Definindo estilos
+#   dotnet_naming_style.constant.capitalization = all_upper
+#   # Definindo simbolos
+#   dotnet_naming_symbols.constant.applicable_kinds = field, local
+#   dotnet_naming_symbols.constant.applicable_accessibilities = *
+#   dotnet_naming_symbols.constant.required_modifiers = const
+#   # Criando regras
+#   dotnet_naming_rule.constant.severity = error
+#   dotnet_naming_rule.constant.symbols = constant
+#   dotnet_naming_rule.constant.style = constant
 
-########## Metodos Assincronos
-# Regra: Metodos Assincronos devem terminar com Async
-  # Definindo estilos
-  dotnet_naming_style.async_method.capitalization = pascal_case
-  dotnet_naming_style.async_method.required_suffix = Async
-  # Definindo simbolos
-  dotnet_naming_symbols.async_method.applicable_kinds = method
-  dotnet_naming_symbols.async_method.applicable_accessibilities = *
-  dotnet_naming_symbols.async_method.required_modifiers = async
-  # Criando regras
-  dotnet_naming_rule.async_method.severity = error
-  dotnet_naming_rule.async_method.symbols = async_method
-  dotnet_naming_rule.async_method.style = async_method  
+# ########## Metodos Assincronos
+# # Regra: Metodos Assincronos devem terminar com Async
+#   # Definindo estilos
+#   dotnet_naming_style.async_method.capitalization = pascal_case
+#   dotnet_naming_style.async_method.required_suffix = Async
+#   # Definindo simbolos
+#   dotnet_naming_symbols.async_method.applicable_kinds = method
+#   dotnet_naming_symbols.async_method.applicable_accessibilities = *
+#   dotnet_naming_symbols.async_method.required_modifiers = async
+#   # Criando regras
+#   dotnet_naming_rule.async_method.severity = error
+#   dotnet_naming_rule.async_method.symbols = async_method
+#   dotnet_naming_rule.async_method.style = async_method  
 
-
-# dotnet_style_allow_multiple_blank_lines_experimental = false:warning
-# dotnet_style_allow_statement_immediately_after_block_experimental = false:error
-# csharp_style_allow_blank_lines_between_consecutive_braces_experimental = false:warning
+# # dotnet_style_allow_multiple_blank_lines_experimental = false:warning
+# # dotnet_style_allow_statement_immediately_after_block_experimental = false:error
+# # csharp_style_allow_blank_lines_between_consecutive_braces_experimental = false:warning
