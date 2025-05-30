@@ -11,19 +11,29 @@ public static class DependencyInjectionExtensions {
     if (assemblies == null || assemblies.Length == 0)
       assemblies = AppDomain.CurrentDomain.GetAssemblies();
 
-    var allTypes = assemblies.SelectMany(a => a.GetTypes())
-        .Where(t =>
-            t.IsClass &&
-            !t.IsAbstract &&
-            !t.IsCompilerGenerated() && // <-- 🔥 Ignora tipos anônimos, lambdas, etc.
-            t.Namespace != null // <-- 🔥 Garante que não seja tipo do sistema
-        );
+    var allTypes = assemblies
+      .SelectMany(a => a.GetTypes())
+      .Where(t =>
+          t.IsClass &&
+          !t.IsAbstract &&
+          !t.IsCompilerGenerated() &&
+          t.Namespace != null);
 
-    // 🔸 Processa classes genéricas abertas
     var genericTypes = allTypes.Where(t => t.IsGenericTypeDefinition);
+    var concreteTypes = allTypes.Where(t => !t.IsGenericTypeDefinition);
 
+    AdicionaClassesGenericas(services, genericTypes);
+    AdicionaImplementacoesDeInterfacesGenericas(services, concreteTypes);
+    AdicionaClassesComAtributo(services, concreteTypes);
+    AdicionaClassesPorConvencao(services, concreteTypes);
+
+    return services;
+  }
+
+  // 🔷 Processa classes genéricas abertas (ex.: CrudService<T>)
+  private static void AdicionaClassesGenericas(IServiceCollection services, IEnumerable<Type> genericTypes) {
     foreach (var type in genericTypes) {
-      if (type.GetCustomAttribute<IgnoreInjectionAttribute>() != null)
+      if (type.HasIgnoreAttribute())
         continue;
 
       var injectableAttr = type.GetCustomAttribute<InjectableAttribute>();
@@ -40,19 +50,44 @@ public static class DependencyInjectionExtensions {
             $"Generic interface 'I{type.Name}' not found for {type.FullName}. Use [Injectable] if intended.");
       }
     }
+  }
 
-    // 🔸 Processa classes concretas
-    var concreteTypes = allTypes.Where(t => !t.IsGenericTypeDefinition);
-
+  // 🔷 Processa implementações de interfaces genéricas fechadas (ex.: ICrudService<Usuario> → UsuarioService)
+  private static void AdicionaImplementacoesDeInterfacesGenericas(IServiceCollection services, IEnumerable<Type> concreteTypes) {
     foreach (var type in concreteTypes) {
-      if (type.GetCustomAttribute<IgnoreInjectionAttribute>() != null)
+      if (type.HasIgnoreAttribute())
+        continue;
+
+      var interfaces = type.GetInterfaces()
+        .Where(i => i.IsGenericType && !i.IsGenericTypeDefinition);
+
+      foreach (var iface in interfaces) {
+        Register(services, iface, type, EServiceLifetimeType.Scoped);
+      }
+    }
+  }
+
+  // 🔷 Processa classes concretas que possuem [Injectable]
+  private static void AdicionaClassesComAtributo(IServiceCollection services, IEnumerable<Type> concreteTypes) {
+    foreach (var type in concreteTypes) {
+      if (type.HasIgnoreAttribute())
         continue;
 
       var injectableAttr = type.GetCustomAttribute<InjectableAttribute>();
       if (injectableAttr != null) {
         Register(services, injectableAttr.InterfaceType, type, injectableAttr.Lifetime);
-        continue;
       }
+    }
+  }
+
+  // 🔷 Processa classes concretas por convenção de nome (Service, Repository)
+  private static void AdicionaClassesPorConvencao(IServiceCollection services, IEnumerable<Type> concreteTypes) {
+    foreach (var type in concreteTypes) {
+      if (type.HasIgnoreAttribute())
+        continue;
+
+      if (type.HasAttribute<InjectableAttribute>())
+        continue; // Já foi processado no método anterior
 
       if (type.Name.EndsWith("Service") || type.Name.EndsWith("Repository")) {
         var interfaceType = type.GetInterface($"I{type.Name}");
@@ -65,10 +100,9 @@ public static class DependencyInjectionExtensions {
         }
       }
     }
-
-    return services;
   }
 
+  // 🔸 Registro simples
   private static void Register(IServiceCollection services, Type interfaceType, Type implementationType, EServiceLifetimeType lifetime) {
     var serviceDescriptor = lifetime switch {
       EServiceLifetimeType.Scoped => ServiceDescriptor.Scoped(interfaceType, implementationType),
@@ -80,6 +114,7 @@ public static class DependencyInjectionExtensions {
     services.Add(serviceDescriptor);
   }
 
+  // 🔸 Registro genérico
   private static void RegisterGeneric(IServiceCollection services, Type interfaceType, Type implementationType, EServiceLifetimeType lifetime) {
     var serviceDescriptor = lifetime switch {
       EServiceLifetimeType.Scoped => ServiceDescriptor.Scoped(interfaceType, implementationType),
@@ -91,20 +126,28 @@ public static class DependencyInjectionExtensions {
     services.Add(serviceDescriptor);
   }
 
+  // 🔍 Busca interface genérica aberta correspondente
   private static Type? FindMatchingGenericInterface(Type type) {
     var targetInterfaceName = $"I{type.Name.Split('`')[0]}";
 
     return type.GetInterfaces()
-        .FirstOrDefault(i =>
-            i.IsGenericTypeDefinition &&
-            i.Name.Split('`')[0] == targetInterfaceName
-        );
+      .FirstOrDefault(i =>
+        i.IsGenericTypeDefinition &&
+        i.Name.Split('`')[0] == targetInterfaceName
+      );
   }
 
-  /// <summary>
-  /// Verifica se um tipo é gerado pelo compilador (ex.: tipos anônimos, closures, etc.)
-  /// </summary>
+  // ✅ Helpers
+
   private static bool IsCompilerGenerated(this Type type) {
     return type.GetCustomAttributes(typeof(CompilerGeneratedAttribute), inherit: false).Any();
+  }
+
+  private static bool HasIgnoreAttribute(this Type type) {
+    return type.GetCustomAttribute<IgnoreInjectionAttribute>(inherit: false) != null;
+  }
+
+  private static bool HasAttribute<T>(this Type type) where T : Attribute {
+    return type.GetCustomAttribute<T>() != null;
   }
 }

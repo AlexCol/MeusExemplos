@@ -6,7 +6,7 @@ using InjeçãoDinamica.Properties.src.config.DI.enumeradores;
 
 namespace InjeçãoDinamica.Properties.src.config.DI.model;
 
-[AttributeUsage(AttributeTargets.Class)]
+[AttributeUsage(AttributeTargets.Class, Inherited = false)]
 public class InjectableAttribute : Attribute {
   public Type InterfaceType { get; }
   public EServiceLifetimeType Lifetime { get; }
