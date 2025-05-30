@@ -58,7 +58,9 @@ public static class DependencyInjectionExtensions {
   }
 
   // 🔷 Processa implementações de interfaces genéricas fechadas (ex.: ICrudService<Usuario> → UsuarioService)
+  // Adiciona um aviso se houver múltiplas implementações para a mesma interface
   private static void AdicionaImplementacoesDeInterfacesGenericas(IServiceCollection services, IEnumerable<Type> concreteTypes) {
+    var interfaceToTypes = new Dictionary<Type, List<Type>>();
     foreach (var type in concreteTypes) {
       if (type.HasIgnoreAttribute())
         continue;
@@ -67,7 +69,16 @@ public static class DependencyInjectionExtensions {
         .Where(i => i.IsGenericType && !i.IsGenericTypeDefinition);
 
       foreach (var iface in interfaces) {
+        if (!interfaceToTypes.ContainsKey(iface))
+          interfaceToTypes[iface] = new List<Type>();
+        interfaceToTypes[iface].Add(type);
         Register(services, iface, type, EServiceLifetimeType.Scoped);
+      }
+    }
+    // Detecta ambiguidade
+    foreach (var kvp in interfaceToTypes) {
+      if (kvp.Value.Count > 1) {
+        Console.WriteLine($"[DI WARNING] Interface '{kvp.Key}' possui múltiplas implementações: {string.Join(", ", kvp.Value.Select(t => t.Name))}. Considere usar IEnumerable<T> na injeção ou ajustar o registro.");
       }
     }
   }
@@ -112,7 +123,7 @@ public static class DependencyInjectionExtensions {
     }
   }
 
-  // 🔸 Registro simples
+  // 🔷 Registro simples
   private static void Register(IServiceCollection services, Type interfaceType, Type implementationType, EServiceLifetimeType lifetime) {
     var serviceDescriptor = lifetime switch {
       EServiceLifetimeType.Scoped => ServiceDescriptor.Scoped(interfaceType, implementationType),
@@ -124,7 +135,7 @@ public static class DependencyInjectionExtensions {
     services.Add(serviceDescriptor);
   }
 
-  // 🔸 Registro genérico
+  // 🔷 Registro genérico
   private static void RegisterGeneric(IServiceCollection services, Type interfaceType, Type implementationType, EServiceLifetimeType lifetime) {
     var serviceDescriptor = lifetime switch {
       EServiceLifetimeType.Scoped => ServiceDescriptor.Scoped(interfaceType, implementationType),
@@ -140,11 +151,13 @@ public static class DependencyInjectionExtensions {
   private static Type? FindMatchingGenericInterface(Type type) {
     var targetInterfaceName = $"I{type.Name.Split('`')[0]}";
 
-    return type.GetInterfaces()
+    // Busca por interface genérica aberta mesmo que implementada como fechada
+    var match = type.GetInterfaces()
       .FirstOrDefault(i =>
-        i.IsGenericTypeDefinition &&
-        i.Name.Split('`')[0] == targetInterfaceName
+        i.IsGenericType &&
+        i.GetGenericTypeDefinition().Name.Split('`')[0] == targetInterfaceName
       );
+    return match?.GetGenericTypeDefinition();
   }
 
   // ✅ Helpers
