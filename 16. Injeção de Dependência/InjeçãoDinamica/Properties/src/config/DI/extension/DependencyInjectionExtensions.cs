@@ -38,7 +38,12 @@ public static class DependencyInjectionExtensions {
 
       var injectableAttr = type.GetCustomAttribute<InjectableAttribute>();
       if (injectableAttr != null) {
-        RegisterGeneric(services, injectableAttr.InterfaceType, type, injectableAttr.Lifetime);
+        Type? resolvedInterfaceType = injectableAttr.InterfaceType;
+        if (resolvedInterfaceType == null)
+          resolvedInterfaceType = type.GetInterface($"I{type.Name}");
+        if (resolvedInterfaceType == null)
+          throw new InvalidOperationException($"Interface 'I{type.Name}' not found for {type.FullName}. Use [Injectable(typeof(IMinhaInterface))] se necessário.");
+        RegisterGeneric(services, resolvedInterfaceType, type, injectableAttr.Lifetime);
         continue;
       }
 
@@ -75,7 +80,12 @@ public static class DependencyInjectionExtensions {
 
       var injectableAttr = type.GetCustomAttribute<InjectableAttribute>();
       if (injectableAttr != null) {
-        Register(services, injectableAttr.InterfaceType, type, injectableAttr.Lifetime);
+        Type? resolvedInterfaceType = injectableAttr.InterfaceType;
+        if (resolvedInterfaceType == null)
+          resolvedInterfaceType = type.GetInterface($"I{type.Name}");
+        if (resolvedInterfaceType == null)
+          throw new InvalidOperationException($"Interface 'I{type.Name}' not found for {type.FullName}. Use [Injectable(typeof(IMinhaInterface))] se necessário.");
+        Register(services, resolvedInterfaceType, type, injectableAttr.Lifetime);
       }
     }
   }

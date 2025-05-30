@@ -7,7 +7,7 @@ public interface ISingletonService {
   Guid GetGuid();
 }
 
-[Injectable(typeof(ISingletonService), lifetime: EServiceLifetimeType.Singleton)]
+[Injectable(EServiceLifetimeType.Singleton)]
 public class SingletonService : ISingletonService {
   public Guid Guid { get; set; }
 

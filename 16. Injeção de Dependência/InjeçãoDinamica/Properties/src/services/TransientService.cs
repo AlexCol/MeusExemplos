@@ -7,7 +7,7 @@ public interface ITransientService {
   Guid GetGuid();
 }
 
-[Injectable(typeof(ITransientService), lifetime: EServiceLifetimeType.Transient)]
+[Injectable(EServiceLifetimeType.Transient)]
 public class TransientService : ITransientService {
   public Guid Guid { get; set; }
 
