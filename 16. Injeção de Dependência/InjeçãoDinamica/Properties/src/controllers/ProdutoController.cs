@@ -12,14 +12,18 @@ namespace InjeçãoDinamica.Properties.src.controllers;
 [ApiController]
 [Route("api/[controller]")]
 public class ProdutoController : ControllerBase {
-  private readonly IProdutoService _service;
+    private readonly IProdutoService _service;
+    public ProdutoController(IProdutoService service) {
+        _service = service;
+    }
 
-  public ProdutoController(IProdutoService service) {
-    _service = service;
-  }
+    // private readonly IGenericRepository<Produto> _service;
+    // public ProdutoController(IGenericRepository<Produto> service) {
+    //     _service = service;
+    // }
 
-  [HttpGet]
-  public IActionResult GenericProduto() {
-    return Ok(new { mensagem = _service.SayGeneric() });
-  }
+    [HttpGet]
+    public IActionResult GenericProduto() {
+        return Ok(new { mensagem = _service.SayGeneric() });
+    }
 }
